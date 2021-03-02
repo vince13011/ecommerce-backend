@@ -1,6 +1,11 @@
+const testMapper= require('../dataMapper/testmapper')
+
 const testController = {
-tester : (req,res,next)=>{
-    res.json('Hello World');
+
+getOne : (req,res)=>{
+    const id = req.body.id
+    const result = testMapper.findOne(id)
+    res.json(result);
 }
 };
 
