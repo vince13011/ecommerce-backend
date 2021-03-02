@@ -2,6 +2,6 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
-
+DROP TABLE category, article, size, "order", "address", "user", "role", order_has_article, article_has_size, article_has_category;
+DROP DOMAIN posint;
 COMMIT;

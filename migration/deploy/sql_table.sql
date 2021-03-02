@@ -15,101 +15,83 @@ CREATE TABLE article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     reference text NOT NULL,
    "name" text NOT NULL,
-   description
+   "description" text NOT NULL,
+   "image" text NOT NULL,
+   color text DEFAULT NULL,
+   pre_tax_price posint NOT NULL,
+   vat_rate posint NOT NULL,
+   discount posint DEFAULT NULL,
+   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    "name" text NOT NULL
 );
 
-CREATE TABLE order (
+CREATE TABLE "address" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+   country text NOT NULL DEFAULT 'France',
+   city text NOT NULL,
+   zip_code posint NOT NULL,
+   "number" text NOT NULL,
+   street_name text NOT NULL,
+   additional text ,
+   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+
 );
 
-CREATE TABLE 'address' (
+CREATE TABLE "order" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    order_number posint NOT NULL,
+    total_price posint NOT NULL,
+    address_id posint NOT NULL REFERENCES "address"(id),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE user (
+CREATE TABLE "role" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    "name" text NOT NULL
 );
 
-CREATE TABLE 'role' (
+CREATE TABLE "user" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    email text NOT NULL,
+    firstname text NOT NULL,
+    lastname text NOT NULL,
+    "password" text NOT NULL,
+    phone_number INT NOT NULL,
+    role_id posint NOT NULL REFERENCES role(id),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()  
 );
+
+
 
 CREATE TABLE order_has_article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    order_id posint NOT NULL REFERENCES "order"(id),
+    article_id posint NOT NULL REFERENCES article(id),
+    quantity posint NOT NULL DEFAULT 1,
+    unit_net_price posint NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+
 );
+
 CREATE TABLE article_has_size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    article_id posint NOT NULL REFERENCES article(id),
+    size_id posint NOT NULL REFERENCES size(id),
+    stock int DEFAULT NULL
 );
 CREATE TABLE article_has_category (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL,
-    min_age posint NOT NULL,
-    min_players posint NOT NULL,
-    max_players posint,
-    "type" text NOT NULL, 
-    note posint NOT NULL,
-    duration interval NOT NULL,
-    creator text NOT NULL 
+    article_id posint NOT NULL REFERENCES article(id),
+    category_id int NOT NULL REFERENCES category(id)
 );
 
 
