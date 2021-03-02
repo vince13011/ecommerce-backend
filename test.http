@@ -6,6 +6,6 @@
 
 ### Route GET /posts
 
-GET {{baseUrl}}/test
+GET {{baseUrl}}/articles
 
 ###

@@ -20,7 +20,7 @@ CREATE TABLE article (
    color text DEFAULT NULL,
    pre_tax_price posint NOT NULL,
    vat_rate posint NOT NULL,
-   discount posint DEFAULT NULL,
+   discount int DEFAULT NULL,
    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
