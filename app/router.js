@@ -10,6 +10,7 @@ const testSchema = require('./joiSchemas/testSchema');
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
 const orderController = require('./controllers/orderController');
+const userController = require('./controllers/userController');
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
@@ -25,13 +26,21 @@ router.get('/categories/:id', categoryController.getOne);
 // router.patch('/categories/:id', categoryController.updateById);
 // router.delete('/categories/:id', categoryController.deleteById);
 
-// 
-router.get('/orders', categoryController.getAll);
-router.get('/orders/:id', categoryController.getOne);
+// ORDERS
+router.get('/orders', orderController.getAll);
+router.get('/orders/:id', orderController.getOne);
 // router.post('/orders', categoryController.create);
 // router.patch('/orders/:id', categoryController.updateById);
 // router.delete('/orders/:id', categoryController.deleteById);
 
+// USERS
+router.get('/users', userController.getAll);
+router.get('/users/:id', userController.getOne);
+// connecter un user ???
+// router.post('/users', userController.create);
+
+// router.patch('/users/:id', userController.updateById);
+// router.delete('/users/:id', userController.deleteById);
 
 // HOME
 // router.get('/', mainController.homePage);

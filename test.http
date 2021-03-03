@@ -63,3 +63,24 @@ PATCH {{baseUrl}}/orders/1
 ### SUPPRIMER un orders
 ### Route DELETE / orders/:id
 DELETE {{baseUrl}}/orders/1
+
+
+#################################
+### USERS
+### Route GET / users
+GET {{baseUrl}}/users
+
+### Route GET / users/:id
+GET {{baseUrl}}/users/1
+
+### CONNECTER un user
+### Route POST / users/:id
+POST {{baseUrl}}/users/1
+
+### UPDATE un user
+### Route PATCH / users/:id
+PATCH {{baseUrl}}/users/1
+
+### SUPPRIMER un user
+### Route DELETE / users/:id
+DELETE {{baseUrl}}/users/1
