@@ -2,7 +2,7 @@ const db = require('../database');
 
 //ici on défénit notre classe
 class Article {
- 
+
     /*
     ici on déclare les champs de notre classe 
     il est donc plus facile de comprendre la classe dans son ensemble
@@ -18,7 +18,7 @@ class Article {
     vat_rate;
     discount;
     created_at;
-    update_at;
+    updated_at;
 
     /**
      * le constructor est la méthode qui s'éxecute lors d'une nouvelle instance de notre classe 
@@ -44,19 +44,19 @@ class Article {
         return rows.map(article => new Article(article));
     }
 
-     /*
-    Cette méthode de classe permet de retourner un article grâce  à son ID
-    via une requête SQL
-    */
-   static async findOne(id) {
-    const { rows } = await db.query('SELECT * FROM article WHERE id = $1;', [id]);
-    if (!rows[0]){
-       throw new Error(`le jeu avec l'id ${id} n'existe pas `)
+    /*
+   Cette méthode de classe permet de retourner un article grâce  à son ID
+   via une requête SQL
+   */
+    static async findOne(id) {
+        const { rows } = await db.query('SELECT * FROM article WHERE id = $1;', [id]);
+        if (!rows[0]) {
+            throw new Error(`l'article avec l'id ${id} n'existe pas `)
+        }
+
+        return new Article(rows[0]);
     }
 
-    return new Article(rows[0]);
-}
 
-    
 }
-module.exports=Article;
+module.exports = Article;
