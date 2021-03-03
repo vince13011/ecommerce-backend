@@ -42,24 +42,6 @@ const addressController = {
         response.json(newAddress);
     },
 
-    deleteById: async (request, response) => {
-
-        //je récupère l'id pour vérifier que ce jeu existe bien grâce à la méthode findone()
-        const { id } = request.params;
-
-        try {
-            // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
-            const theAddress = await Address.findOne(id);
-
-            await theAddress.deleteById();
-
-            response.json(`L'address avec l'id ${id} a bien était supprimé`);
-        }
-        catch (err) {
-            response.status(404).json(`L'address l'id ${id} n'existe pas ou a déjà était supprimé`);
-        }
-    },
-
     // Cette méthode remplace le nombre de  données choisis du jeu en question   
     updateById: async (request, response) => {
 
