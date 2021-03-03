@@ -4,8 +4,22 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-### Route GET /posts
 
+### ARTCILES
+### Route GET / articles
 GET {{baseUrl}}/articles
 
-###
+### Route GET / articles/:id
+GET {{baseUrl}}/articles/1
+
+### CREER un artcicle
+### Route POST / articles/:id
+POST {{baseUrl}}/articles/3
+
+### UPDATE un artcicle
+### Route PATCH / articles/:id
+PATCH {{baseUrl}}/articles/2
+
+### SUPPRIMER un article
+### Route DELETE / articles/:id
+DELETE {{baseUrl}}/articles/4
