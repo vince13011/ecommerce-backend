@@ -19,7 +19,7 @@ const userController = require('./controllers/userController');
 // ARTICLES
 router.get('/articles', articleController.getAll);
 router.get('/articles/:id', articleController.getOne);
-// router.post('/articles', articleController.create);
+router.post('/articles', articleController.create);
 // router.patch('/articles/:id', articleController.updateById);
 // router.delete('/articles/:id', articleController.deleteById);
 

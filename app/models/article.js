@@ -57,6 +57,51 @@ class Article {
         return new Article(rows[0]);
     }
 
+    /** 
+   * Fonction non statique car propre à chaque instance
+   * Elle permet de modifier un jeu de société  dans notre base de donnée
+   * this correspond au contexte qui est utilisé
+   * dans notre cas il correspond aux données de notre jeu de société avant modification
+   * @param {json} data - Objet json venant modifier les données existantes
+   */
+    async updateById(data) {
+
+        const { rows } = await db.query(`SELECT * FROM update_article($1,$2);`, [data, this.id]);
+        if (rows[0].id === null) {
+            throw new Error(`l'article avec l'id  ${this.id} n'existe pas `)
+        }
+
+        return new Article(rows[0]);
+    }
+
+
+    async insert() {
+
+        const { rows } = await db.query(`INSERT INTO article (
+        reference,
+        name,
+        description,
+        image,
+        color,
+        pre_tax_price,
+        vat_rate,
+        discount,
+        created_at,
+        updated_at
+    )
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+            [this.reference, this.name, this.description, this.image,
+            this.color, this.pre_tax_price, this.vat_rate, this.discount,
+            this.created_at, this.updated_at]);
+
+        //this.id = rows[0].id;
+    }
+
+    async deleteById() {
+
+        const { rows } = await db.query(`DELETE FROM article
+                                    WHERE id = $1`, [this.id]);
+    }
 
 }
 module.exports = Article;
