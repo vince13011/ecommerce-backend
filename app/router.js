@@ -22,7 +22,7 @@ router.get('/articles', articleController.getAll);
 router.get('/articles/:id', articleController.getOne);
 router.post('/articles', articleController.create);
 router.patch('/articles/:id', articleController.updateById);
-router.delete('/articles/:id', articleController.deleteById);
+// router.delete('/articles/:id', articleController.deleteById);
 
 // CATEGORIES
 router.get('/categories', categoryController.getAll);
@@ -35,7 +35,7 @@ router.patch('/categories/:id', categoryController.updateById);
 router.get('/orders', orderController.getAll);
 router.get('/orders/:id', orderController.getOne);
 router.post('/orders', orderController.create);
-// router.patch('/orders/:id', orderController.updateById);
+router.patch('/orders/:id', orderController.updateById);
 // router.delete('/orders/:id', orderController.deleteById);
 
 // USERS

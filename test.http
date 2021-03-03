@@ -4,7 +4,8 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-
+# ****************************
+# ****************************
 ### GET /articles
 GET {{baseUrl}}/articles
 
@@ -44,13 +45,13 @@ Content-Type: application/json
 ###  DELETE /articles/:id
 DELETE {{baseUrl}}/articles/4
 
-
+# ****************************
+# ****************************
 ###  GET /categories
 GET {{baseUrl}}/categories
 
 ### GET /categories/:id
 GET {{baseUrl}}/categories/1
-
 
 ### POST /categories/:id
 POST {{baseUrl}}/categories
@@ -71,13 +72,13 @@ Content-Type: application/json
 ### DELETE /categories/:id
 DELETE {{baseUrl}}/categories/1
 
-
+# ****************************
+# ****************************
 ###  GET /orders
 GET {{baseUrl}}/orders
 
 ### GET /orders/:id
-GET {{baseUrl}}/orders/1
-
+GET {{baseUrl}}/orders/9
 
 ### POST /orders/:id
 POST {{baseUrl}}/orders
@@ -95,25 +96,26 @@ PATCH {{baseUrl}}/orders/1
 ### DELETE /orders/:id
 DELETE {{baseUrl}}/orders/1
 
-
+# ****************************
+# **************************** 
 ### GET /users
 GET {{baseUrl}}/users
 
 ### GET /users/:id
 GET {{baseUrl}}/users/1
 
-
 ###POST /users/:id
 POST {{baseUrl}}/users
-
 
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1
 
-
 ###DELETE /users/:id
 DELETE {{baseUrl}}/users/1
 
+
+# ****************************
+# ****************************
 # ADDRESS
 ###  GET /orders
 GET {{baseUrl}}/addresses
@@ -140,3 +142,7 @@ PATCH {{baseUrl}}/addresses/1
 
 ### DELETE /addresses/:id
 DELETE {{baseUrl}}/addresses/1
+
+
+# ****************************
+# ****************************

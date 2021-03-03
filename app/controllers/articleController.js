@@ -12,6 +12,7 @@ const articleController = {
             response.status(404).json(`L'article n'existe pas`);
         }
     },
+
     getOne: async (request, response) => {
 
         const id = request.params.id;
