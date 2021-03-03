@@ -82,6 +82,7 @@ const articleController = {
             const newdata = theArticle;
 
             console.log('newdata: ',newdata)
+            newdata.updated_at ="NOW";
 
             for (const element in data) {
                 if (typeof newdata[element] !== 'undefined') {
