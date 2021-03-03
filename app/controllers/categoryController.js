@@ -23,7 +23,23 @@ const categoryController = {
         catch (err) {
             response.status(404).json(err.message);
         }
-    }
+    },
+
+
+    // ////////////////////////////////////
+
+    create: async (request, response) => {
+        // les infos de la category à ajouter
+        const newCategoryData = request.body;
+
+        console.log('newCategorydata: ', newCategoryData);
+        const newCategory = new Category(newCategoryData);
+        console.log('newarticle: ', newCategory);
+
+        await newCategory.insert();
+
+        response.json(newCategory);
+    },
 
 };
 

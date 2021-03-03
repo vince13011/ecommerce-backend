@@ -29,9 +29,9 @@ const articleController = {
         // les infos de l'article à ajouter
         const newArticleData = request.body;
 
-        console.log('newarticledata: ',newArticleData)
+        console.log('newarticledata: ', newArticleData)
         const newArticle = new Article(newArticleData);
-        console.log('newarticle: ',newArticle)
+        console.log('newarticle: ', newArticle)
 
         await newArticle.insert();
 
@@ -78,11 +78,11 @@ const articleController = {
             if (data.id) {
                 delete (data.id)
             }
-            
+
             const newdata = theArticle;
 
-            console.log('newdata: ',newdata)
-            newdata.updated_at ="NOW";
+            console.log('newdata: ', newdata)
+            newdata.updated_at = "NOW()";
 
             for (const element in data) {
                 if (typeof newdata[element] !== 'undefined') {

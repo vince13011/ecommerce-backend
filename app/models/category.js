@@ -36,7 +36,7 @@ class Category {
     }
 
     /*
-   Cette méthode de classe permet de retourner un article grâce  à son ID
+   Cette méthode de classe permet de retourner un article grâce à son ID
    via une requête SQL
    */
     static async findOne(id) {
@@ -46,6 +46,11 @@ class Category {
         }
 
         return new Category(rows[0]);
+    }
+
+    async insert() {
+        const { rows } = await db.query(`INSERT INTO "category" (name) VALUES($1) RETURNING*;`, [this.name]);
+        this.id = rows[0].id;
     }
 
 

@@ -54,7 +54,11 @@ GET {{baseUrl}}/categories/1
 
 ### POST /categories/:id
 POST {{baseUrl}}/categories
+Content-Type: application/json
 
+{
+    "name": "test1"
+}
 
 ### PATCH /categories/:id
 PATCH {{baseUrl}}/categories/1
@@ -80,7 +84,6 @@ PATCH {{baseUrl}}/orders/1
 
 ### DELETE /orders/:id
 DELETE {{baseUrl}}/orders/1
-
 
 
 ### GET /users
