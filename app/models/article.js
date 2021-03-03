@@ -20,6 +20,7 @@ class Article {
     created_at;
     updated_at;
 
+
     /**
      * le constructor est la méthode qui s'éxecute lors d'une nouvelle instance de notre classe 
     exemple:
@@ -77,7 +78,7 @@ class Article {
 
     async insert() {
 
-        const { rows } = await db.query(`INSERT INTO article (
+        const { rows } = await db.query(`INSERT INTO "article" (
         reference,
         name,
         description,
@@ -85,16 +86,13 @@ class Article {
         color,
         pre_tax_price,
         vat_rate,
-        discount,
-        created_at,
-        updated_at
+        discount
     )
-    VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+    VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING*;`,
             [this.reference, this.name, this.description, this.image,
-            this.color, this.pre_tax_price, this.vat_rate, this.discount,
-            this.created_at, this.updated_at]);
+            this.color, this.pre_tax_price, this.vat_rate, this.discount]);
 
-        //this.id = rows[0].id;
+        this.id = rows[0].id;
     }
 
     async deleteById() {

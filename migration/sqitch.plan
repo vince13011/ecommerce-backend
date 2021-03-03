@@ -4,3 +4,4 @@
 
 sql_table 2021-03-02T13:35:54Z Vincent GIGLIO <vincent giglio@asus-vincent> # creation of SQL table
 seeding 2021-03-02T21:31:15Z Vincent GIGLIO <vincent giglio@asus-vincent> # article seeding
+update_function 2021-03-03T16:32:47Z Vincent GIGLIO <vincent giglio@asus-vincent> # update_function for all models

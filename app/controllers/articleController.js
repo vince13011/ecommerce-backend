@@ -29,7 +29,9 @@ const articleController = {
         // les infos de l'article à ajouter
         const newArticleData = request.body;
 
+        console.log('newarticledata: ',newArticleData)
         const newArticle = new Article(newArticleData);
+        console.log('newarticle: ',newArticle)
 
         await newArticle.insert();
 
@@ -37,7 +39,7 @@ const articleController = {
          la certitude que tout s'est bien passé
          car la réponse sera envoyé avant la fin de l'enregistrement du jeu en base de données
         */
-        response.json(newGame);
+        response.json(newArticle);
     },
 
     deleteById: async (request, response) => {
@@ -76,10 +78,10 @@ const articleController = {
             if (data.id) {
                 delete (data.id)
             }
-
+            
             const newdata = theArticle;
 
-            //ici on compare les données du jeu avec les futurs modifications
+            console.log('newdata: ',newdata)
 
             for (const element in data) {
                 if (typeof newdata[element] !== 'undefined') {
