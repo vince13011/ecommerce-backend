@@ -44,6 +44,19 @@ class Article {
         return rows.map(article => new Article(article));
     }
 
+     /*
+    Cette méthode de classe permet de retourner un article grâce  à son ID
+    via une requête SQL
+    */
+   static async findOne(id) {
+    const { rows } = await db.query('SELECT * FROM article WHERE id = $1;', [id]);
+    if (!rows[0]){
+       throw new Error(`le jeu avec l'id ${id} n'existe pas `)
+    }
+
+    return new Article(rows[0]);
+}
+
     
 }
 module.exports=Article;
