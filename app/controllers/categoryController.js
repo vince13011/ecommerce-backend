@@ -5,8 +5,8 @@ const categoryController = {
 
     getAll: async (request, response) => {
         try {
-            const result = await Category.findAll()
-            response.json(result)
+            const categories = await Category.findAll()
+            response.json(categories)
         }
         catch (err) {
             response.status(404).json(`La categorie n'existe pas`);
@@ -17,8 +17,8 @@ const categoryController = {
         const id = request.params.id;
 
         try {
-            const game = await Category.findOne(id);
-            response.json(game);
+            const category = await Category.findOne(id);
+            response.json(category);
         }
         catch (err) {
             response.status(404).json(err.message);

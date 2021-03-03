@@ -5,8 +5,8 @@ const orderController = {
 
     getAll: async (request, response) => {
         try {
-            const result = await Order.findAll()
-            response.json(result)
+            const orders = await Order.findAll()
+            response.json(orders)
         }
         catch (err) {
             response.status(404).json(`L'order n'existe pas`);
@@ -17,8 +17,8 @@ const orderController = {
         const id = request.params.id;
 
         try {
-            const game = await Order.findOne(id);
-            response.json(game);
+            const order = await Order.findOne(id);
+            response.json(order);
         }
         catch (err) {
             response.status(404).json(err.message);
