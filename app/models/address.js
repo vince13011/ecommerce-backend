@@ -1,7 +1,7 @@
 const db = require('../database');
 
 //ici on défénit notre classe
-class Order {
+class Address {
 
     /*
     ici on déclare les champs de notre classe 
@@ -9,9 +9,13 @@ class Order {
     */
 
     id;
-    order_number;
-    total_price;
-    address_id;
+    country;
+    city;
+    zip_code;
+    number;
+    street_name;
+    role_id;
+    additional;
     created_at;
     updated_at;
 
@@ -34,9 +38,9 @@ class Order {
     */
     static async findAll() {
 
-        const { rows } = await db.query('SELECT * FROM order;');
+        const { rows } = await db.query('SELECT * FROM address;');
 
-        return rows.map(order => new Order(order));
+        return rows.map(address => new Address(address));
     }
 
     /*
@@ -44,26 +48,31 @@ class Order {
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM order WHERE id = $1;', [id]);
+        const { rows } = await db.query('SELECT * FROM address WHERE id = $1;', [id]);
         if (!rows[0]) {
-            throw new Error(`l'order avec l'id ${id} n'existe pas`)
+            throw new Error(`l'address avec l'id ${id} n'existe pas`)
         }
 
-        return new Order(rows[0]);
+        return new Address(rows[0]);
     }
 
     async insert() {
 
-        const { rows } = await db.query(`INSERT INTO "order" (
-        order_number,
-        total_price,
-        address_id
+        const { rows } = await db.query(`INSERT INTO "address" (
+            country,
+            city,
+            zip_code,
+            number,
+            street_name,
+            additional
     )
-    VALUES($1,$2,$3) RETURNING*;`,
-            [this.order_number, this.total_price, this.address_id]);
+    VALUES($1,$2,$3,$4,$5,$6) RETURNING*;`,
+            [this.country, this.city, this.zip_code, this.number,
+            this.street_name, this.additional]);
 
         this.id = rows[0].id;
     }
 
+
 }
-module.exports = Order;
+module.exports = Address;

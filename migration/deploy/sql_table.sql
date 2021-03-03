@@ -32,14 +32,14 @@ CREATE TABLE size (
 
 CREATE TABLE "address" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-   country text NOT NULL DEFAULT 'France',
-   city text NOT NULL,
-   zip_code posint NOT NULL,
-   "number" text NOT NULL,
-   street_name text NOT NULL,
-   additional text ,
-   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    country text NOT NULL DEFAULT 'France',
+    city text NOT NULL,
+    zip_code posint NOT NULL,
+    "number" text NOT NULL,
+    street_name text NOT NULL,
+    additional text ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
 );
 

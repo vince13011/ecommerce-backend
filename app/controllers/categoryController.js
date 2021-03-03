@@ -12,6 +12,7 @@ const categoryController = {
             response.status(404).json(`La categorie n'existe pas`);
         }
     },
+
     getOne: async (request, response) => {
 
         const id = request.params.id;
@@ -24,9 +25,6 @@ const categoryController = {
             response.status(404).json(err.message);
         }
     },
-
-
-    // ////////////////////////////////////
 
     create: async (request, response) => {
         // les infos de la category à ajouter

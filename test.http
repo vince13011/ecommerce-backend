@@ -81,7 +81,13 @@ GET {{baseUrl}}/orders/1
 
 ### POST /orders/:id
 POST {{baseUrl}}/orders
+Content-Type: application/json
 
+{
+    "order_number": 1,
+    "total_price": 20,
+    "address_id": 1
+}
 
 ### PATCH /orders/:id
 PATCH {{baseUrl}}/orders/1
@@ -107,3 +113,30 @@ PATCH {{baseUrl}}/users/1
 
 ###DELETE /users/:id
 DELETE {{baseUrl}}/users/1
+
+# ADDRESS
+###  GET /orders
+GET {{baseUrl}}/addresses
+
+### GET /addresses/:id
+GET {{baseUrl}}/addresses/1
+
+
+### POST /addresses/:id
+POST {{baseUrl}}/addresses
+Content-Type: application/json
+
+{
+    "country": "France",
+    "city": "Marseille",
+    "zip_code": "13000",
+    "number": 10,
+    "street_name": "rue de Vincent",
+    "additional":"étage 5"
+}
+
+### PATCH /addresses/:id
+PATCH {{baseUrl}}/addresses/1
+
+### DELETE /addresses/:id
+DELETE {{baseUrl}}/addresses/1

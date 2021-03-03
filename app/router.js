@@ -12,6 +12,7 @@ const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
 const orderController = require('./controllers/orderController');
 const userController = require('./controllers/userController');
+const addressController = require('./controllers/addressController');
 
 // HOME
 // router.get('/', mainController.homePage);
@@ -33,20 +34,27 @@ router.patch('/categories/:id', categoryController.updateById);
 // ORDERS
 router.get('/orders', orderController.getAll);
 router.get('/orders/:id', orderController.getOne);
-// router.post('/orders', categoryController.create);
-// router.patch('/orders/:id', categoryController.updateById);
-// router.delete('/orders/:id', categoryController.deleteById);
+router.post('/orders', orderController.create);
+// router.patch('/orders/:id', orderController.updateById);
+// router.delete('/orders/:id', orderController.deleteById);
 
 // USERS
 router.get('/users', userController.getAll);
 router.get('/users/:id', userController.getOne);
+// *******************************************
 // connecter un user ???
+// *******************************************
 // router.post('/users', userController.create);
 
 // router.patch('/users/:id', userController.updateById);
 // router.delete('/users/:id', userController.deleteById);
 
-
+// ADDRESSES
+router.get('/addresses', addressController.getAll);
+router.get('/addresses/:id', addressController.getOne);
+router.post('/addresses', addressController.create);
+router.patch('/addresses/:id', addressController.updateById);
+// router.delete('/addresses/:id', addressController.deleteById);
 
 
 

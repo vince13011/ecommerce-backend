@@ -7,7 +7,6 @@ class Category {
     ici on déclare les champs de notre classe 
     il est donc plus facile de comprendre la classe dans son ensemble
     */
-
     id;
     name;
 
