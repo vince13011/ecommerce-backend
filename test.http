@@ -62,7 +62,11 @@ Content-Type: application/json
 
 ### PATCH /categories/:id
 PATCH {{baseUrl}}/categories/1
+Content-Type: application/json
 
+{
+    "name": "test1"
+}
 
 ### DELETE /categories/:id
 DELETE {{baseUrl}}/categories/1

@@ -53,6 +53,22 @@ class Category {
         this.id = rows[0].id;
     }
 
+    /** 
+   * Fonction non statique car propre à chaque instance
+   * Elle permet de modifier un jeu de société  dans notre base de donnée
+   * this correspond au contexte qui est utilisé
+   * dans notre cas il correspond aux données de notre jeu de société avant modification
+   * @param {json} data - Objet json venant modifier les données existantes
+   */
+    async updateById(data) {
+
+        const { rows } = await db.query(`SELECT * FROM update_category($1,$2);`, [data, this.id]);
+        if (rows[0].id === null) {
+            throw new Error(`la category avec l'id  ${this.id} n'existe pas`)
+        }
+
+        return new Category(rows[0]);
+    }
 
 }
 module.exports = Category;

@@ -27,7 +27,7 @@ router.delete('/articles/:id', articleController.deleteById);
 router.get('/categories', categoryController.getAll);
 router.get('/categories/:id', categoryController.getOne);
 router.post('/categories', categoryController.create);
-// router.patch('/categories/:id', categoryController.updateById);
+router.patch('/categories/:id', categoryController.updateById);
 // router.delete('/categories/:id', categoryController.deleteById);
 
 // ORDERS
