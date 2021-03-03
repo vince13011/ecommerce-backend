@@ -8,6 +8,9 @@
 ### GET /articles
 GET {{baseUrl}}/articles
 
+### GET /articles/:id
+GET {{baseUrl}}/articles/2
+
 ### POST /articles
 POST {{baseUrl}}/articles
 Content-Type: application/json
