@@ -8,24 +8,21 @@ const { validateBody, validateQuery } = require('./services/validator');
 const testSchema = require('./joiSchemas/testSchema');
 
 const articleController = require('./controllers/articleController');
-
-// A VERIFIER !!!
-// j'ai appelé category = singulier de categories en anglais
 const categoryController = require('./controllers/categoryController');
 
 // ARTICLES
-router.get('/articles', articleController.getAllArticles);
+router.get('/articles', articleController.getAll);
 router.get('/articles/:id', articleController.getOne);
-router.post('/articles', articleController.create);
-router.patch('/articles/:id', articleController.updateById);
-router.delete('/articles/:id', articleController.deleteById);
+// router.post('/articles', articleController.create);
+// router.patch('/articles/:id', articleController.updateById);
+// router.delete('/articles/:id', articleController.deleteById);
 
 
 
 // CATEGORIES
 router.get('/categories', categoryController.getAll);
-// A FAIRE 
-// A FAIRE
+router.get('/categories/:id', categoryController.getOne);
+
 // retourne la page HOME - d'accueil
 // router.get('/', mainController.homePage);
 

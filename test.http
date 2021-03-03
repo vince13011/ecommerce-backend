@@ -23,3 +23,12 @@ PATCH {{baseUrl}}/articles/2
 ### SUPPRIMER un article
 ### Route DELETE / articles/:id
 DELETE {{baseUrl}}/articles/4
+
+
+
+### CATEGORIES
+### Route GET / categories
+GET {{baseUrl}}/categories
+
+### Route GET / categories/:id
+GET {{baseUrl}}/categories/1
