@@ -32,3 +32,15 @@ GET {{baseUrl}}/categories
 
 ### Route GET / categories/:id
 GET {{baseUrl}}/categories/1
+
+### CREER un artcicle
+### Route POST / categories/:id
+POST {{baseUrl}}/categories/1
+
+### UPDATE un artcicle
+### Route PATCH / categories/:id
+PATCH {{baseUrl}}/categories/1
+
+### SUPPRIMER un article
+### Route DELETE / categories/:id
+DELETE {{baseUrl}}/categories/1
