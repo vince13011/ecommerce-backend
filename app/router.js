@@ -9,6 +9,7 @@ const testSchema = require('./joiSchemas/testSchema');
 
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
+const orderController = require('./controllers/orderController');
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
@@ -17,8 +18,6 @@ router.post('/articles', articleController.create);
 router.patch('/articles/:id', articleController.updateById);
 router.delete('/articles/:id', articleController.deleteById);
 
-
-
 // CATEGORIES
 router.get('/categories', categoryController.getAll);
 router.get('/categories/:id', categoryController.getOne);
@@ -26,7 +25,15 @@ router.post('/categories', categoryController.create);
 router.patch('/categories/:id', categoryController.updateById);
 router.delete('/categories/:id', categoryController.deleteById);
 
-// retourne la page HOME - d'accueil
+// 
+router.get('/orders', categoryController.getAll);
+router.get('/orders/:id', categoryController.getOne);
+router.post('/orders', categoryController.create);
+router.patch('/orders/:id', categoryController.updateById);
+router.delete('/orders/:id', categoryController.deleteById);
+
+
+// HOME
 // router.get('/', mainController.homePage);
 
 

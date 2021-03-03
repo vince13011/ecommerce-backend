@@ -4,7 +4,7 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-
+#################################
 ### ARTCILES
 ### Route GET / articles
 GET {{baseUrl}}/articles
@@ -24,8 +24,7 @@ PATCH {{baseUrl}}/articles/2
 ### Route DELETE / articles/:id
 DELETE {{baseUrl}}/articles/4
 
-
-
+#################################
 ### CATEGORIES
 ### Route GET / categories
 GET {{baseUrl}}/categories
@@ -33,14 +32,34 @@ GET {{baseUrl}}/categories
 ### Route GET / categories/:id
 GET {{baseUrl}}/categories/1
 
-### CREER un artcicle
+### CREER un categories
 ### Route POST / categories/:id
 POST {{baseUrl}}/categories/1
 
-### UPDATE un artcicle
+### UPDATE un categories
 ### Route PATCH / categories/:id
 PATCH {{baseUrl}}/categories/1
 
-### SUPPRIMER un article
+### SUPPRIMER un categories
 ### Route DELETE / categories/:id
 DELETE {{baseUrl}}/categories/1
+
+#################################
+### ORDERS
+### Route GET / orders
+GET {{baseUrl}}/orders
+
+### Route GET / orders/:id
+GET {{baseUrl}}/orders/1
+
+### CREER un orders
+### Route POST / orders/:id
+POST {{baseUrl}}/orders/1
+
+### UPDATE un orders
+### Route PATCH / orders/:id
+PATCH {{baseUrl}}/orders/1
+
+### SUPPRIMER un orders
+### Route DELETE / orders/:id
+DELETE {{baseUrl}}/orders/1
