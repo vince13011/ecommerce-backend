@@ -4,8 +4,99 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-### Route GET /posts
+#################################
+### ARTCILES
+### Route GET / articles
+GET {{baseUrl}}/articles
 
-GET {{baseUrl}}/test
+### Route GET / articles/:id
+GET {{baseUrl}}/articles/1
 
-###
+### CREER un artcicle
+### Route POST / articles
+POST {{baseUrl}}/articles
+
+Content-Type: application/json
+
+{
+    "reference": "2222",
+    "name": "tshirt",
+    "description":"tshirt lacoste noir",
+    "image": "c:/repertoire/image/b",
+    "color":"blue",
+    "pre_tax_price": 30,
+    "vat_rate": 20,
+    "discount": null,
+    "created_at": default,
+    "updated_at":default
+}
+
+
+### UPDATE un artcicle
+### Route PATCH / articles/:id
+PATCH {{baseUrl}}/articles/2
+
+### SUPPRIMER un article
+### Route DELETE / articles/:id
+DELETE {{baseUrl}}/articles/4
+
+#################################
+### CATEGORIES
+### Route GET / categories
+GET {{baseUrl}}/categories
+
+### Route GET / categories/:id
+GET {{baseUrl}}/categories/1
+
+### CREER un categories
+### Route POST / categories/:id
+POST {{baseUrl}}/categories
+
+### UPDATE un categories
+### Route PATCH / categories/:id
+PATCH {{baseUrl}}/categories/1
+
+### SUPPRIMER un categories
+### Route DELETE / categories/:id
+DELETE {{baseUrl}}/categories/1
+
+#################################
+### ORDERS
+### Route GET / orders
+GET {{baseUrl}}/orders
+
+### Route GET / orders/:id
+GET {{baseUrl}}/orders/1
+
+### CREER un orders
+### Route POST / orders/:id
+POST {{baseUrl}}/orders
+
+### UPDATE un orders
+### Route PATCH / orders/:id
+PATCH {{baseUrl}}/orders/1
+
+### SUPPRIMER un orders
+### Route DELETE / orders/:id
+DELETE {{baseUrl}}/orders/1
+
+
+#################################
+### USERS
+### Route GET / users
+GET {{baseUrl}}/users
+
+### Route GET / users/:id
+GET {{baseUrl}}/users/1
+
+### CONNECTER un user
+### Route POST / users/:id
+POST {{baseUrl}}/users
+
+### UPDATE un user
+### Route PATCH / users/:id
+PATCH {{baseUrl}}/users/1
+
+### SUPPRIMER un user
+### Route DELETE / users/:id
+DELETE {{baseUrl}}/users/1

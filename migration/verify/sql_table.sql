@@ -1,0 +1,7 @@
+-- Verify switch:sql_table on pg
+
+BEGIN;
+
+-- XXX Add verifications here.
+
+ROLLBACK;
