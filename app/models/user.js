@@ -58,12 +58,12 @@ class User {
     async insert() {
 
         const { rows } = await db.query(`INSERT INTO "user" (
-        email,
-        firstname,
-        lastname,
-        password,
-        phone_number,
-        role_id
+        "email",
+        "firstname",
+        "lastname",
+        "password",
+        "phone_number",
+        "role_id"
     )
     VALUES($1,$2,$3,$4,$5,$6) RETURNING*;`,
             [this.email, this.firstname, this.lastname, this.password,
