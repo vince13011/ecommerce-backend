@@ -82,7 +82,6 @@ class Article {
         return new Article(rows[0]);
     }
 
-
     async insert() {
 
         const { rows } = await db.query(`INSERT INTO "article" (

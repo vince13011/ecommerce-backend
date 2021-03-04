@@ -27,12 +27,9 @@ const orderController = {
     },
 
     create: async (request, response) => {
-        // les infos de l'article à ajouter
         const newOrderData = request.body;
 
-        // console.log('newOrderdata: ', newOrderData)
         const newOrder = new Order(newOrderData);
-        // console.log('newOrder: ', newOrder)
 
         await newOrder.insert();
 
