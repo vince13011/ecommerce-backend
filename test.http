@@ -32,7 +32,7 @@ PATCH {{baseUrl}}/articles/2
 Content-Type: application/json
 
 {
-"reference":"Capuche12",
+    "reference":"Capuche12",
     "name": "capuche",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
@@ -138,8 +138,17 @@ Content-Type: application/json
 }
 
 ### PATCH /addresses/:id
-PATCH {{baseUrl}}/addresses/1
+PATCH {{baseUrl}}/addresses/4
+Content-Type: application/json
 
+{
+    "country": "France",
+    "city": "Aix",
+    "zip_code": "83000",
+    "number": 11,
+    "street_name": "rue de Mega",
+    "additional":"étage 8"
+}
 ### DELETE /addresses/:id
 DELETE {{baseUrl}}/addresses/1
 
