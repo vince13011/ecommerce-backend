@@ -30,28 +30,6 @@ CREATE TABLE size (
     "name" text NOT NULL
 );
 
-CREATE TABLE "address" (
-    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    country text NOT NULL DEFAULT 'France',
-    city text NOT NULL,
-    zip_code posint NOT NULL,
-    "number" text NOT NULL,
-    street_name text NOT NULL,
-    additional text ,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-
-);
-
-CREATE TABLE "order" (
-    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    order_number posint NOT NULL,
-    total_price posint NOT NULL,
-    address_id posint NOT NULL REFERENCES "address"(id),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
 CREATE TABLE "role" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "name" text NOT NULL
@@ -68,8 +46,28 @@ CREATE TABLE "user" (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()  
 );
+CREATE TABLE "address" (
+    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    country text NOT NULL DEFAULT 'France',
+    city text NOT NULL,
+    zip_code posint NOT NULL,
+    "number" text NOT NULL,
+    street_name text NOT NULL,
+    additional text ,
+    user_id posint NOT NULL REFERENCES "user"(id),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
+);
 
+CREATE TABLE "order" (
+    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    order_number posint NOT NULL,
+    total_price posint NOT NULL,
+    address_id posint NOT NULL REFERENCES "address"(id),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
 CREATE TABLE order_has_article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
