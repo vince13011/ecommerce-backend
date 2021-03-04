@@ -72,6 +72,5 @@ class User {
         this.id = rows[0].id;
     }
 
-
 }
 module.exports = User;
