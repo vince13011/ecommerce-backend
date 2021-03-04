@@ -45,6 +45,13 @@ class Article {
         return rows.map(article => new Article(article));
     }
 
+    //retourne un nombre limité d'article selon l'information envoyé dans la query string
+    static async findSelection(limit) {
+
+        const { rows } = await db.query(`SELECT * FROM article LIMIT ${limit};`);
+
+        return rows.map(article => new Article(article));
+    }
     /*
    Cette méthode de classe permet de retourner un article grâce  à son ID
    via une requête SQL
