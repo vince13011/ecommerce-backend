@@ -34,7 +34,7 @@ class Order {
     */
     static async findAll() {
 
-        const { rows } = await db.query('SELECT * FROM order;');
+        const { rows } = await db.query('SELECT * FROM "order";');
 
         return rows.map(order => new Order(order));
     }
@@ -44,7 +44,7 @@ class Order {
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM order WHERE id = $1;', [id]);
+        const { rows } = await db.query('SELECT * FROM "order" WHERE id = $1;', [id]);
         if (!rows[0]) {
             throw new Error(`l'order avec l'id ${id} n'existe pas`)
         }

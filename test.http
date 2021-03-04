@@ -78,7 +78,7 @@ DELETE {{baseUrl}}/categories/1
 GET {{baseUrl}}/orders
 
 ### GET /orders/:id
-GET {{baseUrl}}/orders/9
+GET {{baseUrl}}/orders/17
 
 ### POST /orders/:id
 POST {{baseUrl}}/orders
