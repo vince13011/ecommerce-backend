@@ -5,6 +5,10 @@ const articleController = {
 
     getAll: async (request, response) => {
         try {
+            if(request.params){
+                const limit = request.params
+                console.log('limit: ',limit)
+            }
             const articles = await Article.findAll()
             response.json(articles)
         }
