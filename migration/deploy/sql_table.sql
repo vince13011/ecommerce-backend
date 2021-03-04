@@ -41,8 +41,8 @@ CREATE TABLE "user" (
     firstname text NOT NULL,
     lastname text NOT NULL,
     "password" text NOT NULL,
-    phone_number INT NOT NULL,
-    role_id posint NOT NULL REFERENCES role(id),
+    phone_number text NOT NULL,
+    "role_id" INTEGER NOT NULL REFERENCES "role"("id"),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()  
 );
@@ -54,7 +54,7 @@ CREATE TABLE "address" (
     "number" text NOT NULL,
     street_name text NOT NULL,
     additional text ,
-    user_id posint NOT NULL REFERENCES "user"(id),
+    "user_id" INTEGER NOT NULL REFERENCES "user"("id"),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
@@ -64,7 +64,7 @@ CREATE TABLE "order" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_number posint NOT NULL,
     total_price posint NOT NULL,
-    address_id posint NOT NULL REFERENCES "address"(id),
+    "address_id" INTEGER NOT NULL REFERENCES "address"("id"),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
