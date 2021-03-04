@@ -50,7 +50,7 @@ class Role {
 
     async insert() {
 
-        const { rows } = await db.query(`INSERT INTO "role" (name) VALUES($1) RETURNING*;`,
+        const { rows } = await db.query(`INSERT INTO "role" ("name") VALUES($1) RETURNING*;`,
             [this.name]);
 
         this.id = rows[0].id;
