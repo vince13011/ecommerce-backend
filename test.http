@@ -107,12 +107,17 @@ GET {{baseUrl}}/users
 ### GET /users/:id
 GET {{baseUrl}}/users/1
 
-###POST /users/:id
-POST {{baseUrl}}/users
+###POST /signup/
+POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "name":"utilisateur"
+    "email":"jeanD@gmail.com",
+    "firstname":"jean",
+    "lastname":"martin",
+    "password":"encen",
+    "phone_number":"0123456789",
+    "role_id":1
 }
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1

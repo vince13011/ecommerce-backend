@@ -28,17 +28,13 @@ const addressController = {
     create: async (request, response) => {
         // les infos de l'address à ajouter
         const newAddressData = request.body;
-
-        // console.log('newAddressdata: ', newAddressData)
+        console.log('type of user_id',typeof(request.body.user_id))
+         console.log('newAddressdata: ', newAddressData)
         const newAddress = new Address(newAddressData);
-        // console.log('newAddress: ', newAddress)
+        console.log('newAddress: ', newAddress)
 
         await newAddress.insert();
 
-        /* sans await, il va me manquer
-         la certitude que tout s'est bien passé
-         car la réponse sera envoyé avant la fin de l'enregistrement du jeu en base de données
-        */
         response.json(newAddress);
     },
 
