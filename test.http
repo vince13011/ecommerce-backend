@@ -155,3 +155,16 @@ DELETE {{baseUrl}}/addresses/1
 
 # ****************************
 # ****************************
+# CREER NOUVEL UTILISATEUR
+### POST /signup
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "email": "magomed@gmail.com",
+    "firstname": "Mago",
+    "lastname": "Vor",
+    "password": "password",
+    "phone_number": 0606060606,
+    "role_id": 1
+}

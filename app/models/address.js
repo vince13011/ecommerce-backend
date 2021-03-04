@@ -14,8 +14,8 @@ class Address {
     zip_code;
     number;
     street_name;
-    role_id;
     additional;
+    user_id;
     created_at;
     updated_at;
 
@@ -64,11 +64,12 @@ class Address {
             zip_code,
             number,
             street_name,
-            additional
+            additional,
+            user_id
     )
-    VALUES($1,$2,$3,$4,$5,$6) RETURNING*;`,
+    VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING*;`,
             [this.country, this.city, this.zip_code, this.number,
-            this.street_name, this.additional]);
+            this.street_name, this.additional, this.user_id]);
 
         this.id = rows[0].id;
     }

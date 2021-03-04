@@ -12,6 +12,7 @@ const userController = {
             response.status(404).json(`Le user n'existe pas`);
         }
     },
+
     getOne: async (request, response) => {
 
         const id = request.params.id;
@@ -23,7 +24,20 @@ const userController = {
         catch (err) {
             response.status(404).json(err.message);
         }
-    }
+    },
+
+    create: async (request, response) => {
+        const newUserData = request.body;
+
+        const newUser = new User(newUserData);
+
+        await newUser.insert();
+        /* sans await, il va me manquer
+         la certitude que tout s'est bien passé
+         car la réponse sera envoyé avant la fin de l'enregistrement du jeu en base de données
+        */
+        response.json(newUser);
+    },
 
 };
 

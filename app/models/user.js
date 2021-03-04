@@ -37,7 +37,7 @@ class User {
     */
     static async findAll() {
 
-        const { rows } = await db.query('SELECT * FROM user;');
+        const { rows } = await db.query('SELECT * FROM "user";');
 
         return rows.map(user => new User(user));
     }
@@ -47,12 +47,29 @@ class User {
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM user WHERE id = $1;', [id]);
+        const { rows } = await db.query('SELECT * FROM "user" WHERE id = $1;', [id]);
         if (!rows[0]) {
             throw new Error(`le user avec l'id ${id} n'existe pas`)
         }
 
         return new User(rows[0]);
+    }
+
+    async insert() {
+
+        const { rows } = await db.query(`INSERT INTO "user" (
+        email,
+        firstname,
+        lastname,
+        password,
+        phone_number,
+        role_id
+    )
+    VALUES($1,$2,$3,$4,$5,$6) RETURNING*;`,
+            [this.email, this.firstname, this.lastname, this.password,
+            this.phone_number, this.role_id]);
+
+        this.id = rows[0].id;
     }
 
 
