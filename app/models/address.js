@@ -71,6 +71,7 @@ class Address {
             [this.country, this.city, this.zip_code, this.number,
             this.street_name, this.additional, this.user_id]);
 
+
         this.id = rows[0].id;
     }
 

@@ -9,8 +9,11 @@
 ### GET /articles
 GET {{baseUrl}}/articles
 
+### GET /articles
+GET {{baseUrl}}/articles?limit=2
+
 ### GET /articles/:id
-GET {{baseUrl}}/articles/2
+GET {{baseUrl}}/articles/
 
 ### POST /articles
 POST {{baseUrl}}/articles
@@ -106,7 +109,11 @@ GET {{baseUrl}}/users/1
 
 ###POST /users/:id
 POST {{baseUrl}}/users
+Content-Type: application/json
 
+{
+    "name":"utilisateur"
+}
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1
 
@@ -134,7 +141,8 @@ Content-Type: application/json
     "zip_code": "13000",
     "number": 10,
     "street_name": "rue de Vincent",
-    "additional":"étage 5"
+    "additional":"étage 5",
+    "user_id":1
 }
 
 ### PATCH /addresses/:id

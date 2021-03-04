@@ -5,17 +5,22 @@ const articleController = {
 
     getAll: async (request, response) => {
         try {
-            if(request.params){
-                const limit = request.params
-                console.log('limit: ',limit)
-            }
-            const articles = await Article.findAll()
+            if(request.query.limit){
+            limit= parseInt(request.query.limit);
+            console.log('limit: ',limit);
+            const articles = await Article.findSelection(limit)
             response.json(articles)
+            }
+
+            else{const articles = await Article.findAll()
+            response.json(articles)
+            }
         }
         catch (err) {
             response.status(404).json(`L'article n'existe pas`);
         }
     },
+  
 
     getOne: async (request, response) => {
 
