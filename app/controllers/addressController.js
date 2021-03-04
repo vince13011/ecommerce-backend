@@ -28,8 +28,8 @@ const addressController = {
     create: async (request, response) => {
         // les infos de l'address à ajouter
         const newAddressData = request.body;
-        console.log('type of user_id',typeof(request.body.user_id))
-         console.log('newAddressdata: ', newAddressData)
+        console.log('type of user_id', typeof (request.body.user_id))
+        console.log('newAddressdata: ', newAddressData)
         const newAddress = new Address(newAddressData);
         console.log('newAddress: ', newAddress)
 
@@ -50,7 +50,7 @@ const addressController = {
         try {
             // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
             const theAddress = await Address.findOne(id);
-
+            console.log('address pour le patch bien trouvé');
             //par mesure de sécurité on supprime la possibilité de modifier l'id 
             if (data.id) {
                 delete (data.id)
@@ -58,7 +58,7 @@ const addressController = {
 
             const newdata = theAddress;
 
-            console.log('newdata: ', newdata)
+            console.log('newdata de Address: ', newdata);
             newdata.updated_at = "NOW()";
 
             for (const element in data) {
@@ -71,13 +71,31 @@ const addressController = {
 
             //je renvoie le jeu avec ses nouvelles informations en base de données
             const result = await theAddress.updateById(newdata);
+            console.log('j envoie tout en BDD :', result);
 
             response.json(result);
         }
         catch (err) {
-            response.status(404).json(`L'address avec l'id ${id} n'existe pas ou a déjà était supprimé`);
+            response.status(404).json(`L'address avec l'id ${id} n'existe pas ou a déjà été supprimé`);
         }
-    }
+    },
+
+    deleteById: async (request, response) => {
+
+        const { id } = request.params;
+        try {
+
+            // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
+            const theAddress = await Address.findOne(id);
+
+            await theAddress.deleteById();
+
+            response.json(`L'address avec l'id ${id} a bien été supprimé`);
+        }
+        catch (err) {
+            response.status(404).json(`L'address l'id ${id} n'existe pas ou a déjà été supprimé`);
+        }
+    },
 
 };
 

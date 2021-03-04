@@ -22,21 +22,21 @@ router.get('/articles', articleController.getAll);
 router.get('/articles/:id', articleController.getOne);
 router.post('/articles', articleController.create);
 router.patch('/articles/:id', articleController.updateById);
-// router.delete('/articles/:id', articleController.deleteById);
+router.delete('/articles/:id', articleController.deleteById);
 
 // CATEGORIES
 router.get('/categories', categoryController.getAll);
 router.get('/categories/:id', categoryController.getOne);
 router.post('/categories', categoryController.create);
 router.patch('/categories/:id', categoryController.updateById);
-// router.delete('/categories/:id', categoryController.deleteById);
+router.delete('/categories/:id', categoryController.deleteById);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
 router.get('/orders/:id', orderController.getOne);
 router.post('/orders', orderController.create);
 router.patch('/orders/:id', orderController.updateById);
-// router.delete('/orders/:id', orderController.deleteById);
+router.delete('/orders/:id', orderController.deleteById);
 
 // USERS
 router.get('/users', userController.getAll);
@@ -45,9 +45,8 @@ router.get('/users/:id', userController.getOne);
 // connecter un user ???
 // *******************************************
 // router.post('/users', userController.create);
-
-// router.patch('/users/:id', userController.updateById);
-// router.delete('/users/:id', userController.deleteById);
+router.patch('/users/:id', userController.updateById);
+router.delete('/users/:id', userController.deleteById);
 
 // CREER UN NOUVEL UTILISATEUR
 router.post('/signup', userController.create);
@@ -58,7 +57,7 @@ router.get('/addresses', addressController.getAll);
 router.get('/addresses/:id', addressController.getOne);
 router.post('/addresses', addressController.create);
 router.patch('/addresses/:id', addressController.updateById);
-// router.delete('/addresses/:id', addressController.deleteById);
+router.delete('/addresses/:id', addressController.deleteById);
 
 
 

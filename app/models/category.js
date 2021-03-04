@@ -69,5 +69,10 @@ class Category {
         return new Category(rows[0]);
     }
 
+    async deleteById() {
+        const { rows } = await db.query(`DELETE FROM "category"
+                                    WHERE id = $1`, [this.id]);
+    }
+
 }
 module.exports = Category;

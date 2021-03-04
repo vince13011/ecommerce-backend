@@ -82,5 +82,10 @@ class Order {
         return new Order(rows[0]);
     }
 
+    async deleteById() {
+        const { rows } = await db.query(`DELETE FROM "order"
+                                    WHERE id = $1`, [this.id]);
+    }
+
 }
 module.exports = Order;
