@@ -4,8 +4,175 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-### Route GET /posts
+# ****************************
+# ****************************
+### GET /articles
+GET {{baseUrl}}/articles
 
-GET {{baseUrl}}/test
+### GET /articles
+GET {{baseUrl}}/articles?limit=2
 
-###
+### GET /articles/:id
+GET {{baseUrl}}/articles/
+
+### POST /articles
+POST {{baseUrl}}/articles
+Content-Type: application/json
+
+{
+    "reference":"POLO12",
+    "name": "POLO",
+    "description":"tshirt lacoste noir",
+    "image": "c:/repertoire/image/b",
+    "color":"blue",
+    "pre_tax_price": "30",
+    "vat_rate": "20",
+    "discount": "20"
+}
+
+### PATCH /articles/:id
+PATCH {{baseUrl}}/articles/2
+Content-Type: application/json
+
+{
+    "reference":"Capuche12",
+    "name": "capuche",
+    "description":"tshirt BLEU",
+    "image": "c:/repertoire/image/b",
+    "color":"blue",
+    "pre_tax_price": "30",
+    "vat_rate": "20",
+    "discount": "20"
+}
+
+###  DELETE /articles/:id
+DELETE {{baseUrl}}/articles/4
+
+# ****************************
+# ****************************
+###  GET /categories
+GET {{baseUrl}}/categories
+
+### GET /categories/:id
+GET {{baseUrl}}/categories/1
+
+### POST /categories/:id
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+    "name": "test1"
+}
+
+### PATCH /categories/:id
+PATCH {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+    "name": "test1"
+}
+
+### DELETE /categories/:id
+DELETE {{baseUrl}}/categories/1
+
+# ****************************
+# ****************************
+###  GET /orders
+GET {{baseUrl}}/orders
+
+### GET /orders/:id
+GET {{baseUrl}}/orders/17
+
+### POST /orders/:id
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+    "order_number": 1,
+    "total_price": 20,
+    "address_id": 1
+}
+
+### PATCH /orders/:id
+PATCH {{baseUrl}}/orders/1
+
+### DELETE /orders/:id
+DELETE {{baseUrl}}/orders/1
+
+# ****************************
+# **************************** 
+### GET /users
+GET {{baseUrl}}/users
+
+### GET /users/:id
+GET {{baseUrl}}/users/1
+
+###POST /users/:id
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "name":"utilisateur"
+}
+###PATCH /users/:id
+PATCH {{baseUrl}}/users/1
+
+###DELETE /users/:id
+DELETE {{baseUrl}}/users/1
+
+
+# ****************************
+# ****************************
+# ADDRESS
+###  GET /orders
+GET {{baseUrl}}/addresses
+
+### GET /addresses/:id
+GET {{baseUrl}}/addresses/1
+
+
+### POST /addresses/:id
+POST {{baseUrl}}/addresses
+Content-Type: application/json
+
+{
+    "country": "France",
+    "city": "Marseille",
+    "zip_code": "13000",
+    "number": 10,
+    "street_name": "rue de Vincent",
+    "additional":"étage 5",
+    "user_id":1
+}
+
+### PATCH /addresses/:id
+PATCH {{baseUrl}}/addresses/4
+Content-Type: application/json
+
+{
+    "country": "France",
+    "city": "Aix",
+    "zip_code": "83000",
+    "number": 11,
+    "street_name": "rue de Mega",
+    "additional":"étage 8"
+}
+### DELETE /addresses/:id
+DELETE {{baseUrl}}/addresses/1
+
+
+# ****************************
+# ****************************
+# CREER NOUVEL UTILISATEUR
+### POST /signup
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "email": "magomed@gmail.com",
+    "firstname": "Mago",
+    "lastname": "Vor",
+    "password": "password",
+    "phone_number": 0606060606,
+    "role_id": 1
+}
