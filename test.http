@@ -215,3 +215,23 @@ Content-Type: application/json
 }
 ### DELETE /sizes/:id
 DELETE {{baseUrl}}/sizes/10
+
+
+
+# ARTICLE_HAS_CATEGORY
+### GET
+GET {{baseUrl}}/category/article
+
+# category/:id/article
+###
+GET {{baseUrl}}/category/1/article
+
+
+### POST
+POST {{baseUrl}}/category/article
+Content-Type: application/json
+
+{
+    "article_id": 2,
+    "category_id": 4
+}
