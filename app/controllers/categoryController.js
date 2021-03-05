@@ -30,9 +30,9 @@ const categoryController = {
         // les infos de la category à ajouter
         const newCategoryData = request.body;
 
-        console.log('newCategorydata: ', newCategoryData);
+        // console.log('newCategorydata: ', newCategoryData);
         const newCategory = new Category(newCategoryData);
-        console.log('newCategory: ', newCategory);
+        // console.log('newCategory: ', newCategory);
 
         await newCategory.insert();
 
