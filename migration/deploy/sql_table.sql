@@ -63,7 +63,7 @@ CREATE TABLE "address" (
 CREATE TABLE "order" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_number posint NOT NULL,
-    total_price posint NOT NULL,
+    total_price text NOT NULL,
     "address_id" INTEGER NOT NULL REFERENCES "address"("id"),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -74,7 +74,7 @@ CREATE TABLE order_has_article (
     order_id posint NOT NULL REFERENCES "order"(id),
     article_id posint NOT NULL REFERENCES article(id),
     quantity posint NOT NULL DEFAULT 1,
-    unit_net_price posint NOT NULL,
+    unit_net_price text NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
@@ -84,7 +84,9 @@ CREATE TABLE article_has_size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     article_id posint NOT NULL REFERENCES article(id),
     size_id posint NOT NULL REFERENCES size(id),
-    stock int DEFAULT NULL
+    stock int DEFAULT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE TABLE article_has_category (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

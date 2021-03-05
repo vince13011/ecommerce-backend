@@ -40,7 +40,7 @@ class Article {
     */
     static async findAll() {
 
-        const { rows } = await db.query('SELECT * FROM article;');
+        const { rows } = await db.query(`SELECT * FROM article;`);
 
         return rows.map(article => new Article(article));
     }
