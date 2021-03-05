@@ -82,8 +82,9 @@ class Address {
   * @param {json} data - Objet json venant modifier les données existantes
   */
     async updateById(data) {
-
+console.log('je suis allé dans la fonction updateById')
         const { rows } = await db.query(`SELECT * FROM update_address($1,$2);`, [data, this.id]);
+        
         if (rows[0].id === null) {
             throw new Error(`l'address avec l'id  ${this.id} n'existe pas `)
         }

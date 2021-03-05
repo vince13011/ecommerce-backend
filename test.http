@@ -121,9 +121,9 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"jeanD@gmail.com",
-    "firstname":"jean",
-    "lastname":"martin",
+    "email":"D@gmail.com",
+    "firstname":"rard",
+    "lastname":"poulpos",
     "password":"encen",
     "phone_number":"0123456789",
     "role_id": 1
@@ -161,16 +161,16 @@ Content-Type: application/json
 
 {
     "country": "France",
-    "city": "Marseille",
+    "city": "marignane",
     "zip_code": "13000",
     "number": 10,
-    "street_name": "rue de Vincent",
-    "additional":"étage 5",
-    "user_id": 2
+    "street_name": "rue de l'osthép",
+    "additional":"étage 2",
+    "user_id": 1
 }
 
 ### PATCH /addresses/:id
-PATCH {{baseUrl}}/addresses/6
+PATCH {{baseUrl}}/addresses/1
 Content-Type: application/json
 
 {
@@ -180,7 +180,7 @@ Content-Type: application/json
     "number": 11,
     "street_name": "rue de Mega",
     "additional": "étage 8",
-    "user_id": 2
+    "user_id": 1
 }
 ### DELETE /addresses/:id
 DELETE {{baseUrl}}/addresses/1
