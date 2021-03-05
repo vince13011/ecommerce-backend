@@ -7,15 +7,13 @@ const { validateBody, validateQuery } = require('./services/validator');
 // schema joi de contraintes avant insertions sql
 const testSchema = require('./joiSchemas/testSchema');
 
-// import controllers
+// CONTROLLERS
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
 const orderController = require('./controllers/orderController');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
-
-// HOME
-// router.get('/', mainController.homePage);
+const sizeController = require('./controllers/sizeController');
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
@@ -60,5 +58,12 @@ router.patch('/addresses/:id', addressController.updateById);
 router.delete('/addresses/:id', addressController.deleteById);
 
 
+// SIZES
+router.get('/sizes', sizeController.getAll);
+router.get('/sizes/:id', sizeController.getOne);
+router.post('/sizes', sizeController.create);
+router.patch('/sizes/:id', sizeController.updateById);
+router.delete('/sizes/:id', sizeController.deleteById);
 
+// ROUTER
 module.exports = router;

@@ -1,13 +1,12 @@
 const db = require('../database');
 
 //ici on défénit notre classe
-class Role {
+class Size {
 
     /*
     ici on déclare les champs de notre classe 
     il est donc plus facile de comprendre la classe dans son ensemble
     */
-
     id;
     name;
 
@@ -30,29 +29,26 @@ class Role {
     */
     static async findAll() {
 
-        const { rows } = await db.query('SELECT * FROM "role";');
+        const { rows } = await db.query('SELECT * FROM size;');
 
-        return rows.map(role => new Role(role));
+        return rows.map(size => new Size(size));
     }
 
     /*
-   Cette méthode de classe permet de retourner un article grâce  à son ID
+   Cette méthode de classe permet de retourner un article grâce à son ID
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM "role" WHERE id = $1;', [id]);
+        const { rows } = await db.query('SELECT * FROM size WHERE id = $1;', [id]);
         if (!rows[0]) {
-            throw new Error(`le role avec l'id ${id} n'existe pas`)
+            throw new Error(`la categorie avec l'id ${id} n'existe pas `)
         }
 
-        return new Role(rows[0]);
+        return new Size(rows[0]);
     }
 
     async insert() {
-
-        const { rows } = await db.query(`INSERT INTO "role" ("name") VALUES($1) RETURNING*;`,
-            [this.name]);
-
+        const { rows } = await db.query(`INSERT INTO "size" (name) VALUES($1) RETURNING*;`, [this.name]);
         this.id = rows[0].id;
     }
 
@@ -65,13 +61,18 @@ class Role {
    */
     async updateById(data) {
 
-        const { rows } = await db.query(`SELECT * FROM update_role($1,$2);`, [data, this.id]);
+        const { rows } = await db.query(`SELECT * FROM update_size($1,$2);`, [data, this.id]);
         if (rows[0].id === null) {
-            throw new Error(`le role avec l'id  ${this.id} n'existe pas `)
+            throw new Error(`la size avec l'id ${this.id} n'existe pas`)
         }
 
-        return new Role(rows[0]);
+        return new Size(rows[0]);
+    }
+
+    async deleteById() {
+        const { rows } = await db.query(`DELETE FROM "size"
+                                    WHERE id = $1`, [this.id]);
     }
 
 }
-module.exports = Role;
+module.exports = Size;
