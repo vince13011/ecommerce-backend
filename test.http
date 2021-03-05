@@ -95,7 +95,7 @@ Content-Type: application/json
 }
 
 ### PATCH /orders/:id
-PATCH {{baseUrl}}/orders/1
+PATCH {{baseUrl}}/orders/5
 Content-Type: application/json
 
 {
