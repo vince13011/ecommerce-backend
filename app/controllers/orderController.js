@@ -65,7 +65,7 @@ const orderController = {
 
             for (const element in data) {
                 if (typeof newdata[element] !== 'undefined') {
-                    //on modifie newdata qui contient les données actuelles de l'article
+                    //on modifie newdata qui contient les données actuelles de l'order
                     // pour chaque clé correspondante on passe à newdata les nouvelles valeurs
                     newdata[element] = data[element];
                 }
@@ -79,7 +79,25 @@ const orderController = {
         catch (err) {
             response.status(404).json(`L'order avec l'id ${id} n'existe pas ou a déjà était supprimé`);
         }
-    }
+    },
+
+    deleteById: async (request, response) => {
+
+        //je récupère l'id pour vérifier que ce jeu existe bien grâce à la méthode findone()
+        const { id } = request.params;
+        try {
+
+            // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
+            const theOrder = await Order.findOne(id);
+
+            await theOrder.deleteById();
+
+            response.json(`L'order avec l'id ${id} a bien été supprimé`);
+        }
+        catch (err) {
+            response.status(404).json(`L'order l'id ${id} n'existe pas ou a déjà été supprimé`);
+        }
+    },
 
 };
 

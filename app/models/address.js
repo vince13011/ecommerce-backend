@@ -91,6 +91,10 @@ class Address {
         return new Address(rows[0]);
     }
 
+    async deleteById() {
+        const { rows } = await db.query(`DELETE FROM "address" WHERE id = $1`, [this.id]);
+    }
+
 
 }
 module.exports = Address;

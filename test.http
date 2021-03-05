@@ -4,8 +4,7 @@
 @path=v1
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
-# ****************************
-# ****************************
+
 ### GET /articles
 GET {{baseUrl}}/articles
 
@@ -13,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=2
 
 ### GET /articles/:id
-GET {{baseUrl}}/articles/
+GET {{baseUrl}}/articles/2
 
 ### POST /articles
 POST {{baseUrl}}/articles
@@ -31,7 +30,7 @@ Content-Type: application/json
 }
 
 ### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/2
+PATCH {{baseUrl}}/articles/3
 Content-Type: application/json
 
 {
@@ -47,6 +46,7 @@ Content-Type: application/json
 
 ###  DELETE /articles/:id
 DELETE {{baseUrl}}/articles/4
+
 
 # ****************************
 # ****************************
@@ -69,11 +69,12 @@ PATCH {{baseUrl}}/categories/1
 Content-Type: application/json
 
 {
-    "name": "test1"
+    "name": "patch"
 }
 
 ### DELETE /categories/:id
 DELETE {{baseUrl}}/categories/1
+
 
 # ****************************
 # ****************************
@@ -94,10 +95,18 @@ Content-Type: application/json
 }
 
 ### PATCH /orders/:id
-PATCH {{baseUrl}}/orders/1
+PATCH {{baseUrl}}/orders/5
+Content-Type: application/json
+
+{
+    "order_number": 20,
+    "total_price": 130,
+    "address_id": 1
+}
 
 ### DELETE /orders/:id
 DELETE {{baseUrl}}/orders/1
+
 
 # ****************************
 # **************************** 
@@ -117,10 +126,20 @@ Content-Type: application/json
     "lastname":"martin",
     "password":"encen",
     "phone_number":"0123456789",
-    "role_id":1
+    "role_id": 1
 }
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+    "email":"chuvak@gmail.com",
+    "firstname":"test patch",
+    "lastname":"patch",
+    "password":"brbr",
+    "phone_number":"000123456789",
+    "role_id": 1
+}
 
 ###DELETE /users/:id
 DELETE {{baseUrl}}/users/1
@@ -129,7 +148,7 @@ DELETE {{baseUrl}}/users/1
 # ****************************
 # ****************************
 # ADDRESS
-###  GET /orders
+###  GET /addresses
 GET {{baseUrl}}/addresses
 
 ### GET /addresses/:id
@@ -147,11 +166,11 @@ Content-Type: application/json
     "number": 10,
     "street_name": "rue de Vincent",
     "additional":"étage 5",
-    "user_id":1
+    "user_id": 2
 }
 
 ### PATCH /addresses/:id
-PATCH {{baseUrl}}/addresses/4
+PATCH {{baseUrl}}/addresses/6
 Content-Type: application/json
 
 {
@@ -160,7 +179,8 @@ Content-Type: application/json
     "zip_code": "83000",
     "number": 11,
     "street_name": "rue de Mega",
-    "additional":"étage 8"
+    "additional": "étage 8",
+    "user_id": 2
 }
 ### DELETE /addresses/:id
 DELETE {{baseUrl}}/addresses/1
@@ -168,16 +188,3 @@ DELETE {{baseUrl}}/addresses/1
 
 # ****************************
 # ****************************
-# CREER NOUVEL UTILISATEUR
-### POST /signup
-POST {{baseUrl}}/signup
-Content-Type: application/json
-
-{
-    "email": "magomed@gmail.com",
-    "firstname": "Mago",
-    "lastname": "Vor",
-    "password": "password",
-    "phone_number": 0606060606,
-    "role_id": 1
-}

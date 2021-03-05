@@ -5,22 +5,23 @@ const articleController = {
 
     getAll: async (request, response) => {
         try {
-            if(request.query.limit){
-            limit= parseInt(request.query.limit);
-            console.log('limit: ',limit);
-            const articles = await Article.findSelection(limit)
-            response.json(articles)
+            if (request.query.limit) {
+                limit = parseInt(request.query.limit);
+                console.log('limit: ', limit);
+                const articles = await Article.findSelection(limit)
+                response.json(articles)
             }
 
-            else{const articles = await Article.findAll()
-            response.json(articles)
+            else {
+                const articles = await Article.findAll()
+                response.json(articles)
             }
         }
         catch (err) {
             response.status(404).json(`L'article n'existe pas`);
         }
     },
-  
+
 
     getOne: async (request, response) => {
 
@@ -64,10 +65,10 @@ const articleController = {
 
             await theArticle.deleteById();
 
-            response.json(`L'article avec l'id ${id} a bien était supprimé`);
+            response.json(`L'article avec l'id ${id} a bien été supprimé`);
         }
         catch (err) {
-            response.status(404).json(`L'artcle l'id ${id} n'existe pas ou a déjà était supprimé`);
+            response.status(404).json(`L'article l'id ${id} n'existe pas ou a déjà été supprimé`);
         }
     },
 

@@ -5,11 +5,11 @@ const port = process.env.PORT || 4000;
 
 const router = require('./app/router.js')
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 //parser json qui récupère le payload et le transforme en objet js dispo sous request.body
-app.use(express.json());
+// app.use(express.json());
 
 
-app.use('/v1',router);
+app.use('/v1', router);
 
-app.listen(port,()=>{console.log(`Listening on http://localhost:${port}`)});
+app.listen(port, () => { console.log(`Listening on http://localhost:${port}`) });
