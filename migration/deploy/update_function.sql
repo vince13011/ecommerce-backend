@@ -59,15 +59,16 @@ CREATE  FUNCTION update_size ( siz json, bid int) RETURNS size  AS $$
         WHERE id = bid RETURNING *;
 $$ LANGUAGE sql ;
 
-CREATE  FUNCTION update_address ( addr json, bid int) RETURNS address  AS $$
+CREATE  FUNCTION update_address ( addr json, bid int) RETURNS "address"  AS $$
 
     UPDATE "address"
-        SET country = addr ->>'order_number',
+        SET country = addr ->>'country',
             city = addr ->>'city',
             zip_code = (addr ->>'zip_code')::posint,   
-            "number" = addr ->> 'number',
-            street_name = addr ->> 'street_name',
-            additional = addr ->> 'additional',                       
+            "number" = addr ->>'number',
+            street_name = addr ->>'street_name',
+            additional = addr ->>'additional',
+            "user_id" = (addr ->>'user_id')::posint,                       
             created_at = (addr ->>'created_at')::TIMESTAMPTZ,
             updated_at = (addr ->>'updated_at')::TIMESTAMPTZ
         WHERE id = bid RETURNING *;

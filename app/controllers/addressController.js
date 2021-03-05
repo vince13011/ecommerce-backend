@@ -28,8 +28,8 @@ const addressController = {
     create: async (request, response) => {
         // les infos de l'address à ajouter
         const newAddressData = request.body;
-        console.log('type of user_id', typeof (request.body.user_id))
         console.log('newAddressdata: ', newAddressData)
+        
         const newAddress = new Address(newAddressData);
         console.log('newAddress: ', newAddress)
 
@@ -68,6 +68,7 @@ const addressController = {
                     newdata[element] = data[element];
                 }
             }
+            console.log('newdata after :', newdata);
 
             //je renvoie le jeu avec ses nouvelles informations en base de données
             const result = await theAddress.updateById(newdata);
