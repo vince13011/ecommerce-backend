@@ -19,11 +19,11 @@ POST {{baseUrl}}/articles
 Content-Type: application/json
 
 {
-    "reference":"POLO12",
-    "name": "POLO",
-    "description":"tshirt lacoste noir",
+    "reference":"",
+    "name": "Jogging addidas",
+    "description":"jogging sport ",
     "image": "c:/repertoire/image/b",
-    "color":"blue",
+    "color":"blanche",
     "pre_tax_price": "30",
     "vat_rate": "20",
     "discount": "20"
@@ -61,7 +61,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-    "name": "test1"
+    "name": "décontracté"
 }
 
 ### PATCH /categories/:id
