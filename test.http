@@ -9,7 +9,7 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=2
+GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
 GET {{baseUrl}}/articles/2
@@ -166,7 +166,7 @@ Content-Type: application/json
     "number": 10,
     "street_name": "rue de Vincent",
     "additional":"étage 5",
-    "user_id": 2
+    "user_id": 1
 }
 
 ### PATCH /addresses/:id
@@ -182,9 +182,36 @@ Content-Type: application/json
     "additional": "étage 8",
     "user_id": 2
 }
+
 ### DELETE /addresses/:id
 DELETE {{baseUrl}}/addresses/1
 
 
 # ****************************
 # ****************************
+
+# SIZES
+###  GET /sizes
+GET {{baseUrl}}/sizes
+
+### GET /sizes/:id
+GET {{baseUrl}}/sizes/10
+
+
+### POST /sizes/
+POST {{baseUrl}}/sizes
+Content-Type: application/json
+
+{
+    "name": "taille 1"
+}
+
+### PATCH /sizes/:id
+PATCH {{baseUrl}}/sizes/10
+Content-Type: application/json
+
+{
+    "name": "S-28"
+}
+### DELETE /sizes/:id
+DELETE {{baseUrl}}/sizes/10
