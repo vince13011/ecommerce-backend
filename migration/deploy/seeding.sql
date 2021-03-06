@@ -80,7 +80,7 @@ INSERT INTO "category" ("title")
 VALUES
 ('homme'),('femme'),('tshirt'),('chaussures'),('pantalon');
 
-INSERT INTO "size" ("name") 
+INSERT INTO "size" ("size_name") 
 VALUES
 ('unique'),('S'),('M'),('L'),('XL'),('36'),('38'),('40'),('42'),('44');
 
