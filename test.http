@@ -61,7 +61,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-    "name": "décontracté"
+    "title": "décontracté"
 }
 
 ### PATCH /categories/:id
@@ -69,7 +69,7 @@ PATCH {{baseUrl}}/categories/1
 Content-Type: application/json
 
 {
-    "name": "patch"
+    "title": "patch"
 }
 
 ### DELETE /categories/:id

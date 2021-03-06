@@ -21,7 +21,7 @@ $$ LANGUAGE sql ;
 CREATE  FUNCTION update_category ( cat json, bid int) RETURNS category  AS $$
 
     UPDATE category
-        SET "name" = cat ->>'name'
+        SET "title" = cat ->>'title'
         WHERE id = bid RETURNING *;
 $$ LANGUAGE sql ;
 
