@@ -222,9 +222,10 @@ DELETE {{baseUrl}}/sizes/10
 ### GET
 GET {{baseUrl}}/category/article
 
+
 # category/:id/article
 ###
-GET {{baseUrl}}/category/1/article
+GET {{baseUrl}}/category/4/article
 
 
 ### POST
@@ -234,4 +235,22 @@ Content-Type: application/json
 {
     "article_id": 2,
     "category_id": 4
+}
+
+# ARTICLE_HAS_SIZE
+### GET
+GET {{baseUrl}}/size/article
+
+# size/:id/article
+###
+GET {{baseUrl}}/size/3/article
+
+### POST
+POST {{baseUrl}}/size/article
+Content-Type: application/json
+
+{
+    "article_id": 2,
+    "size_id": 4,
+    "stock": 12
 }
