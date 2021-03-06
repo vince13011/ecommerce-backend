@@ -28,7 +28,8 @@ class OrderHasArticle {
                                         JOIN "order_has_article" 
                                         ON article.id = order_has_article.article_id 
                                         WHERE order_has_article.order_id = $1) AS 
-                                        "order_articles" JOIN "order" ON "order".id = order_articles.order_id;`, [id]);
+                                        "order_articles" JOIN "order" ON "order".id = order_articles.order_id
+                                        ORDER BY "order".updated_at ASC;`, [id]);
         if (!rows[0]) {
             throw new Error(`les orderHasArticle avec l'id ${id} n'existent pas`)
         }
