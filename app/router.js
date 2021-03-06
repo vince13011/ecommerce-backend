@@ -16,6 +16,7 @@ const addressController = require('./controllers/addressController');
 const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
 const articleHasSizeController = require ('./controllers/articleHasSizeController')
+const orderHasArticleController = require ('./controllers/orderHasArticleController')
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
@@ -77,6 +78,11 @@ router.post('/category/article', articleHasCategoryController.create);
 router.get('/size/article', articleHasSizeController.getAll);
 router.get('/size/:id/article', articleHasSizeController.getAllInSize);
 router.post('/size/article', articleHasSizeController.create);
+
+// ORDER_HAS_ARTICLE
+router.get('/order/article', orderHasArticleController.getAll);
+router.get('/order/:id/article', orderHasArticleController.getAllInOrder);
+router.post('/order/article', orderHasArticleController.create);
 
 // ROUTER
 module.exports = router;

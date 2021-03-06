@@ -21,10 +21,13 @@ class ArticleHasCategory {
 
     // récupérer LA CATEGORY => TOUS LES ARTICLES
     static async findAllInCategory(id) {
-        const { rows } = await db.query(`SELECT * FROM (SELECT * FROM "article" JOIN "article_has_category" 
+        const { rows } = await db.query(`SELECT * FROM (SELECT * FROM "article" 
+                                        JOIN "article_has_category" 
                                         ON article.id = article_has_category.article_id 
-                                        WHERE article_has_category.category_id = $1) AS 
-                                        "category_articles" JOIN category ON category.id = category_articles.category_id;`, [id]);
+                                        WHERE article_has_category.category_id = $1 
+                                        ORDER BY updated_at ASC) AS "category_articles" 
+                                        JOIN category ON category.id = category_articles.category_id
+                                        ;`, [id]);
         if (!rows[0]) {
             throw new Error(`les categories avec l'id ${id} n'existent pas`)
         }

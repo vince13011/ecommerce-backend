@@ -6,6 +6,10 @@ const articleHasCategoryController = {
     // get all associations between categories and articles
     getAll: async (request, response) => {
         try {
+            if (request.query.limit) {
+                limit = parseInt(request.query.limit);
+                console.log('limit: ', limit);
+            }
             const articleHasCategory = await ArticleHasCategory.findAll()
             response.json(articleHasCategory)
         }
