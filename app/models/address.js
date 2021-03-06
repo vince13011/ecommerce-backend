@@ -48,13 +48,15 @@ class Address {
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM address WHERE id = $1;', [id]);
+        const { rows } = await db.query(`SELECT * FROM "order"
+                                        JOIN "address" on "address".id = address_id
+                                        WHERE "address".id =$1;`, [id]);
         if (!rows[0]) {
             throw new Error(`l'address avec l'id ${id} n'existe pas`)
         }
 
-        return new Address(rows[0]);
-    }
+        return rows.map(address => new Address(address));
+        }
 
     async insert() {
 

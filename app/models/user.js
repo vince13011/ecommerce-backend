@@ -47,14 +47,16 @@ class User {
    via une requête SQL
    */
     static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM "user" WHERE id = $1;', [id]);
+        const { rows } = await db.query(`SELECT * FROM "user"
+                                        JOIN "address" on "user".id = user_id
+                                         WHERE "user".id =$1;`, [id]);
         if (!rows[0]) {
             throw new Error(`le user avec l'id ${id} n'existe pas`)
         }
 
-        return new User(rows[0]);
-    }
-
+        return rows.map(user => new User(user)); 
+       }
+    
     async insert() {
 
         const { rows } = await db.query(`INSERT INTO "user" (

@@ -9,7 +9,7 @@ const articleHasSizeController = {
             response.json(articleHasSize)
         }
         catch (err) {
-            response.status(404).json(`L'articleHasSize n'existe pas`);
+            response.status(404).json(`L'orderHasArticle n'existe pas`);
         }
     },
 

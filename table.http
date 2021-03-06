@@ -19,7 +19,7 @@ POST {{baseUrl}}/articles
 Content-Type: application/json
 
 {
-    "reference":"",
+    "reference":"EVYV123",
     "name": "Jogging addidas",
     "description":"jogging sport ",
     "image": "c:/repertoire/image/b",
@@ -95,7 +95,7 @@ Content-Type: application/json
 }
 
 ### PATCH /orders/:id
-PATCH {{baseUrl}}/orders/5
+PATCH {{baseUrl}}/orders/4
 Content-Type: application/json
 
 {
@@ -114,7 +114,7 @@ DELETE {{baseUrl}}/orders/1
 GET {{baseUrl}}/users
 
 ### GET /users/:id
-GET {{baseUrl}}/users/1
+GET {{baseUrl}}/users/2
 
 ###POST /signup/
 POST {{baseUrl}}/signup
@@ -215,42 +215,3 @@ Content-Type: application/json
 }
 ### DELETE /sizes/:id
 DELETE {{baseUrl}}/sizes/10
-
-
-
-# ARTICLE_HAS_CATEGORY
-### GET
-GET {{baseUrl}}/category/article
-
-
-# category/:id/article
-###
-GET {{baseUrl}}/category/4/article
-
-
-### POST
-POST {{baseUrl}}/category/article
-Content-Type: application/json
-
-{
-    "article_id": 2,
-    "category_id": 4
-}
-
-# ARTICLE_HAS_SIZE
-### GET
-GET {{baseUrl}}/size/article
-
-# size/:id/article
-###
-GET {{baseUrl}}/size/3/article
-
-### POST
-POST {{baseUrl}}/size/article
-Content-Type: application/json
-
-{
-    "article_id": 2,
-    "size_id": 4,
-    "stock": 12
-}
