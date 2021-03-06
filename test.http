@@ -19,7 +19,7 @@ POST {{baseUrl}}/articles
 Content-Type: application/json
 
 {
-    "reference":"",
+    "reference":"EVYV123",
     "name": "Jogging addidas",
     "description":"jogging sport ",
     "image": "c:/repertoire/image/b",
@@ -227,6 +227,9 @@ GET {{baseUrl}}/category/article
 ###
 GET {{baseUrl}}/category/1/article
 
+# category/:id/article
+###
+GET {{baseUrl}}/category/1/article?limit=3
 
 ### POST
 POST {{baseUrl}}/category/article
