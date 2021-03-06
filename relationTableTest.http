@@ -51,7 +51,7 @@ GET {{baseUrl}}/order/article
 
 # order/:id/article
 ###
-GET {{baseUrl}}/order/4/article
+GET {{baseUrl}}/order/1/article
 
 ### POST
 POST {{baseUrl}}/order/article
