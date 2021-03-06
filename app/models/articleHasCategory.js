@@ -18,14 +18,16 @@ class ArticleHasCategory {
         return rows.map(articleHasCategory => new ArticleHasCategory(articleHasCategory));
     }
 
-    // get all articles from a particular category
+
+    // récupérer LA CATEGORY => TOUS LES ARTICLES
     static async findAllInCategory(id) {
-        const { rows } = await db.query('SELECT * FROM "article_has_category" WHERE category_id = $1;', [id]);
+        const { rows } = await db.query('SELECT * FROM (SELECT * FROM "article" JOIN "article_has_category" ON article.id = article_has_category.article_id WHERE article_has_category.category_id = $1) AS "category_articles" JOIN category ON category.id = category_articles.category_id;', [id]);
         if (!rows[0]) {
             throw new Error(`les categories avec l'id ${id} n'existent pas`)
         }
         return rows.map(articleHasCategory => new ArticleHasCategory(articleHasCategory));
     }
+
 
     // create an association between category and article
     async insert() {
