@@ -1,0 +1,65 @@
+@protocol= http
+@domainname= localhost
+@port= {{$dotenv PORT}}
+@path=v1
+@baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
+
+
+# ARTICLE_HAS_CATEGORY
+### GET
+GET {{baseUrl}}/category/article
+
+
+# category/:id/article
+###
+GET {{baseUrl}}/category/1/article
+
+# category/:id/article
+###
+GET {{baseUrl}}/category/1/article?limit=3
+
+### POST
+POST {{baseUrl}}/category/article
+Content-Type: application/json
+
+{
+    "article_id": 7,
+    "category_id": 1
+}
+
+# ARTICLE_HAS_SIZE
+### GET
+GET {{baseUrl}}/size/article
+
+# size/:id/article
+###
+GET {{baseUrl}}/size/3/article
+
+### POST
+POST {{baseUrl}}/size/article
+Content-Type: application/json
+
+{
+    "article_id": 2,
+    "size_id": 4,
+    "stock": 12
+}
+
+# ORDER_HAS_ARTICLE
+### GET order/article
+GET {{baseUrl}}/order/article
+
+# order/:id/article
+###
+GET {{baseUrl}}/order/3/article
+
+### POST
+POST {{baseUrl}}/order/article
+Content-Type: application/json
+
+{
+    "order_id":1,
+    "article_id": 2,
+    "quantity": 4,
+    "unit_net_price": "123,00"
+}
