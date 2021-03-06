@@ -17,8 +17,16 @@ const articleHasCategoryController = {
     getAllInCategory: async (request, response) => {
         const id = request.params.id;
         try {
+            if (request.query.limit) {
+                limit = parseInt(request.query.limit);
+                console.log('limit: ', limit);
+                const articles = await ArticleHasCategory.findInCategorySelection(id,limit)
+                response.json(articles)
+            }
+            else{
             const articleHasCategory = await ArticleHasCategory.findAllInCategory(id);
             response.json(articleHasCategory);
+            }
         }
         catch (err) {
             response.status(404).json(err.message);
