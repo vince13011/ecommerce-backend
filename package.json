@@ -14,7 +14,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "npm run seed; node index.js",
+    "seed": "sqitch deploy origin"
   },
   "author": "",
   "license": "ISC"
