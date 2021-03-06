@@ -15,8 +15,10 @@ const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
+
 const articleHasSizeController = require ('./controllers/articleHasSizeController')
 const orderHasArticleController = require ('./controllers/orderHasArticleController')
+
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
@@ -48,6 +50,7 @@ router.get('/users/:id', userController.getOne);
 // router.post('/users', userController.create);
 router.patch('/users/:id', userController.updateById);
 router.delete('/users/:id', userController.deleteById);
+
 
 // CREER UN NOUVEL UTILISATEUR
 router.post('/signup', userController.create);
