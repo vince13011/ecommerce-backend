@@ -8,7 +8,7 @@ class Size {
     il est donc plus facile de comprendre la classe dans son ensemble
     */
     id;
-    name;
+    size_name;
 
     /**
      * le constructor est la méthode qui s'éxecute lors d'une nouvelle instance de notre classe 
@@ -41,14 +41,14 @@ class Size {
     static async findOne(id) {
         const { rows } = await db.query('SELECT * FROM size WHERE id = $1;', [id]);
         if (!rows[0]) {
-            throw new Error(`la categorie avec l'id ${id} n'existe pas `)
+            throw new Error(`la size avec l'id ${id} n'existe pas `)
         }
 
         return new Size(rows[0]);
     }
 
     async insert() {
-        const { rows } = await db.query(`INSERT INTO "size" (name) VALUES($1) RETURNING*;`, [this.name]);
+        const { rows } = await db.query(`INSERT INTO "size" (size_name) VALUES($1) RETURNING*;`, [this.size_name]);
         this.id = rows[0].id;
     }
 

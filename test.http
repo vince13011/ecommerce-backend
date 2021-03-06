@@ -195,7 +195,7 @@ DELETE {{baseUrl}}/addresses/1
 GET {{baseUrl}}/sizes
 
 ### GET /sizes/:id
-GET {{baseUrl}}/sizes/10
+GET {{baseUrl}}/sizes/3
 
 
 ### POST /sizes/
@@ -203,15 +203,15 @@ POST {{baseUrl}}/sizes
 Content-Type: application/json
 
 {
-    "name": "taille 1"
+    "size_name": "taille 1"
 }
 
 ### PATCH /sizes/:id
-PATCH {{baseUrl}}/sizes/10
+PATCH {{baseUrl}}/sizes/3
 Content-Type: application/json
 
 {
-    "name": "S-28"
+    "size_name": "S-28"
 }
 ### DELETE /sizes/:id
 DELETE {{baseUrl}}/sizes/10

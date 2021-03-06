@@ -55,7 +55,7 @@ $$ LANGUAGE sql ;
 CREATE  FUNCTION update_size ( siz json, bid int) RETURNS size  AS $$
 
     UPDATE "size"
-        SET "name" = siz ->>'name'
+        SET "size_name" = siz ->>'size_name'
         WHERE id = bid RETURNING *;
 $$ LANGUAGE sql ;
 

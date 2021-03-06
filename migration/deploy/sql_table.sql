@@ -27,7 +27,7 @@ CREATE TABLE article (
 
 CREATE TABLE size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL
+    "size_name" text NOT NULL
 );
 
 CREATE TABLE "role" (
