@@ -8,7 +8,7 @@ CREATE DOMAIN posint AS int CHECK (value > 0);
 
 CREATE TABLE category (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "name" text NOT NULL
+    "title" text NOT NULL
 );
 
 CREATE TABLE article (

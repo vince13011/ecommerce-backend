@@ -8,7 +8,7 @@ class Category {
     il est donc plus facile de comprendre la classe dans son ensemble
     */
     id;
-    name;
+    title;
 
     /**
      * le constructor est la méthode qui s'éxecute lors d'une nouvelle instance de notre classe 
@@ -48,7 +48,7 @@ class Category {
     }
 
     async insert() {
-        const { rows } = await db.query(`INSERT INTO "category" (name) VALUES($1) RETURNING*;`, [this.name]);
+        const { rows } = await db.query(`INSERT INTO "category" ("title") VALUES($1) RETURNING*;`, [this.title]);
         this.id = rows[0].id;
     }
 

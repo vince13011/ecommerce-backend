@@ -76,7 +76,7 @@ VALUES
 ('France','Lille',59000, '2', 'rue de la fenetre en carton','au fond du chemin',2,NOW(), NOW()),
 ('La Réunion','St Paul',97460, '', 'La digue de la rascasse','la péniche du fond',3,NOW(), NOW());
 
-INSERT INTO "category" ("name") 
+INSERT INTO "category" ("title") 
 VALUES
 ('homme'),('femme'),('tshirt'),('chaussures'),('pantalon');
 
