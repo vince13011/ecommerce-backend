@@ -1,0 +1,256 @@
+@protocol= http
+@domainname= localhost
+@port= {{$dotenv PORT}}
+@path=v1
+@baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
+
+
+### GET /articles
+GET {{baseUrl}}/articles
+
+### GET /articles
+GET {{baseUrl}}/articles?limit=3
+
+### GET /articles/:id
+GET {{baseUrl}}/articles/2
+
+### POST /articles
+POST {{baseUrl}}/articles
+Content-Type: application/json
+
+{
+    "reference":"",
+    "name": "Jogging addidas",
+    "description":"jogging sport ",
+    "image": "c:/repertoire/image/b",
+    "color":"blanche",
+    "pre_tax_price": "30",
+    "vat_rate": "20",
+    "discount": "20"
+}
+
+### PATCH /articles/:id
+PATCH {{baseUrl}}/articles/3
+Content-Type: application/json
+
+{
+    "reference":"Capuche12",
+    "name": "capuche",
+    "description":"tshirt BLEU",
+    "image": "c:/repertoire/image/b",
+    "color":"blue",
+    "pre_tax_price": "30",
+    "vat_rate": "20",
+    "discount": "20"
+}
+
+###  DELETE /articles/:id
+DELETE {{baseUrl}}/articles/4
+
+
+# ****************************
+# ****************************
+###  GET /categories
+GET {{baseUrl}}/categories
+
+### GET /categories/:id
+GET {{baseUrl}}/categories/1
+
+### POST /categories/:id
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+    "title": "décontracté"
+}
+
+### PATCH /categories/:id
+PATCH {{baseUrl}}/categories/1
+Content-Type: application/json
+
+{
+    "title": "patch"
+}
+
+### DELETE /categories/:id
+DELETE {{baseUrl}}/categories/1
+
+
+# ****************************
+# ****************************
+###  GET /orders
+GET {{baseUrl}}/orders
+
+### GET /orders/:id
+GET {{baseUrl}}/orders/17
+
+### POST /orders/:id
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+    "order_number": 1,
+    "total_price": 20,
+    "address_id": 1
+}
+
+### PATCH /orders/:id
+PATCH {{baseUrl}}/orders/5
+Content-Type: application/json
+
+{
+    "order_number": 20,
+    "total_price": 130,
+    "address_id": 1
+}
+
+### DELETE /orders/:id
+DELETE {{baseUrl}}/orders/1
+
+
+# ****************************
+# **************************** 
+### GET /users
+GET {{baseUrl}}/users
+
+### GET /users/:id
+GET {{baseUrl}}/users/1
+
+###POST /signup/
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "email":"D@gmail.com",
+    "firstname":"rard",
+    "lastname":"poulpos",
+    "password":"encen",
+    "phone_number":"0123456789",
+    "role_id": 1
+}
+###PATCH /users/:id
+PATCH {{baseUrl}}/users/1
+Content-Type: application/json
+
+{
+    "email":"chuvak@gmail.com",
+    "firstname":"test patch",
+    "lastname":"patch",
+    "password":"brbr",
+    "phone_number":"000123456789",
+    "role_id": 1
+}
+
+###DELETE /users/:id
+DELETE {{baseUrl}}/users/1
+
+
+# ****************************
+# ****************************
+# ADDRESS
+###  GET /addresses
+GET {{baseUrl}}/addresses
+
+### GET /addresses/:id
+GET {{baseUrl}}/addresses/1
+
+
+### POST /addresses/:id
+POST {{baseUrl}}/addresses
+Content-Type: application/json
+
+{
+    "country": "France",
+    "city": "marignane",
+    "zip_code": "13000",
+    "number": 10,
+    "street_name": "rue de Vincent",
+    "additional":"étage 5",
+    "user_id": 1
+}
+
+### PATCH /addresses/:id
+PATCH {{baseUrl}}/addresses/1
+Content-Type: application/json
+
+{
+    "country": "France",
+    "city": "Aix",
+    "zip_code": "83000",
+    "number": 11,
+    "street_name": "rue de Mega",
+    "additional": "étage 8",
+    "user_id": 1
+}
+
+### DELETE /addresses/:id
+DELETE {{baseUrl}}/addresses/1
+
+
+# ****************************
+# ****************************
+
+# SIZES
+###  GET /sizes
+GET {{baseUrl}}/sizes
+
+### GET /sizes/:id
+GET {{baseUrl}}/sizes/10
+
+
+### POST /sizes/
+POST {{baseUrl}}/sizes
+Content-Type: application/json
+
+{
+    "name": "taille 1"
+}
+
+### PATCH /sizes/:id
+PATCH {{baseUrl}}/sizes/10
+Content-Type: application/json
+
+{
+    "name": "S-28"
+}
+### DELETE /sizes/:id
+DELETE {{baseUrl}}/sizes/10
+
+
+
+# ARTICLE_HAS_CATEGORY
+### GET
+GET {{baseUrl}}/category/article
+
+
+# category/:id/article
+###
+GET {{baseUrl}}/category/4/article
+
+
+### POST
+POST {{baseUrl}}/category/article
+Content-Type: application/json
+
+{
+    "article_id": 2,
+    "category_id": 4
+}
+
+# ARTICLE_HAS_SIZE
+### GET
+GET {{baseUrl}}/size/article
+
+# size/:id/article
+###
+GET {{baseUrl}}/size/3/article
+
+### POST
+POST {{baseUrl}}/size/article
+Content-Type: application/json
+
+{
+    "article_id": 2,
+    "size_id": 4,
+    "stock": 12
+}
