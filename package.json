@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
@@ -17,7 +18,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run seed; node index.js",
-    "seed": "sqitch deploy origin"
+    "deploy": "sqitch deploy db:pg:switch-e-commerce",
+    "seed": "psql -d postgres://pwokrspjqplmgy:c9faa05c76be24b9cbb3bb866cfda93b3148da836175eb254f0a8c0f62defa63@ec2-52-209-134-160.eu-west-1.compute.amazonaws.com:5432/d8ohpsu04as0bb"
   },
   "author": "",
   "license": "ISC"
