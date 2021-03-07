@@ -116,6 +116,9 @@ GET {{baseUrl}}/users
 ### GET /users/:id
 GET {{baseUrl}}/users/2
 
+### POST /users/:id
+POST {{baseUrl}}/users
+
 ###POST /signup/
 POST {{baseUrl}}/signup
 Content-Type: application/json
