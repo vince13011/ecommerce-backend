@@ -39,9 +39,43 @@ class Article {
     via une requête SQL
     */
     static async findAll() {
-
-        const { rows } = await db.query(`SELECT * FROM "article";`);
-
+        let articlesId = await db.query(`SELECT id FROM "article"`);
+        articlesId = articlesId.rows;
+        let rows = [];
+        for (let index = 0; index < articlesId.length; index++) {
+            const { id } = articlesId[index];
+            const article = await db.query(
+                `
+                    SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
+                        FROM "article" WHERE id = ${id};
+                `
+            );
+            const categorie = await db.query(
+                `
+                    SELECT category.id ,"title" 
+                        FROM article_has_category AS article_has_category 
+                            JOIN category AS category 
+                            ON article_has_category.category_id = category.id 
+                                WHERE article_has_category.article_id = ${id};
+                `
+            );
+            const size = await db.query(
+                `
+                    SELECT size.id, size.size_name, article_size.stock 
+                        FROM size AS size 
+                        JOIN 
+                        (SELECT * 
+                            FROM article AS article 
+                                JOIN article_has_size AS article_has_size 
+                                ON article_has_size.article_id = article.id 
+                                    WHERE article.id = ${id}) AS "article_size" 
+                                        ON size.id = article_size.size_id;
+                `
+            );
+            article.rows[0].categories = categorie.rows;
+            article.rows[0].sizes = size.rows;
+            rows.push(article.rows[0]);
+        }
         return rows.map(article => new Article(article));
     }
 
