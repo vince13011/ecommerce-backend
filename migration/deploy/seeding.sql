@@ -15,7 +15,7 @@ INSERT INTO article (
 1234,
 'TSHIRT nike',
 'tshirt nike bleu homme',
-'c:/repertoire/image/b',
+'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
 'noir',
 45,
 20,
@@ -26,7 +26,7 @@ NOW()
 123432,
 'TSHIRT KIABI',
 'tshirt KIABI blanc homme',
-'c:/repertoire/image/c',
+'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
 'blanc',
 15,
 20,
@@ -38,7 +38,7 @@ NOW()
 124334,
 'Pantalon de costume hugo bogoss',
 'pantalon noir  homme',
-'c:/repertoire/image/c',
+'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
 DEFAULT,
 35,
 20,
@@ -50,14 +50,25 @@ NOW()
 123234878,
 'Airmax',
 'basket airmax',
-'c:/repertoire/image/c',
+'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
 'noire',
 100,
 20,
 5,
 NOW(),
 NOW()
-);
+),1234978,
+'Jean levis',
+'Jean bleu slim homme levis',
+'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
+'bleu',
+140,
+20,
+5,
+NOW(),
+NOW()
+)
+;
 
 INSERT INTO "user" (
     email,firstname,lastname,"password",phone_number,"role_id",created_at,updated_at

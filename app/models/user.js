@@ -57,6 +57,17 @@ class User {
         return rows.map(user => new User(user)); 
        }
     
+       static async findByEmail(email) {
+        const { rows } = await db.query(`SELECT * FROM "user"
+                                         WHERE "user".email =$1;`, [email]);
+        console.log(rows[0])
+        if (rows[0]=== undefined) {
+           return null
+        }
+
+        return rows.map(user => new User(user)); 
+       }   
+
     async insert() {
 
         const { rows } = await db.query(`INSERT INTO "user" (
