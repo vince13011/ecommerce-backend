@@ -1,5 +1,7 @@
 const { response } = require('express');
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const emailValidator = require('email-validator')
 
 const userController = {
 
@@ -28,15 +30,67 @@ const userController = {
 
     create: async (request, response) => {
         const newUserData = request.body;
+        // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
+        // qu'on va faire ne passe pas
+        const errors = [];
 
-        const newUser = new User(newUserData);
+        // on teste si la valeur de firstname n'est pas une chaine de carctère vide
+        if (newUserData.firstname.length === 0) {
+            errors.push('Le prénom doit être renseigné')
+        }
 
-        await newUser.insert();
-        /* sans await, il va me manquer
-         la certitude que tout s'est bien passé
-         car la réponse sera envoyé avant la fin de l'enregistrement du jeu en base de données
-        */
-        response.json(newUser);
+        // on teste si la valeur de lastname n'est pas une chaine de carctère vide
+        if (newUserData.lastname.length === 0) {
+            errors.push('Le nom doit être renseigné')
+        }
+        
+        // grâce à email-validator on vient vérifier que notre email est bien
+        // valide
+        const isValidEmail = emailValidator.validate(newUserData.email);
+
+        if (!isValidEmail) {
+            errors.push('Vous devez renseigné un email valide');
+        }
+
+         // vérifier que le mot de passe soit assez long © Maher
+        if (newUserData.password.length < 8) {
+            errors.push('le mot de passe doit avoir au minimum 8 caractères');
+         }
+
+        // vérifier que le mdp soit égal à la confirmation
+        if (newUserData.password !== newUserData.passwordConfirm) {
+            errors.push('Le mot de passe et la confirmation doivent être identiques')
+        }
+
+        // si on a des erreurs, on rend la vue avec les erreurs
+        if (errors.length) {
+            response.json({errors});
+        }
+        else {
+            // sinon on va chercher en bdd si on a un utilisateur avec le même email
+            const user= await User.findByEmail(newUserData.email)
+            console.log('ceci est le resultat de user',user)
+             // si on trouve un user, on affiche une erreur
+            if (user) {
+                errors.push('Email déjà pris');
+                response.json({errors});
+             }
+
+            else {
+                const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
+                const newUser = new User({
+                email: newUserData.email,
+                firstname: newUserData.firstname,
+                lastname: newUserData.lastname,
+                password: hashedPassword,
+                phone_number:newUserData.phone_number,
+                role_id:newUserData.role_id
+                 });
+
+                 await newUser.insert();
+                 response.json(newUser);
+            }
+        }
     },
 
     // Cette méthode remplace le nombre de  données choisis du jeu en question   

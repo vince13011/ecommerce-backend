@@ -121,10 +121,11 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"D@gmail.com",
+    "email":"g@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
-    "password":"encen",
+    "password":"enceneee",
+    "passwordConfirm":"enceneee",
     "phone_number":"0123456789",
     "role_id": 1
 }
