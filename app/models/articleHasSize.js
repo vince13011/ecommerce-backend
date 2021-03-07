@@ -35,10 +35,10 @@ class ArticleHasSize {
     }
 
     // create an association between size and article
-    async insert() {
+    async insert(id) {
         const { rows } = await db.query(`INSERT INTO "article_has_size" 
             (article_id, size_id, stock) VALUES($1,$2,$3) RETURNING*;`,
-            [this.article_id, this.size_id, this.stock]);
+            [id, this.size_id, this.stock]);
 
         this.id = rows[0].id;
     }

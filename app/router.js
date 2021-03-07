@@ -16,16 +16,16 @@ const addressController = require('./controllers/addressController');
 const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
 
-const articleHasSizeController = require ('./controllers/articleHasSizeController')
-const orderHasArticleController = require ('./controllers/orderHasArticleController')
+const articleHasSizeController = require('./controllers/articleHasSizeController')
+const orderHasArticleController = require('./controllers/orderHasArticleController')
 
 
 // ARTICLES
 router.get('/articles', articleController.getAll);
-router.get('/articles/:id', articleController.getOne);
-router.post('/articles', articleController.create);
-router.patch('/articles/:id', articleController.updateById);
-router.delete('/articles/:id', articleController.deleteById);
+router.get('/article/:id', articleController.getOne);
+router.post('/article', articleController.create);
+router.patch('/article/:id', articleController.updateById);
+router.delete('/article/:id', articleController.deleteById);
 
 // CATEGORIES
 router.get('/categories', categoryController.getAll);

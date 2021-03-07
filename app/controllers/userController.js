@@ -44,7 +44,7 @@ const userController = {
         if (newUserData.lastname.length === 0) {
             errors.push('Le nom doit être renseigné')
         }
-        
+
         // grâce à email-validator on vient vérifier que notre email est bien
         // valide
         const isValidEmail = emailValidator.validate(newUserData.email);
@@ -53,10 +53,10 @@ const userController = {
             errors.push('Vous devez renseigné un email valide');
         }
 
-         // vérifier que le mot de passe soit assez long © Maher
+        // vérifier que le mot de passe soit assez long © Maher
         if (newUserData.password.length < 8) {
             errors.push('le mot de passe doit avoir au minimum 8 caractères');
-         }
+        }
 
         // vérifier que le mdp soit égal à la confirmation
         if (newUserData.password !== newUserData.passwordConfirm) {
@@ -65,31 +65,31 @@ const userController = {
 
         // si on a des erreurs, on rend la vue avec les erreurs
         if (errors.length) {
-            response.json({errors});
+            response.json({ errors });
         }
         else {
             // sinon on va chercher en bdd si on a un utilisateur avec le même email
-            const user= await User.findByEmail(newUserData.email)
-            console.log('ceci est le resultat de user',user)
-             // si on trouve un user, on affiche une erreur
+            const user = await User.findByEmail(newUserData.email)
+            console.log('ceci est le resultat de user', user)
+            // si on trouve un user, on affiche une erreur
             if (user) {
                 errors.push('Email déjà pris');
-                response.json({errors});
-             }
+                response.json({ errors });
+            }
 
             else {
                 const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
                 const newUser = new User({
-                email: newUserData.email,
-                firstname: newUserData.firstname,
-                lastname: newUserData.lastname,
-                password: hashedPassword,
-                phone_number:newUserData.phone_number,
-                role_id:newUserData.role_id
-                 });
+                    email: newUserData.email,
+                    firstname: newUserData.firstname,
+                    lastname: newUserData.lastname,
+                    password: hashedPassword,
+                    phone_number: newUserData.phone_number,
+                    role_id: newUserData.role_id
+                });
 
-                 await newUser.insert();
-                 response.json(newUser);
+                await newUser.insert();
+                response.json(newUser);
             }
         }
     },
@@ -151,62 +151,62 @@ const userController = {
             response.status(404).json(`L'user l'id ${id} n'existe pas ou a déjà été supprimé`);
         }
     },
-    
-    login: async (request,response)=>{
+
+    login: async (request, response) => {
 
         console.log('request.body', request.body);
 
         const errors = [];
-    
+
         // on vérifie que l'utilisateur a bien rempli les champs
         if (request.body.email.length === 0 || request.body.password.length === 0) {
-          errors.push('Veuillez remplir tous les champs');
+            errors.push('Veuillez remplir tous les champs');
         }
-    
+
         // vérifier que l'email existe en BDD => User
         // comparer le password du form avec le hash de ka BDD
         // si c'est pas bon lui donner un message d'erreur
         // si c'est bon le connecter
         // persistance de la connexion => session
-        
+
         // si on a des erreurs on rend la vue avec ces erreurs
         if (errors.length) {
-          response.json({errors});
+            response.json({ errors });
         }
         // sinon on chercher l'utilisateur en BDD
         else {
-         const user = await User.findByEmail(request.body.email)
-          console.log('user :', user);
-    
+            const user = await User.findByEmail(request.body.email)
+            console.log('user :', user);
+
             // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
             // si le user est null on redirige sur la page d'inscription 
             if (!user) {
-              errors.push('Veuillez vérifier vos identifiants');
-              response.json({errors});
+                errors.push('Veuillez vérifier vos identifiants');
+                response.json({ errors });
             }
             else {
-              // si on a trouvé un utilisateur, il va falloir comparer le mdp
-              // des données en post avec le hash de la BDD
-              // pour faire ça bcrypt propose une fonction compareSync
-              const isValidPassword = bcrypt.compareSync(request.body.password, user[0].password);
-              console.log('isValidPassword : ',isValidPassword)
-              
-              // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
-              // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
-              // afficher son nom et le lien déconnecter
-              if (isValidPassword) {
+                // si on a trouvé un utilisateur, il va falloir comparer le mdp
+                // des données en post avec le hash de la BDD
+                // pour faire ça bcrypt propose une fonction compareSync
+                const isValidPassword = bcrypt.compareSync(request.body.password, user[0].password);
+                console.log('isValidPassword : ', isValidPassword)
 
-                response.json(user)
-              }
-              else {
-                errors.push('Veuillez vérifier vos identifiants');
-                response.json({errors});
-              }
+                // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
+                // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
+                // afficher son nom et le lien déconnecter
+                if (isValidPassword) {
+
+                    response.json(user)
+                }
+                else {
+                    errors.push('Veuillez vérifier vos identifiants');
+                    response.json({ errors });
+                }
             }
-          
+
         }
-      }
-    
+    }
+
 
 };
 

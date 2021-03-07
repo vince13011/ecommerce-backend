@@ -9,13 +9,13 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=3
+GET {{baseUrl}}/articles?limit=1
 
 ### GET /articles/:id
-GET {{baseUrl}}/articles/2
+GET {{baseUrl}}/article/16
 
 ### POST /articles
-POST {{baseUrl}}/articles
+POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
@@ -26,11 +26,20 @@ Content-Type: application/json
     "color":"blanche",
     "pre_tax_price": "30",
     "vat_rate": "20",
-    "discount": "20"
+    "discount": "20",
+    "categories": [
+        {"category_id": 3}
+    ],
+    "sizes": [
+        {
+        "size_id": 2,
+        "stock": 1000
+        }
+    ]
 }
 
-### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/3
+### PATCH /article/:id
+PATCH {{baseUrl}}/article/3
 Content-Type: application/json
 
 {
@@ -45,7 +54,7 @@ Content-Type: application/json
 }
 
 ###  DELETE /articles/:id
-DELETE {{baseUrl}}/articles/4
+DELETE {{baseUrl}}/article/4
 
 
 # ****************************
