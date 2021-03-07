@@ -1,7 +1,7 @@
 const { response } = require('express');
 const Article = require('../models/article');
-const ArticleHasCategory = require('../models/ArticleHasCategory');
-const ArticleHasSize = require('../models/ArticleHasSize');
+const ArticleHasCategory = require('../models/articleHasCategory');
+const ArticleHasSize = require('../models/articleHasSize');
 
 const articleController = {
 
