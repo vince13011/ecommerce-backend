@@ -1,4 +1,4 @@
-const { response } = require('express');
+const { response, request } = require('express');
 const Category = require('../models/category');
 
 const categoryController = {
