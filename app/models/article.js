@@ -47,8 +47,8 @@ class Article {
             const article = await db.query(
                 `
                     SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
-                        FROM "article" WHERE id = ${id};
-                `
+                        FROM "article" WHERE id = $1;
+                `, [id]
             );
             const categorie = await db.query(
                 `
@@ -56,8 +56,8 @@ class Article {
                         FROM article_has_category AS article_has_category 
                             JOIN category AS category 
                             ON article_has_category.category_id = category.id 
-                                WHERE article_has_category.article_id = ${id};
-                `
+                                WHERE article_has_category.article_id = $1;
+                `, [id]
             );
             const size = await db.query(
                 `
@@ -68,9 +68,9 @@ class Article {
                             FROM article AS article 
                                 JOIN article_has_size AS article_has_size 
                                 ON article_has_size.article_id = article.id 
-                                    WHERE article.id = ${id}) AS "article_size" 
+                                    WHERE article.id = $1) AS "article_size" 
                                         ON size.id = article_size.size_id;
-                `
+                `, [id]
             );
             article.rows[0].categories = categorie.rows;
             article.rows[0].sizes = size.rows;

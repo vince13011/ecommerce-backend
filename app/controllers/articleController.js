@@ -9,7 +9,7 @@ const articleController = {
                 limit = parseInt(request.query.limit);
                 console.log('limit: ', limit);
                 const articles = await Article.findSelection(limit)
-                response.json(articles)
+                response.json(articles);
             }
 
             else {
