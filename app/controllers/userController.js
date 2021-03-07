@@ -1,7 +1,8 @@
 const { response } = require('express');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const emailValidator = require('email-validator')
+const emailValidator = require('email-validator');
+const { findOne } = require('../models/user');
 
 const userController = {
 
@@ -150,6 +151,62 @@ const userController = {
             response.status(404).json(`L'user l'id ${id} n'existe pas ou a déjà été supprimé`);
         }
     },
+    
+    login: async (request,response)=>{
+
+        console.log('request.body', request.body);
+
+        const errors = [];
+    
+        // on vérifie que l'utilisateur a bien rempli les champs
+        if (request.body.email.length === 0 || request.body.password.length === 0) {
+          errors.push('Veuillez remplir tous les champs');
+        }
+    
+        // vérifier que l'email existe en BDD => User
+        // comparer le password du form avec le hash de ka BDD
+        // si c'est pas bon lui donner un message d'erreur
+        // si c'est bon le connecter
+        // persistance de la connexion => session
+        
+        // si on a des erreurs on rend la vue avec ces erreurs
+        if (errors.length) {
+          response.json({errors});
+        }
+        // sinon on chercher l'utilisateur en BDD
+        else {
+         const user = User.findByEmail(request.body.email)
+          console.log('user', user);
+    
+            // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
+            // si le user est null on redirige sur la page d'inscription 
+            if (!user) {
+              errors.push('Veuillez vérifier vos identifiants');
+              response.json({errors});
+            }
+            else {
+              // si on a trouvé un utilisateur, il va falloir comparer le mdp
+              // des données en post avec le hash de la BDD
+              // pour faire ça bcrypt propose une fonction compareSync
+              const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
+              
+              // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
+              // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
+              // afficher son nom et le lien déconnecter
+              if (isValidPassword) {
+                const informations =User.findOne(user.id)
+                console.log ('informations: ',informations)
+                response.json(informations)
+              }
+              else {
+                errors.push('Veuillez vérifier vos identifiants');
+                res.render('login', {errors});
+              }
+            }
+          
+        }
+      }
+    
 
 };
 
