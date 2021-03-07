@@ -57,7 +57,8 @@ NOW()
 5,
 NOW(),
 NOW()
-),1234978,
+),
+(1234978,
 'Jean levis',
 'Jean bleu slim homme levis',
 'https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp',
