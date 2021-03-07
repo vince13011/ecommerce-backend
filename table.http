@@ -118,6 +118,12 @@ GET {{baseUrl}}/users/2
 
 ### POST /users/:id
 POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+"email": "g@gmail.com",
+"password":"enceneee"
+}
 
 ###POST /signup/
 POST {{baseUrl}}/signup

@@ -175,8 +175,8 @@ const userController = {
         }
         // sinon on chercher l'utilisateur en BDD
         else {
-         const user = User.findByEmail(request.body.email)
-          console.log('user', user);
+         const user = await User.findByEmail(request.body.email)
+          console.log('user :', user);
     
             // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
             // si le user est null on redirige sur la page d'inscription 
@@ -188,19 +188,19 @@ const userController = {
               // si on a trouvé un utilisateur, il va falloir comparer le mdp
               // des données en post avec le hash de la BDD
               // pour faire ça bcrypt propose une fonction compareSync
-              const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
+              const isValidPassword = bcrypt.compareSync(request.body.password, user[0].password);
+              console.log('isValidPassword : ',isValidPassword)
               
               // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
               // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
               // afficher son nom et le lien déconnecter
               if (isValidPassword) {
-                const informations =User.findOne(user.id)
-                console.log ('informations: ',informations)
-                response.json(informations)
+
+                response.json(user)
               }
               else {
                 errors.push('Veuillez vérifier vos identifiants');
-                res.render('login', {errors});
+                response.json({errors});
               }
             }
           
