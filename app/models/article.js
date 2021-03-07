@@ -38,65 +38,54 @@ class Article {
     Cette méthode de classe permet de retourner l'ensemble des jeux de société
     via une requête SQL
     */
-    static async findAll() {
+    static async findOne(id) {
+
+        const article = await db.query(
+            `
+                SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
+                    FROM "article" WHERE id = $1;
+            `, [id]
+        );
+        const categorie = await db.query(
+            `
+                SELECT category.id ,"title" 
+                    FROM article_has_category AS article_has_category 
+                        JOIN category AS category 
+                        ON article_has_category.category_id = category.id 
+                            WHERE article_has_category.article_id = $1;
+            `, [id]
+        );
+        const size = await db.query(
+            `
+                SELECT size.id, size.size_name, article_size.stock 
+                    FROM size AS size 
+                    JOIN 
+                    (SELECT * 
+                        FROM article AS article 
+                            JOIN article_has_size AS article_has_size 
+                            ON article_has_size.article_id = article.id 
+                                WHERE article.id = $1) AS "article_size" 
+                                    ON size.id = article_size.size_id;
+            `, [id]
+        );
+        article.rows[0].categories = categorie.rows;
+        article.rows[0].sizes = size.rows;
+        return article.rows[0];
+    }
+
+    static async findAll(limit = null) {
+
         let articlesId = await db.query(`SELECT id FROM "article"`);
         articlesId = articlesId.rows;
         let rows = [];
         for (let index = 0; index < articlesId.length; index++) {
             const { id } = articlesId[index];
-            const article = await db.query(
-                `
-                    SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
-                        FROM "article" WHERE id = $1;
-                `, [id]
-            );
-            const categorie = await db.query(
-                `
-                    SELECT category.id ,"title" 
-                        FROM article_has_category AS article_has_category 
-                            JOIN category AS category 
-                            ON article_has_category.category_id = category.id 
-                                WHERE article_has_category.article_id = $1;
-                `, [id]
-            );
-            const size = await db.query(
-                `
-                    SELECT size.id, size.size_name, article_size.stock 
-                        FROM size AS size 
-                        JOIN 
-                        (SELECT * 
-                            FROM article AS article 
-                                JOIN article_has_size AS article_has_size 
-                                ON article_has_size.article_id = article.id 
-                                    WHERE article.id = $1) AS "article_size" 
-                                        ON size.id = article_size.size_id;
-                `, [id]
-            );
-            article.rows[0].categories = categorie.rows;
-            article.rows[0].sizes = size.rows;
-            rows.push(article.rows[0]);
+            const article = await this.findOne(id);
+            rows.push(article);
         }
+        if (limit === null) limit = rows.length;
+        rows = rows.splice(0, limit);
         return rows.map(article => new Article(article));
-    }
-
-    //retourne un nombre limité d'article selon l'information envoyé dans la query string
-    static async findSelection(limit) {
-
-        const { rows } = await db.query(`SELECT * FROM article LIMIT ${limit};`);
-
-        return rows.map(article => new Article(article));
-    }
-    /*
-   Cette méthode de classe permet de retourner un article grâce  à son ID
-   via une requête SQL
-   */
-    static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM article WHERE id = $1;', [id]);
-        if (!rows[0]) {
-            throw new Error(`l'article avec l'id ${id} n'existe pas `)
-        }
-
-        return new Article(rows[0]);
     }
 
     /** 
@@ -117,7 +106,6 @@ class Article {
     }
 
     async insert() {
-
         const { rows } = await db.query(`INSERT INTO "article" (
         reference,
         name,

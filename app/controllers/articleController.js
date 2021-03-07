@@ -1,5 +1,7 @@
 const { response } = require('express');
 const Article = require('../models/article');
+const ArticleHasCategory = require('../models/ArticleHasCategory');
+const ArticleHasSize = require('../models/ArticleHasSize');
 
 const articleController = {
 
@@ -8,7 +10,7 @@ const articleController = {
             if (request.query.limit) {
                 limit = parseInt(request.query.limit);
                 console.log('limit: ', limit);
-                const articles = await Article.findSelection(limit)
+                const articles = await Article.findAll(limit)
                 response.json(articles);
             }
 
@@ -39,12 +41,22 @@ const articleController = {
     create: async (request, response) => {
         // les infos de l'article à ajouter
         const newArticleData = request.body;
+        console.log(newArticleData);
 
-        console.log('newarticledata: ', newArticleData)
         const newArticle = new Article(newArticleData);
-        console.log('newarticle: ', newArticle)
+        // const newArticleHasCategory = new ArticleHasCategory(newArticleData.categories);
+        // const newArticleHasSize = new ArticleHasSize(newArticleData);
+
 
         await newArticle.insert();
+        for (let index = 0; index < newArticleData.categories.length; index++) {
+            // selection de plusieurs categories
+            const newArticleHasCategory = new ArticleHasCategory(newArticleData.categories[index]);
+            await newArticleHasCategory.insert(newArticle.id);
+            // selection de plusieurs sizes + stocks
+            const newArticleHasSize = new ArticleHasSize(newArticleData.sizes[index]);
+            await newArticleHasSize.insert(newArticle.id);
+        }
 
         /* sans await, il va me manquer
          la certitude que tout s'est bien passé
