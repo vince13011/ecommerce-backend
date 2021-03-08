@@ -9,13 +9,13 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=1
+GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/16
+GET {{baseUrl}}/articles/2
 
 ### POST /articles
-POST {{baseUrl}}/article
+POST {{baseUrl}}/articles
 Content-Type: application/json
 
 {
@@ -26,20 +26,11 @@ Content-Type: application/json
     "color":"blanche",
     "pre_tax_price": "30",
     "vat_rate": "20",
-    "discount": "20",
-    "categories": [
-        {"category_id": 3}
-    ],
-    "sizes": [
-        {
-        "size_id": 2,
-        "stock": 1000
-        }
-    ]
+    "discount": "20"
 }
 
-### PATCH /article/:id
-PATCH {{baseUrl}}/article/3
+### PATCH /articles/:id
+PATCH {{baseUrl}}/articles/3
 Content-Type: application/json
 
 {
@@ -54,7 +45,7 @@ Content-Type: application/json
 }
 
 ###  DELETE /articles/:id
-DELETE {{baseUrl}}/article/4
+DELETE {{baseUrl}}/articles/4
 
 
 # ****************************
@@ -91,7 +82,7 @@ DELETE {{baseUrl}}/categories/1
 GET {{baseUrl}}/orders
 
 ### GET /orders/:id
-GET {{baseUrl}}/orders/17
+GET {{baseUrl}}/orders/5
 
 ### POST /orders/:id
 POST {{baseUrl}}/orders
@@ -125,7 +116,7 @@ GET {{baseUrl}}/users
 ### GET /users/:id
 GET {{baseUrl}}/users/2
 
-### POST /users/:id
+### POST /users/
 POST {{baseUrl}}/users
 Content-Type: application/json
 
@@ -139,13 +130,20 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"g@gmail.com",
+    "email":"RdtASZAZzSdzfvxs@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"enceneee",
     "passwordConfirm":"enceneee",
     "phone_number":"0123456789",
-    "role_id": 1
+    "role_id": 1,
+    "country": "France",
+    "city": "marignane",
+    "zip_code": "13000",
+    "number": 10,
+    "street_name": "rue de Vincent",
+    "additional":"étage 5",
+    "user_id": 1
 }
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1
