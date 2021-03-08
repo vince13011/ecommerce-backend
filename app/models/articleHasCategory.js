@@ -56,6 +56,20 @@ class ArticleHasCategory {
         this.id = rows[0].id;
     }
 
+    static async updateById(data, id) {
+        let tab = Object.values(data);
+        tab.push(Number(id));
+        const { rows } = await db.query(
+            `
+                UPDATE "article_has_category" 
+                    SET "category_id"=$1 
+                WHERE "article_id"=$3 AND "category_id"=$2;
+            `, tab);
+        if (id === null) {
+            throw new Error(`l'article avec l'id  ${id} n'existe pas `)
+        }
+    }
+
 }
 
 module.exports = ArticleHasCategory;
