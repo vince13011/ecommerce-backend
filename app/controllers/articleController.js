@@ -66,20 +66,14 @@ const articleController = {
     },
 
     deleteById: async (request, response) => {
-
-        //je récupère l'id pour vérifier que ce jeu existe bien grâce à la méthode findone()
         const { id } = request.params;
+
         try {
-
-            // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
-            const theArticle = await Article.findOne(id);
-
-
-            await theArticle.deleteById();
-
+            await Article.delete(id);
             response.json(`L'article avec l'id ${id} a bien été supprimé`);
         }
         catch (err) {
+            console.log(err);
             response.status(404).json(`L'article l'id ${id} n'existe pas ou a déjà été supprimé`);
         }
     },
@@ -91,36 +85,42 @@ const articleController = {
         const { id } = request.params;
 
         // je récupère le body qui contient les modifications de notre enregistrement
+        // a récupérer les categories en tableau d'objet
         const data = request.body;
-
+        console.log(data);
         try {
             // je vérifie que le jeu existe bien pour pouvoir ensuite le modifier 
-            const theArticle = await Article.findOne(id);
 
+            // const ArticleCat = await ArticleHasCategory.findOne(id);
             //par mesure de sécurité on supprime la possibilité de modifier l'id 
-            if (data.id) {
-                delete (data.id)
-            }
+            // if (data.id) {
+            //     delete (data.id)
+            // }
 
-            const newdata = theArticle;
+            // const newdata = theArticle;
 
-            console.log('newdata: ', newdata)
-            newdata.updated_at = "NOW()";
+            // console.log('newdata: ', newdata)
+            // newdata.updated_at = "NOW()";
 
-            for (const element in data) {
-                if (typeof newdata[element] !== 'undefined') {
-                    //on modifie newdata qui contient les données actuelles de l'article
-                    // pour chaque clé correspondante on passe à newdata les nouvelles valeurs
-                    newdata[element] = data[element];
-                }
-            }
+            // for (const element in data) {
+            //     if (typeof newdata[element] !== 'undefined') {
+            //         //on modifie newdata qui contient les données actuelles de l'article
+            //         // pour chaque clé correspondante on passe à newdata les nouvelles valeurs
+            //         newdata[element] = data[element];
+            //     }
+            // }
+            data.categories.forEach(async (category) => {
+                await ArticleHasCategory.updateById(category, id)
+            });
 
             //je renvoie le jeu avec ses nouvelles informations en base de données
-            const result = await theArticle.updateById(newdata);
+            // console.log(newdata);
+            const result = await Article.updateById(data, id);
 
             response.json(result);
         }
         catch (err) {
+            console.log(err);
             response.status(404).json(`L'article avec l'id ${id} n'existe pas ou a déjà était supprimé`);
         }
     }
