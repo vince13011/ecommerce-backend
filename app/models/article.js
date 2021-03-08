@@ -42,7 +42,7 @@ class Article {
 
         const article = await db.query(
             `
-                SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
+                SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount", "updated_at" 
                     FROM "article" WHERE id = $1;
             `, [id]
         );
@@ -68,6 +68,12 @@ class Article {
                                     ON size.id = article_size.size_id;
             `, [id]
         );
+        // pour sort by updated_at
+        let string = article.rows[0].updated_at;
+        // j'enlève tous ce qui n'est pas chiffre
+        string = string.toString().replace(/[^\d]/g, '');
+        // updated_at transformé en string
+        article.rows[0].updated_at = string;
         article.rows[0].categories = categorie.rows;
         article.rows[0].sizes = size.rows;
         return article.rows[0];
@@ -84,25 +90,43 @@ class Article {
             rows.push(article);
         }
         if (limit === null) limit = rows.length;
+        // pour la limit splice : prendre de 0 à limit éléments
         rows = rows.splice(0, limit);
+        // on sort du plus petit au plus grand
+        rows = rows.sort((a, b) => { return Number(a.updated_at) - Number(b.updated_at) });
+        // on INVERSE le sorte du plus grand au plus petit
+        rows = rows.reverse();
         return rows.map(article => new Article(article));
     }
 
+
     /** 
-   * Fonction non statique car propre à chaque instance
-   * Elle permet de modifier un jeu de société  dans notre base de donnée
-   * this correspond au contexte qui est utilisé
-   * dans notre cas il correspond aux données de notre jeu de société avant modification
-   * @param {json} data - Objet json venant modifier les données existantes
-   */
-    async updateById(data) {
-
-        const { rows } = await db.query(`SELECT * FROM update_article($1,$2);`, [data, this.id]);
-        if (rows[0].id === null) {
-            throw new Error(`l'article avec l'id  ${this.id} n'existe pas `)
+    * Fonction non statique car propre à chaque instance
+    * Elle permet de modifier un jeu de société  dans notre base de donnée
+    * this correspond au contexte qui est utilisé
+    * dans notre cas il correspond aux données de notre jeu de société avant modification
+    * @param {json} data - Objet json venant modifier les données existantes
+    */
+    static async updateById(data, id) {
+        const { rows } = await db.query(
+            `
+                UPDATE "article" 
+                    SET "reference"=$1, 
+                        "name"=$2, 
+                        "description"=$3,
+                        "image"=$4,
+                        "color"=$5,
+                        "pre_tax_price"=$6,
+                        "vat_rate"=$7,
+                        "discount"=$8
+                    WHERE id=$9;
+            `, [data.reference, data.name, data.description, data.image, data.color, data.pre_tax_price, data.vat_rate, data.discount, id]);
+        if (id === null) {
+            throw new Error(`l'article avec l'id  ${id} n'existe pas `)
         }
-
-        return new Article(rows[0]);
+        const result = await Article.findOne(id);
+        console.log(await Article.findOne(id));
+        return result;
     }
 
     async insert() {
@@ -123,10 +147,8 @@ class Article {
         this.id = rows[0].id;
     }
 
-    async deleteById() {
-
-        const { rows } = await db.query(`DELETE FROM article
-                                    WHERE id = $1`, [this.id]);
+    static async delete(id) {
+        const { rows } = await db.query(`DELETE FROM "article" WHERE id = $1`, [id]);
     }
 
 }
