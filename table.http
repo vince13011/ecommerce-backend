@@ -9,10 +9,10 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=1
+GET {{baseUrl}}/articles?limit=5
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/16
+GET {{baseUrl}}/article/4
 
 ### POST /articles
 POST {{baseUrl}}/article
@@ -39,22 +39,33 @@ Content-Type: application/json
 }
 
 ### PATCH /article/:id
-PATCH {{baseUrl}}/article/3
+PATCH {{baseUrl}}/article/4
 Content-Type: application/json
 
 {
-    "reference":"Capuche12",
+    "reference":"Abdoulla le MOOOOCHE",
     "name": "capuche",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
-    "pre_tax_price": "30",
-    "vat_rate": "20",
-    "discount": "20"
+    "pre_tax_price": 30,
+    "vat_rate": 20,
+    "discount": 20,
+    "categories": [
+        {
+            "category_id": 2,
+            "old_category_id": 3
+        },
+        {
+            "category_id": 1,
+            "old_category_id": 4
+        }
+        
+    ]
 }
 
 ###  DELETE /articles/:id
-DELETE {{baseUrl}}/article/4
+DELETE {{baseUrl}}/article/7
 
 
 # ****************************
@@ -82,7 +93,7 @@ Content-Type: application/json
 }
 
 ### DELETE /categories/:id
-DELETE {{baseUrl}}/categories/1
+DELETE {{baseUrl}}/categorie/1
 
 
 # ****************************
@@ -161,7 +172,7 @@ Content-Type: application/json
 }
 
 ###DELETE /users/:id
-DELETE {{baseUrl}}/users/1
+DELETE {{baseUrl}}/users/4
 
 
 # ****************************
@@ -203,7 +214,7 @@ Content-Type: application/json
 }
 
 ### DELETE /addresses/:id
-DELETE {{baseUrl}}/addresses/1
+DELETE {{baseUrl}}/addresses/5
 
 
 # ****************************
