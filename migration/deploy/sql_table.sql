@@ -72,7 +72,7 @@ CREATE TABLE "order" (
 CREATE TABLE order_has_article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_id posint NOT NULL REFERENCES "order"(id),
-    article_id posint NOT NULL REFERENCES article(id),
+    article_id posint REFERENCES article(id) ON DELETE SET NULL,
     quantity posint NOT NULL DEFAULT 1,
     unit_net_price text NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -82,16 +82,16 @@ CREATE TABLE order_has_article (
 
 CREATE TABLE article_has_size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    article_id posint NOT NULL REFERENCES article(id),
-    size_id posint NOT NULL REFERENCES size(id),
+    article_id posint NOT NULL REFERENCES article(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    size_id posint NOT NULL REFERENCES size(id) ON UPDATE CASCADE,
     stock int DEFAULT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE TABLE article_has_category (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    article_id posint NOT NULL REFERENCES article(id),
-    category_id int NOT NULL REFERENCES category(id)
+    article_id posint NOT NULL REFERENCES article(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    category_id int NOT NULL REFERENCES category(id) ON UPDATE CASCADE
 );
 
 
