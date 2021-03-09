@@ -9,10 +9,9 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=3
+GET {{baseUrl}}/articles?limit=1
 
 ### GET /articles/:id
-
 GET {{baseUrl}}/article/4
 
 

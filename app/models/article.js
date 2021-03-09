@@ -39,7 +39,7 @@ class Article {
     via une requête SQL
     */
     static async findOne(id) {
-
+        
         const results= await db.query( `SELECT 
        article.id,
        article.name,
@@ -57,11 +57,11 @@ class Article {
        LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
        LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
        LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
-       WHERE article.id=$1
-       `
-       
-       ,[id])
-       
+       WHERE article.id=$1`,[id]);
+
+       if (!results.rows[0]){
+        throw new Error(`le jeu avec l'id ${id} n'existe pas `)
+     }
         const dataResults=results.rows
         const data=[]
 
