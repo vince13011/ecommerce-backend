@@ -39,38 +39,59 @@ class Article {
     via une requête SQL
     */
     static async findOne(id) {
+        const results= await db.query( `SELECT 
+       article.id,
+       article.name,
+       article.reference,
+       article.color,
+       article.description,
+       category.title as category,
+       size_name as size,
+       article_has_size.stock,
+       article.pre_tax_price,
+       article.vat_rate,
+       article.discount
+       FROM "article"
+       LEFT JOIN "article_has_category" ON "article_has_category"."article_id" = "article"."id"
+       LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
+       LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
+       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
+       WHERE article.id=$1
+       `
+       
+       ,[id])
+       
+        const dataResults=results.rows
+        const data=[]
 
-        const article = await db.query(
-            `
-                SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount" 
-                    FROM "article" WHERE id = $1;
-            `, [id]
-        );
-        const categorie = await db.query(
-            `
-                SELECT category.id ,"title" 
-                    FROM article_has_category AS article_has_category 
-                        JOIN category AS category 
-                        ON article_has_category.category_id = category.id 
-                            WHERE article_has_category.article_id = $1;
-            `, [id]
-        );
-        const size = await db.query(
-            `
-                SELECT size.id, size.size_name, article_size.stock 
-                    FROM size AS size 
-                    JOIN 
-                    (SELECT * 
-                        FROM article AS article 
-                            JOIN article_has_size AS article_has_size 
-                            ON article_has_size.article_id = article.id 
-                                WHERE article.id = $1) AS "article_size" 
-                                    ON size.id = article_size.size_id;
-            `, [id]
-        );
-        article.rows[0].categories = categorie.rows;
-        article.rows[0].sizes = size.rows;
-        return article.rows[0];
+        for (const result of dataResults) {
+            const category = result.category
+            const size ={size_name:result.size,stock:result.stock}
+            delete result.size;
+            delete result.stock;
+            delete result.category;
+            const dataFound = data.find(elem => elem.id === result.id);
+            if(!dataFound){
+                result.categories=[category]
+                result.sizes=[size]
+                data.push(result)
+            } else{
+              
+             const categoryfound= dataFound.categories.find(e=> e=== category)
+              if(!categoryfound){
+                dataFound.categories.push(category)
+              }
+              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
+              if(!sizeFound){
+                dataFound.sizes.push(size)
+              }
+          }
+          
+        }
+        
+        return data
+       
+       
     }
 
     static async findAll(limit = null) {
