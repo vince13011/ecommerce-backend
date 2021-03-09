@@ -42,13 +42,15 @@ const mainController = {
 
     create: async (req, res) => {
         const data = req.body;
-        console.log(data);
-
         const article = await Article.create({
-            ...data
+            ...data,
+        }, {
+            include: [
+                'categories', 'sizes'
+            ]
         });
         res.json(article);
-    }
+    },
 };
 
 module.exports = mainController;

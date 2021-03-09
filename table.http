@@ -12,21 +12,47 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/1
+GET {{baseUrl}}/article/8
 
 ### POST /articles
-POST {{baseUrl}}/articles
+POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference":"EVYV123",
-    "name": "Jogging addidas",
-    "description":"jogging sport ",
-    "image": "c:/repertoire/image/b",
-    "color":"blanche",
-    "pre_tax_price": "30",
-    "vat_rate": "20",
-    "discount": "20"
+    "reference": "124334",
+    "name": "Pantalon de costume hugo bogoss",
+    "description": "pantalon noir  homme",
+    "image": "https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp",
+    "color": null,
+    "pre_tax_price": 35,
+    "vat_rate": 20,
+    "discount": 5,
+    "categories": [
+        {
+            "title": "chaussures",
+            "article_has_category": {
+                "article_id": 1,
+                "category_id": 4
+            }
+        },
+        {
+        "title": "homme",
+            "article_has_category": {
+            "article_id": 1,
+            "category_id": 3
+            }
+        }
+    ],
+    "sizes": [
+      {
+        "size_name": "L",
+        "article_has_size": {
+          "stock": 12,
+          "article_id": 3,
+          "size_id": 4
+        }
+      }
+    ]
 }
 
 
