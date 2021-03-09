@@ -24,8 +24,8 @@ const orderHasArticleController = require('./controllers/orderHasArticleControll
 router.get('/articles', articleController.getAll);
 router.get('/article/:id', articleController.getOne);
 router.post('/article', articleController.create);
-// router.patch('/article/:id', articleController.updateById);
-// router.delete('/article/:id', articleController.deleteById);
+router.patch('/article/:id', articleController.update);
+router.delete('/article/:id', articleController.delete);
 
 // // CATEGORIES
 // router.get('/categories', categoryController.getAll);

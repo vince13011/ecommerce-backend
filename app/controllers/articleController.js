@@ -1,4 +1,5 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
+const sequelize = require('../database');
 
 const mainController = {
     getAll: async (req, res) => {
@@ -17,10 +18,9 @@ const mainController = {
                     attributes: ['size_name'],
                 }
             ],
-
             limit,
             order: [
-                ['created_at', 'ASC']
+                ['updated_at', 'ASC']
             ]
         });
         res.json(articles);
@@ -50,6 +50,52 @@ const mainController = {
             ]
         });
         res.json(article);
+    },
+
+    update: async (req, res) => {
+        const { id } = req.params;
+        const data = req.body;
+        const oldArticle = await Article.findOne({
+            where: {
+                id,
+            },
+            include: [
+                'categories',
+                'sizes'
+            ],
+        });
+        const article = await Article.update({
+            ...data,
+        }, {
+            where: {
+                id,
+            },
+            include: [
+                'categories', 'sizes'
+            ]
+        });
+        data.categories.forEach(async (category, index) => {
+            console.log('index', index)
+            const newCategoryId = category.article_has_category.category_id;
+            const oldCategoryId = oldArticle.dataValues.categories[index].dataValues.article_has_category.dataValues.category_id;
+            await sequelize.query(`UPDATE "article_has_category" 
+            SET "category_id"=${newCategoryId} 
+            WHERE "article_id"=${id} AND "category_id"=${oldCategoryId}`);
+        });
+        res.json(article)
+    },
+
+    delete: async (req, res) => {
+        console.log('object')
+        try {
+            const { id } = req.params;
+            const article = await Article.findByPk(id);
+            article.destroy();
+            res.json(article);
+        } catch (error) {
+            console.log('error', error)
+        }
+
     },
 };
 
