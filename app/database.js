@@ -1,21 +1,15 @@
-const { Pool } = require('pg');
+const { Sequelize } = require('sequelize');
 
-// db est un pool de connecteurs de base de données
-// avec Heroku, mon Pool va devoir se connecter à DATABASE_URL
-// par contre, en local, il faut qu'il continue de se connecter avec les variables d'environnement de libpq (PGUSER, PGPASSWORD etc.)
-// mais en fait, Pool se débrouille tout seul comme un grand
-
-const config = { connectionString: process.env.DATABASE_URL };
-if (process.env.NODE_ENV === 'production') {
-    config.ssl = {
-        rejectUnauthorized: false
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    define: {
+        underscored: true, // faire correspondre automatiquement camelCase <-> snake_case, si on ne l'écrit pas, sequelize attend une colonne createdAt alors que la colonne se nomme created_at
+        timestamps: false
+    },
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
     }
-}
-console.log(config);
-const db = new Pool(config);
-
-// maintenant, on n'a plus un seul connecteur mais un pool de connecteurs
-module.exports = db;
-
-
-// 
+});
+module.exports = sequelize;

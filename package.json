@@ -12,7 +12,8 @@
     "joi": "^17.3.0",
     "pg": "^8.5.1",
     "postgres": "^1.0.2",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "sequelize": "^6.5.0"
   },
   "devDependencies": {},
   "scripts": {
