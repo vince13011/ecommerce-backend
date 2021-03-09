@@ -112,6 +112,7 @@ const userController = {
         await newAddress.insert();
                 const userWithAddress= await User.findOne(infoUser.id)
                 console.log('userwithaddress',userWithAddress)
+                delete userWithAddress[0].password;
                 response.json(userWithAddress);
             }
         }
@@ -220,7 +221,7 @@ const userController = {
                 // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
-
+                    delete user[0].password;
                     response.json(user)
                 }
                 else {

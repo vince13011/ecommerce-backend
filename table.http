@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/3
+PATCH {{baseUrl}}/article/1
 Content-Type: application/json
 
 {
@@ -121,7 +121,7 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-"email": "g@gmail.com",
+"email": "RdtSZAZzSdzzefvxs@gmail.com",
 "password":"enceneee"
 }
 
@@ -130,7 +130,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"RdtASZAZzSdzfvxs@gmail.com",
+    "email":"RdtSZAZzSdzzefvxs@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"enceneee",
