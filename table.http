@@ -12,13 +12,16 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
+
 GET {{baseUrl}}/article/4
 
-### POST /articles
+
+### POST /article
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
+
     "reference":"EVYV123",
     "name": "vincent jogg addidas",
     "description":"jogging sport ",
@@ -27,33 +30,32 @@ Content-Type: application/json
     "pre_tax_price": "30",
     "vat_rate": "20",
     "discount": "20",
-    "categories": [
-        {"category_id": 3}
-    ],
-    "sizes": [
-        {
-        "size_id": 2,
-        "stock": 1000
-        }
-    ]
+    "categories":2
 }
 
-### PATCH /article/:id
-PATCH {{baseUrl}}/article/3
+
+### PUT /article/:id
+PUT {{baseUrl}}/article/5
 Content-Type: application/json
 
 {
-    "reference":"Capuche12",
+    "reference":"Abdoulla le MOOOOCHE",
     "name": "capuche",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
-    "pre_tax_price": "30",
-    "vat_rate": "20",
-    "discount": "20"
+    "pre_tax_price": 30,
+    "vat_rate": 20,
+    "discount": 20,
+    "categories": [
+        {
+            "category_id": 2,
+            "old_category_id": 3
+        }
+    ]
 }
 
-###  DELETE /articles/:id
+###  DELETE /article/:id
 DELETE {{baseUrl}}/article/4
 
 
@@ -62,27 +64,27 @@ DELETE {{baseUrl}}/article/4
 ###  GET /categories
 GET {{baseUrl}}/categories
 
-### GET /categories/:id
-GET {{baseUrl}}/categories/1
+### GET /category/:id
+GET {{baseUrl}}/category/1
 
-### POST /categories/:id
-POST {{baseUrl}}/categories
+### POST /category/:id
+POST {{baseUrl}}/category
 Content-Type: application/json
 
 {
     "title": "décontracté"
 }
 
-### PATCH /categories/:id
-PATCH {{baseUrl}}/categories/1
+### PUT /category/:id
+PUT {{baseUrl}}/category/1
 Content-Type: application/json
 
 {
     "title": "patch"
 }
 
-### DELETE /categories/:id
-DELETE {{baseUrl}}/categories/1
+### DELETE /category/:id
+DELETE {{baseUrl}}/category/2
 
 
 # ****************************
@@ -90,11 +92,11 @@ DELETE {{baseUrl}}/categories/1
 ###  GET /orders
 GET {{baseUrl}}/orders
 
-### GET /orders/:id
-GET {{baseUrl}}/orders/17
+### GET /order/:id
+GET {{baseUrl}}/order/5
 
-### POST /orders/:id
-POST {{baseUrl}}/orders
+### POST /order/:id
+POST {{baseUrl}}/order
 Content-Type: application/json
 
 {
@@ -103,8 +105,8 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### PATCH /orders/:id
-PATCH {{baseUrl}}/orders/4
+### PUT /order/:id
+PUT {{baseUrl}}/order/4
 Content-Type: application/json
 
 {
@@ -113,8 +115,8 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### DELETE /orders/:id
-DELETE {{baseUrl}}/orders/1
+### DELETE /order/:id
+DELETE {{baseUrl}}/order/1
 
 
 # ****************************
@@ -123,14 +125,14 @@ DELETE {{baseUrl}}/orders/1
 GET {{baseUrl}}/users
 
 ### GET /users/:id
-GET {{baseUrl}}/users/2
+GET {{baseUrl}}/user/2
 
-### POST /users/:id
-POST {{baseUrl}}/users
+### POST /user/
+POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-"email": "g@gmail.com",
+"email": "RdtSZAZzSdzzefvxs@gmail.com",
 "password":"enceneee"
 }
 
@@ -139,16 +141,23 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"g@gmail.com",
+    "email":"RdtSZAZzSdzzefvxs@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"enceneee",
     "passwordConfirm":"enceneee",
     "phone_number":"0123456789",
-    "role_id": 1
+    "role_id": 1,
+    "country": "France",
+    "city": "marignane",
+    "zip_code": "13000",
+    "number": 10,
+    "street_name": "rue de Vincent",
+    "additional":"étage 5",
+    "user_id": 1
 }
-###PATCH /users/:id
-PATCH {{baseUrl}}/users/1
+###PUT /user/:id
+PUT {{baseUrl}}/user/4
 Content-Type: application/json
 
 {
@@ -160,8 +169,8 @@ Content-Type: application/json
     "role_id": 1
 }
 
-###DELETE /users/:id
-DELETE {{baseUrl}}/users/1
+###DELETE /user/:id
+DELETE {{baseUrl}}/user/4
 
 
 # ****************************
@@ -170,12 +179,12 @@ DELETE {{baseUrl}}/users/1
 ###  GET /addresses
 GET {{baseUrl}}/addresses
 
-### GET /addresses/:id
-GET {{baseUrl}}/addresses/1
+### GET /address/:id
+GET {{baseUrl}}/address/1
 
 
-### POST /addresses/:id
-POST {{baseUrl}}/addresses
+### POST /address/:id
+POST {{baseUrl}}/address
 Content-Type: application/json
 
 {
@@ -188,8 +197,8 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### PATCH /addresses/:id
-PATCH {{baseUrl}}/addresses/1
+### PUT /address/:id
+PUT {{baseUrl}}/address/1
 Content-Type: application/json
 
 {
@@ -202,8 +211,8 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### DELETE /addresses/:id
-DELETE {{baseUrl}}/addresses/1
+### DELETE /address/:id
+DELETE {{baseUrl}}/address/1
 
 
 # ****************************
@@ -213,24 +222,24 @@ DELETE {{baseUrl}}/addresses/1
 ###  GET /sizes
 GET {{baseUrl}}/sizes
 
-### GET /sizes/:id
-GET {{baseUrl}}/sizes/3
+### GET /size/:id
+GET {{baseUrl}}/size/3
 
 
-### POST /sizes/
-POST {{baseUrl}}/sizes
+### POST /size/
+POST {{baseUrl}}/size
 Content-Type: application/json
 
 {
     "size_name": "taille 1"
 }
 
-### PATCH /sizes/:id
-PATCH {{baseUrl}}/sizes/3
+### PUT /size/:id
+PUT {{baseUrl}}/size/3
 Content-Type: application/json
 
 {
     "size_name": "S-28"
 }
-### DELETE /sizes/:id
-DELETE {{baseUrl}}/sizes/10
+### DELETE /size/:id
+DELETE {{baseUrl}}/size/11

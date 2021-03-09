@@ -59,6 +59,7 @@ class User {
     
        static async findByEmail(email) {
         const { rows } = await db.query(`SELECT * FROM "user"
+                                         JOIN "address" on "user".id = user_id
                                          WHERE "user".email =$1;`, [email]);
         console.log(rows[0])
         if (rows[0]=== undefined) {

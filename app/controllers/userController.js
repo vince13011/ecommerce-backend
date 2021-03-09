@@ -2,7 +2,7 @@ const { response } = require('express');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const emailValidator = require('email-validator');
-const { findOne } = require('../models/user');
+const Address = require('../models/address');
 
 const userController = {
 
@@ -79,7 +79,7 @@ const userController = {
 
             else {
                 const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
-                const newUser = new User({
+                const infoUser = new User({
                     email: newUserData.email,
                     firstname: newUserData.firstname,
                     lastname: newUserData.lastname,
@@ -87,9 +87,33 @@ const userController = {
                     phone_number: newUserData.phone_number,
                     role_id: newUserData.role_id
                 });
+                console.log('infoUser avant :',infoUser);
+                 await infoUser.insert();
+                 console.log('infoUser après :',infoUser);
+                 console.log('infoUser id :',infoUser.id);
 
-                await newUser.insert();
-                response.json(newUser);
+
+                  // les infos de l'address à ajouter
+            const newAddressData ={
+                country: newUserData.country,
+                city: newUserData.city,
+                zip_code: newUserData.zip_code,
+                number: newUserData.number,
+                street_name: newUserData.street_name,
+                additional: newUserData.additional,
+                user_id: infoUser.id
+
+             };
+        console.log('newAddressdata: ', newAddressData)
+        
+        const newAddress = new Address(newAddressData);
+        console.log('newAddress: ', newAddress)
+
+        await newAddress.insert();
+                const userWithAddress= await User.findOne(infoUser.id)
+                console.log('userwithaddress',userWithAddress)
+                delete userWithAddress[0].password;
+                response.json(userWithAddress);
             }
         }
     },
@@ -182,12 +206,14 @@ const userController = {
             // si le user est null on redirige sur la page d'inscription 
             if (!user) {
                 errors.push('Veuillez vérifier vos identifiants');
+                
                 response.json({ errors });
             }
             else {
                 // si on a trouvé un utilisateur, il va falloir comparer le mdp
                 // des données en post avec le hash de la BDD
                 // pour faire ça bcrypt propose une fonction compareSync
+                console.log('user :',user)
                 const isValidPassword = bcrypt.compareSync(request.body.password, user[0].password);
                 console.log('isValidPassword : ', isValidPassword)
 
@@ -195,7 +221,7 @@ const userController = {
                 // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
-
+                    delete user[0].password;
                     response.json(user)
                 }
                 else {

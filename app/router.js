@@ -24,32 +24,29 @@ const orderHasArticleController = require('./controllers/orderHasArticleControll
 router.get('/articles', articleController.getAll);
 router.get('/article/:id', articleController.getOne);
 router.post('/article', articleController.create);
-router.patch('/article/:id', articleController.updateById);
+router.put('/article/:id', articleController.updateById);
 router.delete('/article/:id', articleController.deleteById);
 
 // CATEGORIES
 router.get('/categories', categoryController.getAll);
-router.get('/categories/:id', categoryController.getOne);
-router.post('/categories', categoryController.create);
-router.patch('/categories/:id', categoryController.updateById);
-router.delete('/categories/:id', categoryController.deleteById);
+router.get('/category/:id', categoryController.getOne);
+router.post('/category', categoryController.create);
+router.put('/category/:id', categoryController.updateById);
+router.delete('/category/:id', categoryController.deleteById);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
-router.get('/orders/:id', orderController.getOne);
-router.post('/orders', orderController.create);
-router.patch('/orders/:id', orderController.updateById);
-router.delete('/orders/:id', orderController.deleteById);
+router.get('/order/:id', orderController.getOne);
+router.post('/order', orderController.create);
+router.put('/order/:id', orderController.updateById);
+router.delete('/order/:id', orderController.deleteById);
 
 // USERS
 router.get('/users', userController.getAll);
-router.get('/users/:id', userController.getOne);
-// *******************************************
-// connecter un user ???
-// *******************************************
-router.post('/users', userController.login);
-router.patch('/users/:id', userController.updateById);
-router.delete('/users/:id', userController.deleteById);
+router.get('/user/:id', userController.getOne);
+router.post('/user', userController.login);
+router.put('/user/:id', userController.updateById);
+router.delete('/user/:id', userController.deleteById);
 
 
 // CREER UN NOUVEL UTILISATEUR
@@ -58,18 +55,18 @@ router.post('/signup', userController.create);
 
 // ADDRESSES
 router.get('/addresses', addressController.getAll);
-router.get('/addresses/:id', addressController.getOne);
-router.post('/addresses', addressController.create);
-router.patch('/addresses/:id', addressController.updateById);
-router.delete('/addresses/:id', addressController.deleteById);
+router.get('/address/:id', addressController.getOne);
+router.post('/address', addressController.create);
+router.put('/address/:id', addressController.updateById);
+router.delete('/address/:id', addressController.deleteById);
 
 
 // SIZES
 router.get('/sizes', sizeController.getAll);
-router.get('/sizes/:id', sizeController.getOne);
-router.post('/sizes', sizeController.create);
-router.patch('/sizes/:id', sizeController.updateById);
-router.delete('/sizes/:id', sizeController.deleteById);
+router.get('/size/:id', sizeController.getOne);
+router.post('/size', sizeController.create);
+router.put('/size/:id', sizeController.updateById);
+router.delete('/size/:id', sizeController.deleteById);
 
 
 // ARTICLE_HAS_CATEGORY
