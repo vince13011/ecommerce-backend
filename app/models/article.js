@@ -151,5 +151,7 @@ class Article {
         const { rows } = await db.query(`DELETE FROM "article" WHERE id = $1`, [id]);
     }
 
+    // phrase pour push
+
 }
 module.exports = Article;
