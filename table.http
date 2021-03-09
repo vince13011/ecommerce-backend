@@ -12,15 +12,18 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/1
+
+GET {{baseUrl}}/article/4
+
 
 ### POST /article
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference":"EVV2123",
-    "name": "Jogging addidas",
+
+    "reference":"EVYV123",
+    "name": "vincent jogg addidas",
     "description":"jogging sport ",
     "image": "c:/repertoire/image/b",
     "color":"blanche",
