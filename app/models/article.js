@@ -74,18 +74,52 @@ class Article {
     }
 
     static async findAll(limit = null) {
+       const results= await db.query( `SELECT 
+       article.id,
+       article.name,
+       article.reference,
+       article.color,
+       article.description,
+       category.title as category,
+       size_name as size,
+       article_has_size.stock,
+       article.pre_tax_price,
+       article.vat_rate,
+       article.discount
+       FROM "article"
+       LEFT JOIN "article_has_category" ON "article_has_category"."article_id" = "article"."id"
+       LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
+       LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
+       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"`)
+        const dataResults=results.rows
+        const data=[]
 
-        let articlesId = await db.query(`SELECT id FROM "article"`);
-        articlesId = articlesId.rows;
-        let rows = [];
-        for (let index = 0; index < articlesId.length; index++) {
-            const { id } = articlesId[index];
-            const article = await this.findOne(id);
-            rows.push(article);
+        for (const result of dataResults) {
+            const category = result.category
+            const size ={size_name:result.size,stock:result.stock}
+            delete result.size;
+            delete result.stock;
+            delete result.category;
+            const dataFound = data.find(elem => elem.id === result.id);
+            if(!dataFound){
+                result.categories=[category]
+                result.sizes=[size]
+                data.push(result)
+            } else{
+              
+             const categoryfound= dataFound.categories.find(e=> e=== category)
+              if(!categoryfound){
+                dataFound.categories.push(category)
+              }
+              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
+              if(!sizeFound){
+                dataFound.sizes.push(size)
+              }
+          }
+          
         }
-        if (limit === null) limit = rows.length;
-        rows = rows.splice(0, limit);
-        return rows.map(article => new Article(article));
+        
+        return data
     }
 
     /** 

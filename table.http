@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=1
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/16
+GET {{baseUrl}}/article/1
 
 ### POST /articles
 POST {{baseUrl}}/article
