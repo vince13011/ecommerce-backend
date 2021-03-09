@@ -1,13 +1,13 @@
 const { DataTypes, Model } = require('sequelize');
 const connection = require('../database');
 
-class Category extends Model { };
+class Role extends Model { };
 
-Category.init({
-    title: DataTypes.TEXT
+Role.init({
+    name: DataTypes.TEXT,
 }, {
     sequelize: connection,
-    tableName: "category",
+    tableName: "role"
 });
 
-module.exports = Category;
+module.exports = Role;
