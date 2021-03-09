@@ -9,7 +9,7 @@
 GET {{baseUrl}}/articles
 
 ### GET /articles
-GET {{baseUrl}}/articles?limit=1
+GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
 GET {{baseUrl}}/article/4
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
     "reference":"EVYV123",
-    "name": "Jogging addidas",
+    "name": "vincent jogg addidas",
     "description":"jogging sport ",
     "image": "c:/repertoire/image/b",
     "color":"blanche",

@@ -106,12 +106,15 @@ class Article {
        article_has_size.stock,
        article.pre_tax_price,
        article.vat_rate,
-       article.discount
+       article.discount,
+       article.updated_at
        FROM "article"
        LEFT JOIN "article_has_category" ON "article_has_category"."article_id" = "article"."id"
        LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
        LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
-       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"`)
+       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
+       ORDER BY article.updated_at DESC
+       LIMIT $1`,[limit])
         const dataResults=results.rows
         const data=[]
 
