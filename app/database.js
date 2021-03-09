@@ -16,3 +16,6 @@ const db = new Pool(config);
 
 // maintenant, on n'a plus un seul connecteur mais un pool de connecteurs
 module.exports = db;
+
+
+// 
