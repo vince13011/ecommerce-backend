@@ -65,7 +65,7 @@ class User {
         if (rows[0]=== undefined) {
            return null
         }
-
+        
         return rows.map(user => new User(user)); 
        }   
 

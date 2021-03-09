@@ -39,64 +39,112 @@ class Article {
     via une requête SQL
     */
     static async findOne(id) {
+        
+        const results= await db.query( `SELECT 
+       article.id,
+       article.name,
+       article.reference,
+       article.color,
+       article.description,
+       category.title as category,
+       size_name as size,
+       article_has_size.stock,
+       article.pre_tax_price,
+       article.vat_rate,
+       article.discount
+       FROM "article"
+       LEFT JOIN "article_has_category" ON "article_has_category"."article_id" = "article"."id"
+       LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
+       LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
+       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
+       WHERE article.id=$1`,[id]);
 
-        const article = await db.query(
-            `
-                SELECT "id", "reference", "name", "description", "image", "color", "pre_tax_price", "vat_rate", "discount", "updated_at" 
-                    FROM "article" WHERE id = $1;
-            `, [id]
-        );
-        const categorie = await db.query(
-            `
-                SELECT category.id ,"title" 
-                    FROM article_has_category AS article_has_category 
-                        JOIN category AS category 
-                        ON article_has_category.category_id = category.id 
-                            WHERE article_has_category.article_id = $1;
-            `, [id]
-        );
-        const size = await db.query(
-            `
-                SELECT size.id, size.size_name, article_size.stock 
-                    FROM size AS size 
-                    JOIN 
-                    (SELECT * 
-                        FROM article AS article 
-                            JOIN article_has_size AS article_has_size 
-                            ON article_has_size.article_id = article.id 
-                                WHERE article.id = $1) AS "article_size" 
-                                    ON size.id = article_size.size_id;
-            `, [id]
-        );
-        // pour sort by updated_at
-        let string = article.rows[0].updated_at;
-        // j'enlève tous ce qui n'est pas chiffre
-        string = string.toString().replace(/[^\d]/g, '');
-        // updated_at transformé en string
-        article.rows[0].updated_at = string;
-        article.rows[0].categories = categorie.rows;
-        article.rows[0].sizes = size.rows;
-        return article.rows[0];
+       if (!results.rows[0]){
+        throw new Error(`le jeu avec l'id ${id} n'existe pas `)
+     }
+        const dataResults=results.rows
+        const data=[]
+
+        for (const result of dataResults) {
+            const category = result.category
+            const size ={size_name:result.size,stock:result.stock}
+            delete result.size;
+            delete result.stock;
+            delete result.category;
+            const dataFound = data.find(elem => elem.id === result.id);
+            if(!dataFound){
+                result.categories=[category]
+                result.sizes=[size]
+                data.push(result)
+            } else{
+              
+             const categoryfound= dataFound.categories.find(e=> e=== category)
+              if(!categoryfound){
+                dataFound.categories.push(category)
+              }
+              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
+              if(!sizeFound){
+                dataFound.sizes.push(size)
+              }
+          }
+          
+        }
+        
+        return data
+       
+       
+
     }
 
     static async findAll(limit = null) {
+       const results= await db.query( `SELECT 
+       article.id,
+       article.name,
+       article.reference,
+       article.color,
+       article.description,
+       category.title as category,
+       size_name as size,
+       article_has_size.stock,
+       article.pre_tax_price,
+       article.vat_rate,
+       article.discount,
+       article.updated_at
+       FROM "article"
+       LEFT JOIN "article_has_category" ON "article_has_category"."article_id" = "article"."id"
+       LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
+       LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
+       LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
+       ORDER BY article.updated_at DESC
+       LIMIT $1`,[limit])
+        const dataResults=results.rows
+        const data=[]
 
-        let articlesId = await db.query(`SELECT id FROM "article"`);
-        articlesId = articlesId.rows;
-        let rows = [];
-        for (let index = 0; index < articlesId.length; index++) {
-            const { id } = articlesId[index];
-            const article = await this.findOne(id);
-            rows.push(article);
+        for (const result of dataResults) {
+            const category = result.category
+            const size ={size_name:result.size,stock:result.stock}
+            delete result.size;
+            delete result.stock;
+            delete result.category;
+            const dataFound = data.find(elem => elem.id === result.id);
+            if(!dataFound){
+                result.categories=[category]
+                result.sizes=[size]
+                data.push(result)
+            } else{
+              
+             const categoryfound= dataFound.categories.find(e=> e=== category)
+              if(!categoryfound){
+                dataFound.categories.push(category)
+              }
+              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
+              if(!sizeFound){
+                dataFound.sizes.push(size)
+              }
+          }
+          
         }
-        if (limit === null) limit = rows.length;
-        // pour la limit splice : prendre de 0 à limit éléments
-        rows = rows.splice(0, limit);
-        // on sort du plus petit au plus grand
-        rows = rows.sort((a, b) => { return Number(a.updated_at) - Number(b.updated_at) });
-        // on INVERSE le sorte du plus grand au plus petit
-        rows = rows.reverse();
-        return rows.map(article => new Article(article));
+        return data
     }
 
 
