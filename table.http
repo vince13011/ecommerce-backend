@@ -56,8 +56,8 @@ Content-Type: application/json
 }
 
 
-### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/3
+### PUT /articles/:id
+PUT {{baseUrl}}/articles/3
 Content-Type: application/json
 
 {
@@ -101,12 +101,12 @@ Content-Type: application/json
     "title": "décontracté"
 }
 
-### PATCH /categories/:id
-PATCH {{baseUrl}}/categories/1
+### PUT /categories/:id
+PUT {{baseUrl}}/categories/1
 Content-Type: application/json
 
 {
-    "title": "patch"
+    "title": "PUT"
 }
 
 ### DELETE /categories/:id
@@ -131,8 +131,8 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### PATCH /orders/:id
-PATCH {{baseUrl}}/orders/4
+### PUT /orders/:id
+PUT {{baseUrl}}/orders/4
 Content-Type: application/json
 
 {
@@ -183,21 +183,21 @@ Content-Type: application/json
     "additional":"étage 5",
     "userId": 1
 }
-###PATCH /users/:id
-PATCH {{baseUrl}}/users/1
+###PUT /users/:id
+PUT {{baseUrl}}/users/1
 Content-Type: application/json
 
 {
-    "email":"chuvak@gmail.com",
-    "firstname":"test patch",
-    "lastname":"patch",
+    "email":"chvak@gmail.com",
+    "firstname":"test PUT",
+    "lastname":"PUT",
     "password":"brbr",
     "phone_number":"000123456789",
     "role_id": 1
 }
 
 ###DELETE /users/:id
-DELETE {{baseUrl}}/users/4
+DELETE {{baseUrl}}/users/2
 
 
 # ****************************
@@ -224,8 +224,8 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### PATCH /addresses/:id
-PATCH {{baseUrl}}/addresses/1
+### PUT /addresses/:id
+PUT {{baseUrl}}/addresses/1
 Content-Type: application/json
 
 {
@@ -261,8 +261,8 @@ Content-Type: application/json
     "size_name": "taille 1"
 }
 
-### PATCH /sizes/:id
-PATCH {{baseUrl}}/sizes/3
+### PUT /sizes/:id
+PUT {{baseUrl}}/sizes/3
 Content-Type: application/json
 
 {

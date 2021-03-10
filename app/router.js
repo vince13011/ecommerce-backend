@@ -24,21 +24,21 @@ const orderHasArticleController = require('./controllers/orderHasArticleControll
 router.get('/articles', articleController.getAll);
 router.get('/article/:id', articleController.getOne);
 router.post('/article', articleController.create);
-router.patch('/article/:id', articleController.update);
+router.put('/article/:id', articleController.update);
 router.delete('/article/:id', articleController.delete);
 
 // // CATEGORIES
 // router.get('/categories', categoryController.getAll);
 // router.get('/categories/:id', categoryController.getOne);
 // router.post('/categories', categoryController.create);
-// router.patch('/categorie/:id', categoryController.updateById);
+// router.put('/categorie/:id', categoryController.updateById);
 // router.delete('/categorie/:id', categoryController.deleteById);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
 router.get('/orders/:id', orderController.getOne);
 // router.post('/orders', orderController.create);
-// router.patch('/orders/:id', orderController.updateById);
+// router.put('/orders/:id', orderController.updateById);
 // router.delete('/orders/:id', orderController.deleteById);
 
 // // USERS
@@ -47,8 +47,8 @@ router.get('/orders/:id', orderController.getOne);
 
 // // connecter un user ???
 router.post('/users', userController.login);
-// router.patch('/users/:id', userController.updateById);
-// router.delete('/users/:id', userController.deleteById);
+router.put('/users/:id', userController.updateById);
+router.delete('/users/:id', userController.deleteById);
 
 
 // // CREER UN NOUVEL UTILISATEUR
@@ -59,7 +59,7 @@ router.post('/signup', userController.create);
 // router.get('/addresses', addressController.getAll);
 // router.get('/addresses/:id', addressController.getOne);
 // router.post('/addresses', addressController.create);
-// router.patch('/addresses/:id', addressController.updateById);
+// router.put('/addresses/:id', addressController.updateById);
 // router.delete('/addresses/:id', addressController.deleteById);
 
 
@@ -67,7 +67,7 @@ router.post('/signup', userController.create);
 // router.get('/sizes', sizeController.getAll);
 // router.get('/sizes/:id', sizeController.getOne);
 // router.post('/sizes', sizeController.create);
-// router.patch('/sizes/:id', sizeController.updateById);
+// router.put('/sizes/:id', sizeController.updateById);
 // router.delete('/sizes/:id', sizeController.deleteById);
 
 

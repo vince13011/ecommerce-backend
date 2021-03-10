@@ -245,7 +245,27 @@ const userController = {
                 }
             }
         }
+    },
+    updateById:async (req,res)=>{
+        const {id} = req.params;
+        const data = req.body;
+        //const oldUser = await User.findOne({where:{id}});
+        await User.update({ ...data},{where: {id}})
+        const newUser = await User.findByPk(id)
+        res.json(newUser)  
+    },
+    deleteById:async(req,res)=>{
+        try{
+        const {id} = req.params;
+        console.log('id:',id)
+        const user = await User.findByPk(id);
+        User.destroy({where:{id}})
+        //await user.destroy();
+        res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+        }
+        catch{
+            res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
+        }
     }
-        
-    }
+}
 module.exports = userController;
