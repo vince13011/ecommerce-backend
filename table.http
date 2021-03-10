@@ -94,7 +94,7 @@ GET {{baseUrl}}/orders
 ### GET /order/:id
 GET {{baseUrl}}/order/5
 
-### POST /order/:id
+### POST /order
 POST {{baseUrl}}/order
 Content-Type: application/json
 
