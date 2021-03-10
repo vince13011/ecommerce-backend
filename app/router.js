@@ -74,14 +74,14 @@ router.delete('/size/:id', sizeController.delete);
 
 
 // // ARTICLE_HAS_CATEGORY
-// router.get('/category/article', articleHasCategoryController.getAll);
-// router.get('/category/:id/article', articleHasCategoryController.getAllInCategory);
-// router.post('/category/article', articleHasCategoryController.create);
+router.get('/article-has-category', articleHasCategoryController.getAll);
+router.get('/article-has-category/:id', articleHasCategoryController.getOne);
+// router.post('/article-has-size', articleHasCategoryController.create);
 
 // // ARTICLE_HAS_SIZE
 router.get('/article-has-size', articleHasSizeController.getAll);
 router.get('/article-has-size/:id', articleHasSizeController.getOne);
-router.post('/article-has-size', articleHasSizeController.create);
+// router.post('/article-has-size', articleHasSizeController.create);
 
 // // ORDER_HAS_ARTICLE
 // router.get('/order/article', orderHasArticleController.getAll);

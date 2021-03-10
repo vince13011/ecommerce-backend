@@ -1,5 +1,6 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
 const articleHasSizeController = require('./articleHasSizeController');
+const articleHasCategoryController = require('./articleHasCategoryController');
 const sequelize = require('../database');
 
 const articleController = {
@@ -52,29 +53,9 @@ const articleController = {
         // console.log(newArticleId);
 
         // 2) LIER des CATEGORIES à l'article
-        if (data.categories !== []) {
-            data.categories.forEach(async (category) => {
-
-                const resCategory = await Category.findOne({
-                    attributes:
-                        ["id", "title"],
-                    where: { title: category }
-                });
-
-                // on récupère l'id de la categorie choisie par l'utilisateur en front
-                const categoryId = resCategory.dataValues.id;
-                // console.log('category id :', categoryId);
-
-                // on insert dans la table de liaison article_has_category
-                // une nouvelle colonne de relation entre article et categorie
-                await sequelize.query(`
-                    INSERT INTO "article_has_category" 
-                        ("category_id", "article_id") 
-                        VALUES 
-                        (${categoryId}, ${newArticleId});
-                `);
-            });
-        }
+        data.categories.forEach(async (category) => {
+            articleHasCategoryController.create(newArticleId, category);
+        });
 
         // 3) LIER des SIZES à l'article
         data.sizes.forEach(async (size) => {

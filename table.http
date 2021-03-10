@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/16
+GET {{baseUrl}}/article/17
 
 ### POST
 POST {{baseUrl}}/article
@@ -28,7 +28,9 @@ Content-Type: application/json
     "vat_rate": 20,
     "discount": 30,
     "categories": [
-        "homme"
+        {
+        "title": "homme"
+        }
     ],
     "sizes": [
       {
