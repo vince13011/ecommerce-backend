@@ -10,14 +10,15 @@ const testSchema = require('./joiSchemas/testSchema');
 // CONTROLLERS
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
+const sizeController = require('./controllers/sizeController');
+const articleHasSizeController = require('./controllers/articleHasSizeController')
+
 const orderController = require('./controllers/orderController');
+const orderHasArticleController = require('./controllers/orderHasArticleController')
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
-const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
 
-const articleHasSizeController = require('./controllers/articleHasSizeController')
-const orderHasArticleController = require('./controllers/orderHasArticleController')
 
 
 // ARTICLES
@@ -28,11 +29,11 @@ router.patch('/article/:id', articleController.update);
 router.delete('/article/:id', articleController.delete);
 
 // // CATEGORIES
-// router.get('/categories', categoryController.getAll);
-// router.get('/categories/:id', categoryController.getOne);
-// router.post('/categories', categoryController.create);
-// router.patch('/categorie/:id', categoryController.updateById);
-// router.delete('/categorie/:id', categoryController.deleteById);
+router.get('/categories', categoryController.getAll);
+router.get('/category/:id', categoryController.getOne);
+router.post('/category', categoryController.create);
+router.patch('/category/:id', categoryController.update);
+router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
@@ -65,22 +66,22 @@ router.get('/orders/:id', orderController.getOne);
 
 
 // // SIZES
-// router.get('/sizes', sizeController.getAll);
-// router.get('/sizes/:id', sizeController.getOne);
-// router.post('/sizes', sizeController.create);
-// router.patch('/sizes/:id', sizeController.updateById);
-// router.delete('/sizes/:id', sizeController.deleteById);
+router.get('/sizes', sizeController.getAll);
+router.get('/size/:id', sizeController.getOne);
+router.post('/sizes', sizeController.create);
+router.patch('/size/:id', sizeController.update);
+router.delete('/size/:id', sizeController.delete);
 
 
 // // ARTICLE_HAS_CATEGORY
-// router.get('/category/article', articleHasCategoryController.getAll);
-// router.get('/category/:id/article', articleHasCategoryController.getAllInCategory);
-// router.post('/category/article', articleHasCategoryController.create);
+router.get('/article-has-category', articleHasCategoryController.getAll);
+router.get('/article-has-category/:id', articleHasCategoryController.getOne);
+// router.post('/article-has-size', articleHasCategoryController.create);
 
 // // ARTICLE_HAS_SIZE
-// router.get('/size/article', articleHasSizeController.getAll);
-// router.get('/size/:id/article', articleHasSizeController.getAllInSize);
-// router.post('/size/article', articleHasSizeController.create);
+router.get('/article-has-size', articleHasSizeController.getAll);
+router.get('/article-has-size/:id', articleHasSizeController.getOne);
+// router.post('/article-has-size', articleHasSizeController.create);
 
 // // ORDER_HAS_ARTICLE
 // router.get('/order/article', orderHasArticleController.getAll);

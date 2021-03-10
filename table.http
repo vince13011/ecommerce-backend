@@ -5,123 +5,98 @@
 @baseUrl = {{protocol}}://{{domainname}}:{{port}}/{{path}}
 
 
-### GET /articles
+### GET
 GET {{baseUrl}}/articles
 
-### GET /articles
+### GET
 GET {{baseUrl}}/articles?limit=3
 
-### GET /articles/:id
-GET {{baseUrl}}/article/8
+### GET
+GET {{baseUrl}}/article/17
 
-### POST /articles
+### POST
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference": "124334",
-    "name": "Pantalon de costume hugo bogoss",
-    "description": "pantalon noir  homme",
-    "image": "https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp",
-    "color": null,
-    "pre_tax_price": 35,
+    "reference": "222222",
+    "name": "Chuvak",
+    "description": "blanc",
+    "image": "image/link",
+    "color": "blue",
+    "pre_tax_price": 10,
     "vat_rate": 20,
-    "discount": 5,
+    "discount": 30,
     "categories": [
         {
-            "title": "chaussures",
-            "article_has_category": {
-                "article_id": 1,
-                "category_id": 4
-            }
-        },
-        {
-        "title": "homme",
-            "article_has_category": {
-            "article_id": 1,
-            "category_id": 3
-            }
+        "title": "homme"
         }
     ],
     "sizes": [
       {
         "size_name": "L",
-        "article_has_size": {
-          "stock": 12,
-          "article_id": 3,
-          "size_id": 4
-        }
+        "stock": 12
+      },
+      {
+        "size_name": "M",
+        "stock": 10
       }
     ]
 }
 
 
-### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/3
+### PATCH
+PATCH {{baseUrl}}/article/1
 Content-Type: application/json
 
 {
-    "reference":"Abdoulla le MOOOOCHE",
+    "reference":"1402303239",
     "name": "capuche",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
     "pre_tax_price": 30,
     "vat_rate": 20,
-    "discount": 20,
-    "categories": [
-        {
-            "category_id": 2,
-            "old_category_id": 3
-        },
-        {
-            "category_id": 1,
-            "old_category_id": 4
-        }
-        
-    ]
+    "discount": 20
 }
 
-###  DELETE /articles/:id
-DELETE {{baseUrl}}/articles/4
+### DELETE
+DELETE {{baseUrl}}/article/1
 
-# ****************************
-# ****************************
-###  GET /categories
+
+### GET
 GET {{baseUrl}}/categories
 
-### GET /categories/:id
-GET {{baseUrl}}/categories/1
+### GET
+GET {{baseUrl}}/category/11
 
-### POST /categories/:id
-POST {{baseUrl}}/categories
+### POST 
+POST {{baseUrl}}/category
 Content-Type: application/json
 
 {
     "title": "décontracté"
 }
 
-### PATCH /categories/:id
-PATCH {{baseUrl}}/categories/1
+### PATCH
+PATCH {{baseUrl}}/category/11
 Content-Type: application/json
 
 {
-    "title": "patch"
+    "title": "test"
 }
 
-### DELETE /categories/:id
-DELETE {{baseUrl}}/categorie/1
+### DELETE
+DELETE {{baseUrl}}/category/11
 
 
-# ****************************
-# ****************************
-###  GET /orders
+### GET
 GET {{baseUrl}}/orders
 
-### GET /orders/:id
+### GET
 GET {{baseUrl}}/orders/5
 
-### POST /orders/:id
+### POST
 POST {{baseUrl}}/orders
 Content-Type: application/json
 
@@ -131,7 +106,7 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### PATCH /orders/:id
+### PATCH
 PATCH {{baseUrl}}/orders/4
 Content-Type: application/json
 
@@ -141,19 +116,17 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### DELETE /orders/:id
+### DELETE
 DELETE {{baseUrl}}/orders/1
 
 
-# ****************************
-# **************************** 
-### GET /users
+### GET
 GET {{baseUrl}}/users
 
-### GET /users/:id
+### GET
 GET {{baseUrl}}/users/2
 
-### POST /users/
+### POST
 POST {{baseUrl}}/users
 Content-Type: application/json
 
@@ -162,7 +135,7 @@ Content-Type: application/json
 "password":"enceneee"
 }
 
-###POST /signup/
+### POST
 POST {{baseUrl}}/signup
 Content-Type: application/json
 
@@ -182,7 +155,7 @@ Content-Type: application/json
     "additional":"étage 5",
     "user_id": 1
 }
-###PATCH /users/:id
+### PATCH
 PATCH {{baseUrl}}/users/1
 Content-Type: application/json
 
@@ -195,21 +168,18 @@ Content-Type: application/json
     "role_id": 1
 }
 
-###DELETE /users/:id
+### DELETE
 DELETE {{baseUrl}}/users/4
 
 
-# ****************************
-# ****************************
-# ADDRESS
-###  GET /addresses
+### GET
 GET {{baseUrl}}/addresses
 
-### GET /addresses/:id
+### GET
 GET {{baseUrl}}/addresses/1
 
 
-### POST /addresses/:id
+### POST
 POST {{baseUrl}}/addresses
 Content-Type: application/json
 
@@ -223,7 +193,7 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### PATCH /addresses/:id
+### PATCH
 PATCH {{baseUrl}}/addresses/1
 Content-Type: application/json
 
@@ -237,35 +207,32 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### DELETE /addresses/:id
+### DELETE
 DELETE {{baseUrl}}/addresses/5
 
 
-# ****************************
-# ****************************
-
 # SIZES
-###  GET /sizes
+### GET
 GET {{baseUrl}}/sizes
 
-### GET /sizes/:id
-GET {{baseUrl}}/sizes/3
+### GET
+GET {{baseUrl}}/size/14
 
 
-### POST /sizes/
+### POST
 POST {{baseUrl}}/sizes
 Content-Type: application/json
 
 {
-    "size_name": "taille 1"
+    "size_name": "taille test"
 }
 
-### PATCH /sizes/:id
-PATCH {{baseUrl}}/sizes/3
+### PATCH
+PATCH {{baseUrl}}/size/2
 Content-Type: application/json
 
 {
-    "size_name": "S-28"
+    "size_name": "45"
 }
-### DELETE /sizes/:id
-DELETE {{baseUrl}}/sizes/10
+### DELETE
+DELETE {{baseUrl}}/size/12
