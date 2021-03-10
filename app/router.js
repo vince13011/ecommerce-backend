@@ -10,15 +10,15 @@ const testSchema = require('./joiSchemas/testSchema');
 // CONTROLLERS
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
+const sizeController = require('./controllers/sizeController');
+const articleHasSizeController = require('./controllers/articleHasSizeController')
+
 const orderController = require('./controllers/orderController');
+const orderHasArticleController = require('./controllers/orderHasArticleController')
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
-const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
 
-// article_has_size
-const articleHasSizeController = require('./controllers/articleHasSizeController')
-const orderHasArticleController = require('./controllers/orderHasArticleController')
 
 
 // ARTICLES
@@ -79,9 +79,9 @@ router.delete('/size/:id', sizeController.delete);
 // router.post('/category/article', articleHasCategoryController.create);
 
 // // ARTICLE_HAS_SIZE
-router.get('/size/article', articleHasSizeController.getAll);
-router.get('/size/:id/article', articleHasSizeController.getOne);
-router.post('/size/article', articleHasSizeController.create);
+router.get('/article-has-size', articleHasSizeController.getAll);
+router.get('/article-has-size/:id', articleHasSizeController.getOne);
+router.post('/article-has-size', articleHasSizeController.create);
 
 // // ORDER_HAS_ARTICLE
 // router.get('/order/article', orderHasArticleController.getAll);

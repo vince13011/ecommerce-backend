@@ -1,4 +1,5 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
+const articleHasSizeController = require('./articleHasSizeController');
 const sequelize = require('../database');
 
 const articleController = {
@@ -43,11 +44,14 @@ const articleController = {
     create: async (req, res) => {
         const data = req.body;
 
+
         // 1) je crée l'article avec les req.body
         const article = await Article.create({ ...data });
 
         const newArticleId = article.dataValues.id;
         // console.log(newArticleId);
+
+        articleHasSizeController.create(newArticleId, data);
 
         // 2) LIER des CATEGORIES à l'article
         if (data.categories !== []) {

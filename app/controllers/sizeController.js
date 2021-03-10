@@ -12,11 +12,7 @@ const sizeController = {
 
     getOne: async (req, res) => {
         const { id } = req.params;
-        const response = await Size.findOne({
-            where: {
-                id,
-            }
-        });
+        const response = await Size.findByPk(id);
         res.json(response);
     },
 

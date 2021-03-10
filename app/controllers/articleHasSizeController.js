@@ -4,9 +4,7 @@ const sequelize = require('../database');
 const articleHasSizeController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
-        const response = await ArticleHasSize.findAll({
-            limit: limit,
-        });
+        const response = await ArticleHasSize.findAll();
         res.json(response);
     },
 
@@ -20,94 +18,94 @@ const articleHasSizeController = {
         res.json(response);
     },
 
-    create: async (req, res) => {
-        /* Voici la structure que doit avoir le req.body
-        {
-            "stock": 20,
-            "article_id": 2,
-            "size_id": 3
-        }
-        */
-        const data = req.body;
+    create: async (req, res, article_id, data) => {
+        console.log('create de ArticleHasSize marche', req.body);
+    }
 
-        // 1) je crée Size avec les req.body
-        const article = await ArticleHasSize.create({ ...data });
+    //     create: async (req, res, article_id, data) => {
+    //         /* Voici la structure que doit avoir le req.body
+    //         on va mettre size name, par contre il faudra 
+    //         faire une recherche pour retrouver l'id qui correspond 
+    //         à cet size_name
+    //         {
+    //             "stock": 20,
+    //             "article_id": 2,
+    //             "size_name": "L"
+    //         }
+    //         */
 
-        const newArticleId = article.dataValues.id;
-        // console.log(newArticleId);
+    //         // celui-ci pour faire le test
+    //         // const data = req.body;
 
-        // 3) LIER des SIZES à l'article
-        if (data.sizes !== []) {
-            data.sizes.forEach(async (size) => {
+    //         // 1) on cherche à retrouver l'id de size_name
+    //         const sizeId = await Size.findOne({
+    //         // attributes = permet un SELECT de "id" dans ce cas
+    //         attributes: ['id'],
+    //         // size_name qui se trouve dans la table...
+    //         where: {
+    //             size_name: data.size_name
+    //         },
+    //     });
 
-                const resSize = await Size.findOne({
-                    attributes:
-                        ["id", "size_name"],
+    //     // 2) insérer le tout : toutes les data qu'on a updaté dans ArticleHasSize
+    //     const articleHasSize = await ArticleHasSize.create({
+    //         // data est en paramètre et sera récupéré dans le controller articleController
+    //         stock: data.stock,
+    //         // lorsqu'on crée une nouvelle dans cette table, on a besoin 
+    //         // aussi de l'article_id, qui sera renvoyé / retrouvé dans le controller article
+    //         article_id: article_id,
 
-                    where: { size_name: size.size_name }
-                });
-                console.log('size: ', size);
+    //         // celui ci pour faire le test directement dans le controller ici
+    //         // article_id: data.article_id,
 
-                // on récupère l'id de la size choisie par l'utilisateur en front
-                const sizeId = resSize.dataValues.id;
+    //         // on met l'id 
+    //         size_id: sizeId.id
+    //     });
 
-                // on récupère le stock dans body
-                const sizeStock = size.stock;
+    //     // on renvoie le JSON article
+    //     res.json(sizeId);
 
-                // on insert dans la table de liaison article_has_size
-                // une nouvelle colonne de relation entre article et size
-                await sequelize.query(`
-                    INSERT INTO "article_has_size" 
-                        ("article_id", "size_id", "stock") 
-                        VALUES 
-                        (${newArticleId}, ${sizeId}, ${sizeStock});
-                `);
-            });
-        }
+    // },
 
-        // on renvoie le JSON article
-        res.json(article);
-    },
+    // // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
+    // // et les sizes, pour cela, il faut faire des routes PATCH pour 
+    // // article_has_size et article_has_category
+    // update: async (req, res) => {
+    //     const { id } = req.params;
+    //     const data = req.body;
+    //     const articleUpdate = await Article.update(
+    //         {
+    //             ...data
+    //         }, {
+    //         where: {
+    //             id: id,
+    //         }
+    //     });
 
-    // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
-    // et les sizes, pour cela, il faut faire des routes PATCH pour 
-    // article_has_size et article_has_category
-    update: async (req, res) => {
-        const { id } = req.params;
-        const data = req.body;
-        const articleUpdate = await Article.update(
-            {
-                ...data
-            }, {
-            where: {
-                id: id,
-            }
-        });
+    //     // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
+    //     const article = await Article.findOne(
+    //         {
+    //             where: {
+    //                 id: id
+    //             },
+    //             include: ['categories', 'sizes']
+    //         }
+    //     );
+    //     res.json(article)
+    // },
 
-        // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
-        const article = await Article.findOne(
-            {
-                where: {
-                    id: id
-                },
-                include: ['categories', 'sizes']
-            }
-        );
-        res.json(article)
-    },
+    // delete: async (req, res) => {
+    //     console.log('object')
+    //     try {
+    //         const { id } = req.params;
+    //         const article = await Article.findByPk(id);
+    //         article.destroy();
+    //         res.json(article);
+    //     } catch (error) {
+    //         console.log('error', error)
+    //     }
 
-    delete: async (req, res) => {
-        console.log('object')
-        try {
-            const { id } = req.params;
-            const article = await Article.findByPk(id);
-            article.destroy();
-            res.json(article);
-        } catch (error) {
-            console.log('error', error)
-        }
-
-    },
+    // },
 };
 
 module.exports = articleHasSizeController;
