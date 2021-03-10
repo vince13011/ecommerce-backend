@@ -156,9 +156,10 @@ GET {{baseUrl}}/users/1
 ### POST /users/
 POST {{baseUrl}}/users
 Content-Type: application/json
+#les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "zerq@gmail.com",
+"email": "vincent@gmail.com",
 "password":"ABCDEFGH"
 }
 
@@ -167,7 +168,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"zerq@gmail.com",
+    "email":"vincent@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",

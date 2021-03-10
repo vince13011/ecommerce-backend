@@ -40,9 +40,9 @@ const userController = {
 
      //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
      getOne: async (req, res) =>{
-        const {id} = req.params;
+        const user_id = req.params.id;
         const users = await Address.findOne({
-                    where: {id},
+                    where: {user_id},
                     attributes:{
                         exclude:['created_at']
                     },
@@ -216,11 +216,26 @@ const userController = {
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
                     //maintenant que tout est validé on renvoit les informations demandées
-                    const theuser = await User.findOne({
-                        where:{email:req.body.email},
+                    const theuser = await Address.findOne({
+                        where: {user_id:user.id},
                         attributes:{
-                                    exclude:['password','role_id']
-                                     }
+                            exclude:['created_at']
+                        },
+                            include:[
+                                {association:'address_user',
+                                    attributes:{
+                                    exclude:['password','created_at']}
+                                },
+                                {association:'address_orders',
+                                        include:[{
+                                            association:'orderArticles',
+                                            order: [
+                                                ['updated_at', 'ASC']
+                                            ]
+                                        }]
+                                }
+                            ]  
+                                
                         })
                     res.json(theuser)
                 }
