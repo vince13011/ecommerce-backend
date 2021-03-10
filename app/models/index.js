@@ -6,6 +6,7 @@ const User = require('./User');
 const Address = require('./Address');
 const ArticleHasSize = require('./ArticleHasSize');
 const Role = require('./Role');
+const OrderHasArticle = require('./orderHasArticle')
 
 // une question a plusieurs answers
 Article.belongsToMany(Category, {
@@ -23,6 +24,21 @@ Category.belongsToMany(Article, {
     foreignKey: 'category_id',
     otherKey: 'article_id',
     timestamps: false
+});
+// une question a plusieurs answers
+Article.belongsToMany(Order, {
+    through: 'order_has_article',
+    as: "orders",
+    foreignKey: 'article_id',
+    otherKey: 'order_id'
+});
+
+// réciproque : une answer est lié à une seule question
+Order.belongsToMany(Article, {
+    through: 'order_has_article',
+    as: "orderArticles",
+    foreignKey: 'order_id',
+    otherKey: 'article_id',
 });
 
 Article.belongsToMany(Size, {
@@ -52,12 +68,12 @@ Address.hasMany(Order, {
 
 Address.belongsTo(User, {
     foreignKey: 'user_id',
-    as: "user_has_address"
+    as: "address_user"
 });
 
 User.hasMany(Address, {
     foreignKey: 'user_id',
-    as: "address_user"
+    as: "user_has_address"
 });
 
 User.belongsTo(Role, {

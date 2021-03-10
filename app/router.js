@@ -42,7 +42,7 @@ router.get('/orders/:id', orderController.getOne);
 // router.delete('/orders/:id', orderController.deleteById);
 
 // // USERS
-// router.get('/users', userController.getAll);
+ router.get('/users', userController.getAll);
 // router.get('/users/:id', userController.getOne);
 // // *******************************************
 // // connecter un user ???
