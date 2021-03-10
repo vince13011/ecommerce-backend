@@ -151,7 +151,7 @@ DELETE {{baseUrl}}/orders/1
 GET {{baseUrl}}/users
 
 ### GET /users/:id
-GET {{baseUrl}}/users/2
+GET {{baseUrl}}/users/1
 
 ### POST /users/
 POST {{baseUrl}}/users

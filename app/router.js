@@ -43,7 +43,7 @@ router.get('/orders/:id', orderController.getOne);
 
 // // USERS
  router.get('/users', userController.getAll);
-// router.get('/users/:id', userController.getOne);
+ router.get('/users/:id', userController.getOne);
 // // *******************************************
 // // connecter un user ???
 // // *******************************************
