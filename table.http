@@ -167,20 +167,20 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"RdtASZAZzSdzfxs@gmail.com",
+    "email":"RdnAQazersq@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
-    "password":"enceneee",
-    "passwordConfirm":"enceneee",
+    "password":"ABCDEFGH",
+    "passwordConfirm":"ABCDEFGH",
     "phoneNumber":"0123456789",
-    "role_id": 1,
+    "roleId": 1,
     "country": "France",
     "city": "marignane",
     "zipCode": "13000",
     "number": 10,
     "streetName": "rue de Vincent",
     "additional":"étage 5",
-    "user_id": 1
+    "userId": 1
 }
 ###PATCH /users/:id
 PATCH {{baseUrl}}/users/1
