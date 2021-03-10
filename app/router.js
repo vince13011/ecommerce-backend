@@ -16,6 +16,7 @@ const addressController = require('./controllers/addressController');
 const sizeController = require('./controllers/sizeController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
 
+// article_has_size
 const articleHasSizeController = require('./controllers/articleHasSizeController')
 const orderHasArticleController = require('./controllers/orderHasArticleController')
 
@@ -28,11 +29,11 @@ router.patch('/article/:id', articleController.update);
 router.delete('/article/:id', articleController.delete);
 
 // // CATEGORIES
-// router.get('/categories', categoryController.getAll);
-// router.get('/categories/:id', categoryController.getOne);
-// router.post('/categories', categoryController.create);
-// router.patch('/categorie/:id', categoryController.updateById);
-// router.delete('/categorie/:id', categoryController.deleteById);
+router.get('/categories', categoryController.getAll);
+router.get('/category/:id', categoryController.getOne);
+router.post('/category', categoryController.create);
+router.patch('/category/:id', categoryController.update);
+router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
@@ -65,11 +66,11 @@ router.get('/orders/:id', orderController.getOne);
 
 
 // // SIZES
-// router.get('/sizes', sizeController.getAll);
-// router.get('/sizes/:id', sizeController.getOne);
-// router.post('/sizes', sizeController.create);
-// router.patch('/sizes/:id', sizeController.updateById);
-// router.delete('/sizes/:id', sizeController.deleteById);
+router.get('/sizes', sizeController.getAll);
+router.get('/size/:id', sizeController.getOne);
+router.post('/sizes', sizeController.create);
+router.patch('/size/:id', sizeController.update);
+router.delete('/size/:id', sizeController.delete);
 
 
 // // ARTICLE_HAS_CATEGORY
@@ -78,9 +79,9 @@ router.get('/orders/:id', orderController.getOne);
 // router.post('/category/article', articleHasCategoryController.create);
 
 // // ARTICLE_HAS_SIZE
-// router.get('/size/article', articleHasSizeController.getAll);
-// router.get('/size/:id/article', articleHasSizeController.getAllInSize);
-// router.post('/size/article', articleHasSizeController.create);
+router.get('/size/article', articleHasSizeController.getAll);
+router.get('/size/:id/article', articleHasSizeController.getOne);
+router.post('/size/article', articleHasSizeController.create);
 
 // // ORDER_HAS_ARTICLE
 // router.get('/order/article', orderHasArticleController.getAll);

@@ -1,7 +1,7 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
 const sequelize = require('../database');
 
-const mainController = {
+const articleController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
         const articles = await Article.findAll({
@@ -122,7 +122,7 @@ const mainController = {
             }
         });
 
-        // 
+        // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
         const article = await Article.findOne(
             {
                 where: {
@@ -148,4 +148,4 @@ const mainController = {
     },
 };
 
-module.exports = mainController;
+module.exports = articleController;

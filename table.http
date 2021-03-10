@@ -67,10 +67,10 @@ DELETE {{baseUrl}}/article/1
 GET {{baseUrl}}/categories
 
 ### GET /categories/:id
-GET {{baseUrl}}/categories/1
+GET {{baseUrl}}/category/11
 
 ### POST /categories/:id
-POST {{baseUrl}}/categories
+POST {{baseUrl}}/category
 Content-Type: application/json
 
 {
@@ -78,15 +78,15 @@ Content-Type: application/json
 }
 
 ### PATCH /categories/:id
-PATCH {{baseUrl}}/categories/1
+PATCH {{baseUrl}}/category/11
 Content-Type: application/json
 
 {
-    "title": "patch"
+    "title": "test"
 }
 
 ### DELETE /categories/:id
-DELETE {{baseUrl}}/categorie/1
+DELETE {{baseUrl}}/category/11
 
 
 # ****************************
@@ -225,7 +225,7 @@ DELETE {{baseUrl}}/addresses/5
 GET {{baseUrl}}/sizes
 
 ### GET /sizes/:id
-GET {{baseUrl}}/sizes/3
+GET {{baseUrl}}/size/14
 
 
 ### POST /sizes/
@@ -233,15 +233,15 @@ POST {{baseUrl}}/sizes
 Content-Type: application/json
 
 {
-    "size_name": "taille 1"
+    "size_name": "taille test"
 }
 
 ### PATCH /sizes/:id
-PATCH {{baseUrl}}/sizes/3
+PATCH {{baseUrl}}/size/14
 Content-Type: application/json
 
 {
-    "size_name": "S-28"
+    "size_name": "45"
 }
 ### DELETE /sizes/:id
-DELETE {{baseUrl}}/sizes/10
+DELETE {{baseUrl}}/size/14
