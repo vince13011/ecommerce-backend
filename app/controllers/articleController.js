@@ -5,9 +5,9 @@ const mainController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
         const articles = await Article.findAll({
-            attributes: {
-                exclude: ['created_at', 'updated_at']
-            },
+            // attributes: {
+            //     exclude: ['updated_at']
+            // },
             include: [
                 {
                     association: 'categories',
@@ -18,10 +18,10 @@ const mainController = {
                     attributes: ['size_name'],
                 }
             ],
-            limit,
             order: [
-                ['updated_at', 'ASC']
-            ]
+                ['updated_at', 'DESC']
+            ],
+            limit: limit,
         });
         res.json(articles);
     },
@@ -121,6 +121,8 @@ const mainController = {
                 id: id,
             }
         });
+
+        // 
         const article = await Article.findOne(
             {
                 where: {
