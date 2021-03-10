@@ -39,10 +39,11 @@ class Article {
     via une requête SQL
     */
     static async findOne(id) {
-        
-        const results= await db.query( `SELECT 
+
+        const results = await db.query(`SELECT 
        article.id,
        article.name,
+       article.image,
        article.reference,
        article.color,
        article.description,
@@ -57,47 +58,47 @@ class Article {
        LEFT JOIN "category" ON "category"."id" = "article_has_category"."category_id"
        LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
        LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
-       WHERE article.id=$1`,[id]);
+       WHERE article.id=$1`, [id]);
 
-       if (!results.rows[0]){
-        throw new Error(`le jeu avec l'id ${id} n'existe pas `)
-     }
-        const dataResults=results.rows
-        const data=[]
+        if (!results.rows[0]) {
+            throw new Error(`le jeu avec l'id ${id} n'existe pas `)
+        }
+        const dataResults = results.rows
+        const data = []
 
         for (const result of dataResults) {
             const category = result.category
-            const size ={size_name:result.size,stock:result.stock}
+            const size = { size_name: result.size, stock: result.stock }
             delete result.size;
             delete result.stock;
             delete result.category;
             const dataFound = data.find(elem => elem.id === result.id);
-            if(!dataFound){
-                result.categories=[category]
-                result.sizes=[size]
+            if (!dataFound) {
+                result.categories = [category]
+                result.sizes = [size]
                 data.push(result)
-            } else{
-              
-             const categoryfound= dataFound.categories.find(e=> e=== category)
-              if(!categoryfound){
-                dataFound.categories.push(category)
-              }
-              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
-              if(!sizeFound){
-                dataFound.sizes.push(size)
-              }
-          }
-          
+            } else {
+
+                const categoryfound = dataFound.categories.find(e => e === category)
+                if (!categoryfound) {
+                    dataFound.categories.push(category)
+                }
+                const sizeFound = dataFound.sizes.find(e => e.size_name === size.size_name)
+                if (!sizeFound) {
+                    dataFound.sizes.push(size)
+                }
+            }
+
         }
-        
+
         return data
-       
-       
+
+
 
     }
 
     static async findAll(limit = null) {
-       const results= await db.query( `SELECT 
+        const results = await db.query(`SELECT 
        article.id,
        article.name,
        article.reference,
@@ -116,33 +117,33 @@ class Article {
        LEFT JOIN "article_has_size" ON "article_has_size"."article_id" = "article"."id"
        LEFT JOIN "size" ON "size"."id" = "article_has_size"."size_id"
        ORDER BY article.updated_at DESC
-       LIMIT $1`,[limit])
-        const dataResults=results.rows
-        const data=[]
+       LIMIT $1`, [limit])
+        const dataResults = results.rows
+        const data = []
 
         for (const result of dataResults) {
             const category = result.category
-            const size ={size_name:result.size,stock:result.stock}
+            const size = { size_name: result.size, stock: result.stock }
             delete result.size;
             delete result.stock;
             delete result.category;
             const dataFound = data.find(elem => elem.id === result.id);
-            if(!dataFound){
-                result.categories=[category]
-                result.sizes=[size]
+            if (!dataFound) {
+                result.categories = [category]
+                result.sizes = [size]
                 data.push(result)
-            } else{
-              
-             const categoryfound= dataFound.categories.find(e=> e=== category)
-              if(!categoryfound){
-                dataFound.categories.push(category)
-              }
-              const sizeFound=dataFound.sizes.find(e=>e.size_name===size.size_name)
-              if(!sizeFound){
-                dataFound.sizes.push(size)
-              }
-          }
-          
+            } else {
+
+                const categoryfound = dataFound.categories.find(e => e === category)
+                if (!categoryfound) {
+                    dataFound.categories.push(category)
+                }
+                const sizeFound = dataFound.sizes.find(e => e.size_name === size.size_name)
+                if (!sizeFound) {
+                    dataFound.sizes.push(size)
+                }
+            }
+
         }
         return data
     }
