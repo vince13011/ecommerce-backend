@@ -51,8 +51,6 @@ const articleController = {
         const newArticleId = article.dataValues.id;
         // console.log(newArticleId);
 
-        articleHasSizeController.create(newArticleId, data);
-
         // 2) LIER des CATEGORIES à l'article
         if (data.categories !== []) {
             data.categories.forEach(async (category) => {
@@ -79,33 +77,11 @@ const articleController = {
         }
 
         // 3) LIER des SIZES à l'article
-        if (data.sizes !== []) {
-            data.sizes.forEach(async (size) => {
-
-                const resSize = await Size.findOne({
-                    attributes:
-                        ["id", "size_name"],
-
-                    where: { size_name: size.size_name }
-                });
-                console.log('size: ', size);
-
-                // on récupère l'id de la size choisie par l'utilisateur en front
-                const sizeId = resSize.dataValues.id;
-
-                // on récupère le stock dans body
-                const sizeStock = size.stock;
-
-                // on insert dans la table de liaison article_has_size
-                // une nouvelle colonne de relation entre article et size
-                await sequelize.query(`
-                    INSERT INTO "article_has_size" 
-                        ("article_id", "size_id", "stock") 
-                        VALUES 
-                        (${newArticleId}, ${sizeId}, ${sizeStock});
-                `);
-            });
-        }
+        data.sizes.forEach(async (size) => {
+            // on récupère la fonction create depuis le controller articleHasSize
+            // on la boucle pour autant de fois qu'il y a d'éléments : data.sizes
+            articleHasSizeController.create(newArticleId, size);
+        });
 
         // on renvoie le JSON article
         res.json(article);

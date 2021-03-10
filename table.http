@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/1
+GET {{baseUrl}}/article/16
 
 ### POST
 POST {{baseUrl}}/article
