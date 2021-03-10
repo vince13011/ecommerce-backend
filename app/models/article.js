@@ -103,6 +103,7 @@ class Article {
        article.name,
        article.reference,
        article.color,
+       article.image,
        article.description,
        category.title as category,
        size_name as size,
