@@ -166,7 +166,71 @@ const userController = {
                     res.json(userWithAddress)
                 }
             }
+        },
+
+
+    login: async (req, res) => {
+
+        console.log('req.body', req.body);
+
+        const errors = [];
+
+        // on vérifie que l'utilisateur a bien rempli les champs
+        if (req.body.email.length === 0 || req.body.password.length === 0) {
+            errors.push('Veuillez remplir tous les champs');
         }
+
+        // vérifier que l'email existe en BDD => User
+        // comparer le password du form avec le hash de ka BDD
+        // si c'est pas bon lui donner un message d'erreur
+        // si c'est bon le connecter
+        // persistance de la connexion => session
+
+        // si on a des erreurs on rend la vue avec ces erreurs
+        if (errors.length) {
+            res.json({ errors });
+        }
+        // sinon on chercher l'utilisateur en BDD
+        else {
+            const user = await User.findOne({where:{email:req.body.email}})
+           
+                console.log('user :', user);
+
+            // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
+            // si le user est null on redirige sur la page d'inscription 
+            if (!user) {
+                errors.push('Veuillez vérifier vos identifiants');
+                
+                res.json({ errors });
+            }
+            else {
+                // si on a trouvé un utilisateur, il va falloir comparer le mdp
+                // des données en post avec le hash de la BDD
+                // pour faire ça bcrypt propose une fonction compareSync
+                console.log('user :',user)
+                const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
+                console.log('isValidPassword : ', isValidPassword)
+
+                // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
+                // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
+                // afficher son nom et le lien déconnecter
+                if (isValidPassword) {
+                    //maintenant que tout est validé on renvoit les informations demandées
+                    const theuser = await User.findOne({
+                        where:{email:req.body.email},
+                        attributes:{
+                                    exclude:['password','role_id']
+                                     }
+                        })
+                    res.json(theuser)
+                }
+                else {
+                    errors.push('Veuillez vérifier vos identifiants');
+                    res.json({ errors });
+                }
+            }
+        }
+    }
         
     }
 module.exports = userController;

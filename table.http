@@ -158,8 +158,8 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-"email": "g@gmail.com",
-"password":"enceneee"
+"email": "zerq@gmail.com",
+"password":"ABCDEFGH"
 }
 
 ###POST /signup/
