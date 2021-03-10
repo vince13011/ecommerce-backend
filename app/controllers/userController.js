@@ -133,35 +133,37 @@ const userController = {
                                                 exclude:['password','role_id']
                                                 }
                                     })
-                    console.log('infoUser : ',infoUser)
-
-                    console.log('infoUser.id',infoUser.id)
-
 
                     // les infos de l'address à ajouter
-                    const newAddressData ={
-                    country: req.body.country,
-                    city: req.body.city,
-                    zip_code: req.body.zipCode,
-                    number: req.body.number,
-                    street_name: req.body.streetName,
-                    additional: req.body.additional,
-                    user_id: infoUser.id
-                    };
-                    await Address.create(newAddressData);
-                    const infoAddress= await Address.findOne({ 
-                                      where: { user_id: infoUser.id },
-                                      attributes:{
-                                      exclude:['id','user_id']
-                                    } }
-                                    );
-                    
-                    
 
-                    console.log('infoAdress.id',infoAddress.id);
-                
-                    totalInfo=[infoUser,infoAddress]
-                    res.json(totalInfo)
+                    const newAddressData ={
+                        country: req.body.country,
+                        city: req.body.city,
+                        zip_code: req.body.zipCode,
+                        number: req.body.number,
+                        street_name: req.body.streetName,
+                        additional: req.body.additional,
+                        user_id: infoUser.id
+                        };
+                        await Address.create(newAddressData);
+
+                        console.log('infoUser : ',infoUser.id)
+
+                        const userWithAddress = await User.findOne({
+                            where:{ id : infoUser.id},
+                            attributes:{
+                                         exclude:['password','role_id','created_at','updated_at']
+                            },
+                            include:[
+                                    {association:'user_has_address',
+                                    attributes:{
+                                                exclude:['user_id']}
+                                    }
+                            ],
+                        })
+
+
+                    res.json(userWithAddress)
                 }
             }
         }
