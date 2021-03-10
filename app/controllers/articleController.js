@@ -74,7 +74,7 @@ const mainController = {
             });
         }
 
-        // 2) LIER des SIZES à l'article
+        // 3) LIER des SIZES à l'article
         if (data.sizes !== []) {
             data.sizes.forEach(async (size) => {
 
