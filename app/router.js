@@ -53,7 +53,7 @@ router.get('/orders/:id', orderController.getOne);
 
 
 // // CREER UN NOUVEL UTILISATEUR
-// router.post('/signup', userController.create);
+router.post('/signup', userController.create);
 
 
 // // ADDRESSES

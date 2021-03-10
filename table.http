@@ -167,18 +167,18 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"RdtASZAZzSdzfvxs@gmail.com",
+    "email":"RdtASZAZzSdzfxs@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"enceneee",
     "passwordConfirm":"enceneee",
-    "phone_number":"0123456789",
+    "phoneNumber":"0123456789",
     "role_id": 1,
     "country": "France",
     "city": "marignane",
-    "zip_code": "13000",
+    "zipCode": "13000",
     "number": 10,
-    "street_name": "rue de Vincent",
+    "streetName": "rue de Vincent",
     "additional":"étage 5",
     "user_id": 1
 }
