@@ -12,74 +12,50 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET /articles/:id
-GET {{baseUrl}}/article/8
+GET {{baseUrl}}/article/27
 
 ### POST /articles
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference": "124334",
-    "name": "Pantalon de costume hugo bogoss",
-    "description": "pantalon noir  homme",
-    "image": "https://img.ltwebstatic.com/images2_pi/2019/06/04/1559631949293247477_thumbnail_900x1199.webp",
-    "color": null,
-    "pre_tax_price": 35,
+    "reference": "222222",
+    "name": "Chuvak",
+    "description": "blanc",
+    "image": "image/link",
+    "color": "blue",
+    "pre_tax_price": 10,
     "vat_rate": 20,
-    "discount": 5,
+    "discount": 30,
     "categories": [
-        {
-            "title": "chaussures",
-            "article_has_category": {
-                "article_id": 1,
-                "category_id": 4
-            }
-        },
-        {
-        "title": "homme",
-            "article_has_category": {
-            "article_id": 1,
-            "category_id": 3
-            }
-        }
+        "homme"
     ],
     "sizes": [
       {
         "size_name": "L",
-        "article_has_size": {
-          "stock": 12,
-          "article_id": 3,
-          "size_id": 4
-        }
+        "stock": 12
+      },
+      {
+        "size_name": "M",
+        "stock": 10
       }
     ]
 }
 
 
 ### PATCH /articles/:id
-PATCH {{baseUrl}}/articles/3
+PATCH {{baseUrl}}/article/1
 Content-Type: application/json
 
 {
-    "reference":"Abdoulla le MOOOOCHE",
+    "reference":"1402303239",
     "name": "capuche",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
     "pre_tax_price": 30,
     "vat_rate": 20,
-    "discount": 20,
-    "categories": [
-        {
-            "category_id": 2,
-            "old_category_id": 3
-        },
-        {
-            "category_id": 1,
-            "old_category_id": 4
-        }
-        
-    ]
+    "discount": 20
 }
 
 ###  DELETE /articles/:id
