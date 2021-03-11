@@ -6,7 +6,7 @@ const User = require('./User');
 const Address = require('./Address');
 const ArticleHasSize = require('./ArticleHasSize');
 const Role = require('./Role');
-const OrderHasArticle = require('./orderHasArticle')
+const OrderHasArticle = require('./OrderHasArticle')
 
 // une question a plusieurs answers
 Article.belongsToMany(Category, {
@@ -86,4 +86,4 @@ Role.hasMany(User, {
     as: "role_user"
 });
 
-module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize,OrderHasArticle };
+module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize, OrderHasArticle };

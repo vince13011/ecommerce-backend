@@ -108,10 +108,10 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/orders/20
+GET {{baseUrl}}/order/29
 
 ### POST
-POST {{baseUrl}}/orders
+POST {{baseUrl}}/order
 Content-Type: application/json
 
 {
@@ -121,7 +121,7 @@ Content-Type: application/json
     "total_price": "100",
     "articles": [
         {
-            "article_id": 2,
+            "article_id": 1,
             "quantity": 10,
             "unit_net_price": 10
         },
@@ -132,20 +132,6 @@ Content-Type: application/json
         }
     ]
 }
-
-### PUT /orders/:id
-PUT {{baseUrl}}/orders/4
-
-Content-Type: application/json
-
-{
-    "order_number": 20,
-    "total_price": 130,
-    "address_id": 1
-}
-
-### DELETE
-DELETE {{baseUrl}}/orders/1
 
 
 ### GET

@@ -47,14 +47,14 @@ Content-Type: application/json
 
 # ORDER_HAS_ARTICLE
 ### GET order/article
-GET {{baseUrl}}/order/article
+GET {{baseUrl}}/order-has-article
 
 # order/:id/article
 ###
-GET {{baseUrl}}/order/1/article
+GET {{baseUrl}}/order-has-article/1
 
 ### POST
-POST {{baseUrl}}/order/article
+POST {{baseUrl}}/order-has-article
 Content-Type: application/json
 
 {
