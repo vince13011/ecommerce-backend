@@ -83,7 +83,7 @@ CREATE TABLE order_has_article (
 CREATE TABLE article_has_size (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     article_id posint NOT NULL REFERENCES article(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    size_id posint NOT NULL REFERENCES size(id) ON UPDATE CASCADE,
+    size_id posint NOT NULL REFERENCES size(id) ON DELETE CASCADE ON UPDATE CASCADE,
     stock int DEFAULT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

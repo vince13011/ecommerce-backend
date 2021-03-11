@@ -7,19 +7,19 @@
 
 # ARTICLE_HAS_CATEGORY
 ### GET
-GET {{baseUrl}}/category/article
+GET {{baseUrl}}/article-has-category
 
 
 # category/:id/article
 ###
-GET {{baseUrl}}/category/1/article
+GET {{baseUrl}}/article-has-category/2
 
 # category/:id/article
 ###
-GET {{baseUrl}}/category/1/article?limit=3
+GET {{baseUrl}}/article-has-category?limit=3
 
 ### POST
-POST {{baseUrl}}/category/article
+POST {{baseUrl}}/article-has-category
 Content-Type: application/json
 
 {
@@ -27,21 +27,21 @@ Content-Type: application/json
     "category_id": 1
 }
 
-# ARTICLE_HAS_SIZE
-### GET
-GET {{baseUrl}}/size/article
 
-# size/:id/article
+### GET
+GET {{baseUrl}}/article-has-size
+
+# size /:id/article
 ###
-GET {{baseUrl}}/size/3/article
+GET {{baseUrl}}/article-has-size/4
 
 ### POST
-POST {{baseUrl}}/size/article
+POST {{baseUrl}}/article-has-size
 Content-Type: application/json
 
 {
     "article_id": 2,
-    "size_id": 4,
+    "size_name": "L",
     "stock": 12
 }
 
