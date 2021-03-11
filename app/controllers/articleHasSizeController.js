@@ -91,15 +91,13 @@ const articleHasSizeController = {
 
 
     delete: async (req, res) => {
-        console.log('object')
-        try {
-            const { id } = req.params;
-            const article = await Article.findByPk(id);
-            article.destroy();
-            res.json(article);
-        } catch (error) {
-            console.log('error', error)
-        }
+        const { id } = req.params;
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_size" WHERE "article_id"=${id}
+            `
+        )
+        res.json(`l'association avec article_id=${id} a bien été supprimée`);
     },
 };
 

@@ -71,18 +71,15 @@ const articleHasCategoryController = {
         });
     },
 
-    // delete: async (req, res) => {
-    //     console.log('object')
-    //     try {
-    //         const { id } = req.params;
-    //         const article = await Article.findByPk(id);
-    //         article.destroy();
-    //         res.json(article);
-    //     } catch (error) {
-    //         console.log('error', error)
-    //     }
-
-    // },
+    delete: async (req, res) => {
+        const { id } = req.params;
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_category" WHERE "article_id"=${id}
+            `
+        );
+        res.json(`l'association avec article_id=${id} a bien été supprimée`);
+    }
 };
 
 module.exports = articleHasCategoryController;
