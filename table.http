@@ -183,6 +183,7 @@ Content-Type: application/json
     "additional":"étage 5",
     "userId": 1
 }
+
 ###PUT /users/:id
 PUT {{baseUrl}}/users/1
 Content-Type: application/json

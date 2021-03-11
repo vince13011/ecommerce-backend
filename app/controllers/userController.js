@@ -125,8 +125,7 @@ const userController = {
                     newUserData.password = hashedPassword;
                 
                     await User.create(newUserData);
-                 
-                
+                    
                     const infoUser= await User.findOne({
                                     where: { email: newUserData.email }, 
                                     attributes:{
@@ -135,7 +134,6 @@ const userController = {
                                     })
 
                     // les infos de l'address à ajouter
-
                     const newAddressData ={
                         country: req.body.country,
                         city: req.body.city,
@@ -145,39 +143,35 @@ const userController = {
                         additional: req.body.additional,
                         user_id: infoUser.id
                         };
-                        await Address.create(newAddressData);
 
-                        console.log('infoUser : ',infoUser.id)
+                    await Address.create(newAddressData);
 
-                        const theAddressUser = await Address.findOne({
-                            where: {user_id: infoUser.id},
-                            attributes:{
-                                exclude:['created_at']
-                            },
-                                include:[
-                                    {association:'address_orders',
-                                            include:[{
-                                                association:'orderArticles',
-                                                order: [
-                                                    ['updated_at', 'ASC']
-                                                ]
-                                            }]
-                                    }
-                                ]  
-                                    
-                            })
-    
-                        const user = await User.findOne({
-                            where:{ id : infoUser.id},
-                            attributes:{
-                                        exclude:['role_id','password','created_at','updated_at']
-                            }
-                        })
-                        const userWithAddress = [user , theAddressUser];
-                        res.json(userWithAddress)
-                }
+                    const theAddressUser = await Address.findOne({
+                        where: {user_id: infoUser.id},
+                        attributes:{
+                            exclude:['created_at']
+                        },
+                            include:[{ 
+                                    association:'address_orders',
+                                        include:[{
+                                            association:'orderArticles',
+                                            order: [
+                                                ['updated_at', 'ASC']
+                                            ]
+                                        }]
+                            }]  
+                                
+                    })
+
+                const user = await User.findOne({
+                    where:{ id : infoUser.id},
+                    attributes:{exclude:['role_id','password','created_at','updated_at']}
+                })
+                const userWithAddress = [user , theAddressUser];
+                res.json(userWithAddress)
             }
-        },
+         }
+    },
 
 
     login: async (req, res) => {
@@ -242,15 +236,14 @@ const userController = {
                                         }]
                                 }
                             ]  
-                                
                         })
 
-                        const infoUser = await User.findOne({
-                            where:{ id : user.id},
-                            attributes:{
-                                        exclude:['role_id','password','created_at','updated_at']
-                            }
-                        })
+                    const infoUser = await User.findOne({
+                        where:{ id : user.id},
+                        attributes:{
+                                    exclude:['role_id','password','created_at','updated_at']
+                        }
+                    })
                     const userWithAddress = [infoUser , theAddressUser];
                     res.json(userWithAddress)
                 }
