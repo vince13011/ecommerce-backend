@@ -2,6 +2,7 @@ const { Article, Category, Size, User, Order, Address } = require('../models/ind
 const articleHasSizeController = require('./articleHasSizeController');
 const articleHasCategoryController = require('./articleHasCategoryController');
 const sequelize = require('../database');
+const { findOne } = require('../models/Article');
 
 const articleController = {
     getAll: async (req, res) => {
@@ -68,31 +69,34 @@ const articleController = {
         res.json(article);
     },
 
-    // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
-    // et les sizes, pour cela, il faut faire des routes PATCH pour 
-    // article_has_size et article_has_category
     update: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
-        const articleUpdate = await Article.update(
+        // on update Article avec les données de req.body
+        await Article.update(
             {
+                // déscruturation d'un ojet 
                 ...data
             }, {
+            // SELECT * FROM "article" WHERE "id"=id
             where: {
                 id: id,
             }
         });
-
-        // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
-        const article = await Article.findOne(
-            {
-                where: {
-                    id: id
-                },
-                include: ['categories', 'sizes']
-            }
-        );
-        res.json(article)
+        // je renvoie vers la fonction update de articleHasCategoryController
+        articleHasCategoryController.update(id, data.categories);
+        // je renvoie vers la fonction update de articleHasSizeController
+        articleHasSizeController.update(id, data.sizes);
+        // en essaye de prendre le nouveau article modifé
+        const updatedArticle = await Article.findOne({
+            // SELECT * FROM "article" WHERE "id"=id
+            where: {
+                id,
+            },
+            // SELECT * FROM "article" LEFT JOIN etc...
+            include: ['categories', 'sizes']
+        })
+        res.json(updatedArticle)
     },
 
     delete: async (req, res) => {
@@ -105,7 +109,6 @@ const articleController = {
         } catch (error) {
             console.log('error', error)
         }
-
     },
 };
 
