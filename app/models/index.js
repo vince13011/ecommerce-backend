@@ -27,7 +27,7 @@ Category.belongsToMany(Article, {
 });
 // une question a plusieurs answers
 Article.belongsToMany(Order, {
-    through: 'order_has_article',
+    through: OrderHasArticle,
     as: "orders",
     foreignKey: 'article_id',
     otherKey: 'order_id'
@@ -35,7 +35,7 @@ Article.belongsToMany(Order, {
 
 // réciproque : une answer est lié à une seule question
 Order.belongsToMany(Article, {
-    through: 'order_has_article',
+    through: OrderHasArticle,
     as: "orderArticles",
     foreignKey: 'order_id',
     otherKey: 'article_id',
@@ -86,4 +86,4 @@ Role.hasMany(User, {
     as: "role_user"
 });
 
-module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize };
+module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize,OrderHasArticle };

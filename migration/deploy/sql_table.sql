@@ -62,7 +62,7 @@ CREATE TABLE "address" (
 
 CREATE TABLE "order" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    order_number posint NOT NULL,
+    order_number posint UNIQUE NOT NULL,
     total_price text NOT NULL,
     "address_id" INTEGER NOT NULL REFERENCES "address"("id") ON DELETE CASCADE ON UPDATE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

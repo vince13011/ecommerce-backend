@@ -93,16 +93,19 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/orders/5
+GET {{baseUrl}}/orders/12
 
 ### POST
 POST {{baseUrl}}/orders
 Content-Type: application/json
 
 {
-    "order_number": 1,
-    "total_price": 20,
-    "address_id": 1
+    "orderNumber": 7,
+    "totalPrice": "2000",
+    "addressId": 1,
+    "articleId":3,
+    "quantity": 1,
+    "unitNetPrice":"30"
 }
 
 
@@ -134,7 +137,7 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "vincent@gmail.com",
+"email": "vincentG@gmail.com",
 "password":"ABCDEFGH"
 }
 
@@ -160,7 +163,7 @@ Content-Type: application/json
 }
 
 ###PUT /users/:id
-PUT {{baseUrl}}/users/1
+PUT {{baseUrl}}/users/2
 
 Content-Type: application/json
 
@@ -174,6 +177,7 @@ Content-Type: application/json
 }
 
 ### DELETE /users/:id
+
 DELETE {{baseUrl}}/users/2
 
 
