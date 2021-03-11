@@ -44,9 +44,8 @@ Content-Type: application/json
     ]
 }
 
-
-### PATCH
-PATCH {{baseUrl}}/article/1
+### PUT /articles/:id
+PUT {{baseUrl}}/articles/3
 Content-Type: application/json
 
 {
@@ -78,12 +77,12 @@ Content-Type: application/json
     "title": "décontracté"
 }
 
-### PATCH
-PATCH {{baseUrl}}/category/11
+### PUT /categories/:id
+PUT {{baseUrl}}/categories/1
 Content-Type: application/json
 
 {
-    "title": "test"
+    "title": "PUT"
 }
 
 ### DELETE
@@ -106,8 +105,10 @@ Content-Type: application/json
     "address_id": 1
 }
 
-### PATCH
-PATCH {{baseUrl}}/orders/4
+
+### PUT /orders/:id
+PUT {{baseUrl}}/orders/4
+
 Content-Type: application/json
 
 {
@@ -126,13 +127,15 @@ GET {{baseUrl}}/users
 ### GET
 GET {{baseUrl}}/users/2
 
+
 ### POST
 POST {{baseUrl}}/users
 Content-Type: application/json
+#les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "g@gmail.com",
-"password":"enceneee"
+"email": "vincent@gmail.com",
+"password":"ABCDEFGH"
 }
 
 ### POST
@@ -140,36 +143,39 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"RdtASZAZzSdzfvxs@gmail.com",
+    "email":"vincentG@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
-    "password":"enceneee",
-    "passwordConfirm":"enceneee",
-    "phone_number":"0123456789",
-    "role_id": 1,
+    "password":"ABCDEFGH",
+    "passwordConfirm":"ABCDEFGH",
+    "phoneNumber":"0123456789",
+    "roleId": 1,
     "country": "France",
     "city": "marignane",
-    "zip_code": "13000",
+    "zipCode": "13000",
     "number": 10,
-    "street_name": "rue de Vincent",
+    "streetName": "rue de Vincent",
     "additional":"étage 5",
-    "user_id": 1
+    "userId": 1
 }
-### PATCH
-PATCH {{baseUrl}}/users/1
+
+###PUT /users/:id
+PUT {{baseUrl}}/users/1
+
 Content-Type: application/json
 
 {
-    "email":"chuvak@gmail.com",
-    "firstname":"test patch",
-    "lastname":"patch",
+    "email":"chvak@gmail.com",
+    "firstname":"test PUT",
+    "lastname":"PUT",
     "password":"brbr",
     "phone_number":"000123456789",
     "role_id": 1
 }
 
-### DELETE
-DELETE {{baseUrl}}/users/4
+### DELETE /users/:id
+DELETE {{baseUrl}}/users/2
+
 
 
 ### GET
@@ -193,8 +199,9 @@ Content-Type: application/json
     "user_id": 1
 }
 
-### PATCH
-PATCH {{baseUrl}}/addresses/1
+
+### PUT /addresses/:id
+PUT {{baseUrl}}/addresses/1
 Content-Type: application/json
 
 {
@@ -227,8 +234,8 @@ Content-Type: application/json
     "size_name": "taille test"
 }
 
-### PATCH
-PATCH {{baseUrl}}/size/2
+### PUT /sizes/:id
+PUT {{baseUrl}}/sizes/3
 Content-Type: application/json
 
 {
