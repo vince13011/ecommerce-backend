@@ -149,21 +149,32 @@ const userController = {
 
                         console.log('infoUser : ',infoUser.id)
 
-                        const userWithAddress = await User.findOne({
+                        const theAddressUser = await Address.findOne({
+                            where: {user_id: infoUser.id},
+                            attributes:{
+                                exclude:['created_at']
+                            },
+                                include:[
+                                    {association:'address_orders',
+                                            include:[{
+                                                association:'orderArticles',
+                                                order: [
+                                                    ['updated_at', 'ASC']
+                                                ]
+                                            }]
+                                    }
+                                ]  
+                                    
+                            })
+    
+                        const user = await User.findOne({
                             where:{ id : infoUser.id},
                             attributes:{
-                                         exclude:['password','role_id','created_at','updated_at']
-                            },
-                            include:[
-                                    {association:'user_has_address',
-                                    attributes:{
-                                                exclude:['user_id']}
-                                    }
-                            ],
+                                        exclude:['role_id','password','created_at','updated_at']
+                            }
                         })
-
-
-                    res.json(userWithAddress)
+                        const userWithAddress = [user , theAddressUser];
+                        res.json(userWithAddress)
                 }
             }
         },
@@ -216,16 +227,12 @@ const userController = {
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
                     //maintenant que tout est validé on renvoit les informations demandées
-                    const theuser = await Address.findOne({
+                    const theAddressUser = await Address.findOne({
                         where: {user_id:user.id},
                         attributes:{
                             exclude:['created_at']
                         },
                             include:[
-                                {association:'address_user',
-                                    attributes:{
-                                    exclude:['password','created_at']}
-                                },
                                 {association:'address_orders',
                                         include:[{
                                             association:'orderArticles',
@@ -237,7 +244,15 @@ const userController = {
                             ]  
                                 
                         })
-                    res.json(theuser)
+
+                        const infoUser = await User.findOne({
+                            where:{ id : user.id},
+                            attributes:{
+                                        exclude:['role_id','password','created_at','updated_at']
+                            }
+                        })
+                    const userWithAddress = [infoUser , theAddressUser];
+                    res.json(userWithAddress)
                 }
                 else {
                     errors.push('Veuillez vérifier vos identifiants');

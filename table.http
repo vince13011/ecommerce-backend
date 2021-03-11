@@ -168,7 +168,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"vincent@gmail.com",
+    "email":"vincentG@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",
