@@ -43,8 +43,8 @@ router.get('/orders/:id', orderController.getOne);
 // router.delete('/orders/:id', orderController.deleteById);
 
 // // USERS
- router.get('/users', userController.getAll);
- router.get('/users/:id', userController.getOne);
+router.get('/users', userController.getAll);
+router.get('/users/:id', userController.getOne);
 
 // // connecter un user ???
 router.post('/users', userController.login);

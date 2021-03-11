@@ -27,7 +27,7 @@ const articleHasCategoryController = {
         */
 
         // 1) on cherche à retrouver l'id de category_title
-        const categoryId = await Category.findOne({
+        const categoryId = await Category.findOrCreate({
             // attributes = permet un SELECT de "id" dans ce cas
             attributes: ['id'],
             // size_name qui se trouve dans la table...
@@ -41,7 +41,7 @@ const articleHasCategoryController = {
             `
                 INSERT INTO "article_has_category" 
                 ("article_id", "category_id") 
-                VALUES (${article_id}, ${categoryId.id})
+                VALUES (${article_id}, ${categoryId[0].id})
             `);
     },
 

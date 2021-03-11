@@ -12,14 +12,14 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/17
+GET {{baseUrl}}/article/9
 
 ### POST
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference": "222222",
+    "reference": "111222222",
     "name": "Chuvak",
     "description": "blanc",
     "image": "image/link",
@@ -29,12 +29,12 @@ Content-Type: application/json
     "discount": 30,
     "categories": [
         {
-        "title": "homme"
+        "title": "CHAKAL"
         }
     ],
     "sizes": [
       {
-        "size_name": "L",
+        "size_name": "SLLL",
         "stock": 12
       },
       {

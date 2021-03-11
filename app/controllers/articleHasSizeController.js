@@ -34,8 +34,8 @@ const articleHasSizeController = {
         // celui-ci pour faire le test
         // const data = req.body;
 
-        // 1) on cherche à retrouver l'id de size_name
-        const sizeId = await Size.findOne({
+        // 1) on cherche à retrouver l'id de size_name, et s'il n'existe pas, on le crée
+        const sizeId = await Size.findOrCreate({
             // attributes = permet un SELECT de "id" dans ce cas
             attributes: ['id'],
             // size_name qui se trouve dans la table...
@@ -56,7 +56,7 @@ const articleHasSizeController = {
             // article_id: data.article_id,
 
             // on met l'id 
-            size_id: sizeId.id
+            size_id: sizeId[0].id
         });
 
         // on renvoie le JSON article
