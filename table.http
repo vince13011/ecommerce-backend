@@ -93,19 +93,19 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/orders/12
+GET {{baseUrl}}/orders/20
 
 ### POST
 POST {{baseUrl}}/orders
 Content-Type: application/json
 
 {
-    "orderNumber": 7,
-    "totalPrice": "2000",
+    "orderNumber": 123456,
+    "totalPrice": "23040",
     "addressId": 1,
     "articleId":3,
     "quantity": 1,
-    "unitNetPrice":"30"
+    "unitNetPrice":"10"
 }
 
 

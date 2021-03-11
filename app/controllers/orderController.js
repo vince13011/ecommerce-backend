@@ -97,6 +97,14 @@ const { OrderHasArticle, Article, Category, Size, User, Order, Address } = requi
             //on récupère les info de l'order que l'on vient de créer
             const infoOrder = await Order.findOne({where:{order_number:order.order_number}});
             console.log('infoOrder: ',infoOrder);
+            
+            // on prépare le nouvel order has article avec le numéro de commande existant
+            const orderArticles = {
+                order_id : infoOrder.id,
+                article_id : req.body.articleId,
+                quantity: req.body.quantity,
+                unit_net_price: req.body.unitNetPrice
+            }
 
             // on créer le nouvel orderHasArticle qui est pour l'instant le seul de la liste
             await OrderHasArticle.create(orderArticles);
