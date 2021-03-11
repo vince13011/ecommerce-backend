@@ -45,32 +45,31 @@ const articleHasCategoryController = {
             `);
     },
 
-    // // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
-    // // et les sizes, pour cela, il faut faire des routes PATCH pour 
-    // // article_has_size et article_has_category
-    // update: async (req, res) => {
-    //     const { id } = req.params;
-    //     const data = req.body;
-    //     const articleUpdate = await Article.update(
-    //         {
-    //             ...data
-    //         }, {
-    //         where: {
-    //             id: id,
-    //         }
-    //     });
 
-    //     // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
-    //     const article = await Article.findOne(
-    //         {
-    //             where: {
-    //                 id: id
-    //             },
-    //             include: ['categories', 'sizes']
-    //         }
-    //     );
-    //     res.json(article)
-    // },
+    update: async (article_id, data) => {
+        // Premierement on delete toutes les category associé a l'article en question 
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_category" WHERE "article_id"=${article_id}
+            `
+        );
+        // on boucle sur data.categories 
+        data.forEach(async (category) => {
+            // soit on cherche une id soit on creer ET on cherche l'id d'une category avec son title
+            const categoryId = await Category.findOrCreate({
+                where: {
+                    title: category.title,
+                }
+            });
+            // on insert l'id du category et l'article id dans article has category
+            await sequelize.query(
+                `
+                    INSERT INTO "article_has_category" ("article_id", "category_id")
+                    VALUES (${article_id}, ${categoryId[0].id})
+                `
+            )
+        });
+    },
 
     // delete: async (req, res) => {
     //     console.log('object')

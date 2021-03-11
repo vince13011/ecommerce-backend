@@ -64,45 +64,43 @@ const articleHasSizeController = {
 
     },
 
-    // // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
-    // // et les sizes, pour cela, il faut faire des routes PATCH pour 
-    // // article_has_size et article_has_category
-    // update: async (req, res) => {
-    //     const { id } = req.params;
-    //     const data = req.body;
-    //     const articleUpdate = await Article.update(
-    //         {
-    //             ...data
-    //         }, {
-    //         where: {
-    //             id: id,
-    //         }
-    //     });
+    update: async (article_id, data) => {
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
+            `
+        );
+        // on boucle sur data.sizes 
+        data.forEach(async (size) => {
+            // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title
+            const sizeId = await Size.findOrCreate({
+                where: {
+                    size_name: size.size_name,
+                }
+            });
 
-    //     // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
-    //     const article = await Article.findOne(
-    //         {
-    //             where: {
-    //                 id: id
-    //             },
-    //             include: ['categories', 'sizes']
-    //         }
-    //     );
-    //     res.json(article)
-    // },
+            // on insert l'id du size et l'article id et stock dans article has size
+            await sequelize.query(
+                `
+                    INSERT INTO "article_has_size" ("article_id", "size_id", "stock")
+                    VALUES (${article_id}, ${sizeId[0].id}, ${size.stock})
+                `
+            )
+        });
+    },
 
-    // delete: async (req, res) => {
-    //     console.log('object')
-    //     try {
-    //         const { id } = req.params;
-    //         const article = await Article.findByPk(id);
-    //         article.destroy();
-    //         res.json(article);
-    //     } catch (error) {
-    //         console.log('error', error)
-    //     }
 
-    // },
+    delete: async (req, res) => {
+        console.log('object')
+        try {
+            const { id } = req.params;
+            const article = await Article.findByPk(id);
+            article.destroy();
+            res.json(article);
+        } catch (error) {
+            console.log('error', error)
+        }
+    },
 };
 
 module.exports = articleHasSizeController;
