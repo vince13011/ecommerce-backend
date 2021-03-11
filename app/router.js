@@ -12,7 +12,7 @@ const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
 const sizeController = require('./controllers/sizeController');
 const articleHasSizeController = require('./controllers/articleHasSizeController');
-
+const orderHasArticleController = require('./controllers/orderHasArticleController');
 const orderController = require('./controllers/orderController');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
@@ -36,10 +36,8 @@ router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
 router.get('/orders', orderController.getAll);
-router.get('/orders/:id', orderController.getOne);
-router.post('/orders', orderController.create);
-// router.put('/orders/:id', orderController.updateById);
-// router.delete('/orders/:id', orderController.deleteById);
+router.get('/order/:id', orderController.getOne);
+router.post('/order', orderController.create);
 
 // // USERS
 router.get('/users', userController.getAll);
@@ -82,9 +80,9 @@ router.get('/article-has-size/:id', articleHasSizeController.getOne);
 router.post('/article-has-size/:id', articleHasCategoryController.delete);
 
 // // ORDER_HAS_ARTICLE
-// router.get('/order/article', orderHasArticleController.getAll);
-// router.get('/order/:id/article', orderHasArticleController.getAllInOrder);
-// router.post('/order/article', orderHasArticleController.create);
+router.get('/order-has-article', orderHasArticleController.getAll);
+router.get('/order-has-article/:id', orderHasArticleController.getOne);
+// router.post('/order-has-article', orderHasArticleController.create);
 
 // ROUTER
 module.exports = router;
