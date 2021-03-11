@@ -27,7 +27,7 @@ const articleHasCategoryController = {
         */
 
         // 1) on cherche à retrouver l'id de category_title
-        const categoryId = await Category.findOne({
+        const categoryId = await Category.findOrCreate({
             // attributes = permet un SELECT de "id" dans ce cas
             attributes: ['id'],
             // size_name qui se trouve dans la table...
@@ -41,49 +41,45 @@ const articleHasCategoryController = {
             `
                 INSERT INTO "article_has_category" 
                 ("article_id", "category_id") 
-                VALUES (${article_id}, ${categoryId.id})
+                VALUES (${article_id}, ${categoryId[0].id})
             `);
     },
 
-    // // ATTENTION : cela update UNIQUEMENT l'article, pas les categories 
-    // // et les sizes, pour cela, il faut faire des routes PATCH pour 
-    // // article_has_size et article_has_category
-    // update: async (req, res) => {
-    //     const { id } = req.params;
-    //     const data = req.body;
-    //     const articleUpdate = await Article.update(
-    //         {
-    //             ...data
-    //         }, {
-    //         where: {
-    //             id: id,
-    //         }
-    //     });
 
-    //     // une fois que l'article a été updaté, il est renvoyé avec les nouvelles données
-    //     const article = await Article.findOne(
-    //         {
-    //             where: {
-    //                 id: id
-    //             },
-    //             include: ['categories', 'sizes']
-    //         }
-    //     );
-    //     res.json(article)
-    // },
+    update: async (article_id, data) => {
+        // Premierement on delete toutes les category associé a l'article en question 
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_category" WHERE "article_id"=${article_id}
+            `
+        );
+        // on boucle sur data.categories 
+        data.forEach(async (category) => {
+            // soit on cherche une id soit on creer ET on cherche l'id d'une category avec son title
+            const categoryId = await Category.findOrCreate({
+                where: {
+                    title: category.title,
+                }
+            });
+            // on insert l'id du category et l'article id dans article has category
+            await sequelize.query(
+                `
+                    INSERT INTO "article_has_category" ("article_id", "category_id")
+                    VALUES (${article_id}, ${categoryId[0].id})
+                `
+            )
+        });
+    },
 
-    // delete: async (req, res) => {
-    //     console.log('object')
-    //     try {
-    //         const { id } = req.params;
-    //         const article = await Article.findByPk(id);
-    //         article.destroy();
-    //         res.json(article);
-    //     } catch (error) {
-    //         console.log('error', error)
-    //     }
-
-    // },
+    delete: async (req, res) => {
+        const { id } = req.params;
+        await sequelize.query(
+            `
+                DELETE FROM "article_has_category" WHERE "article_id"=${id}
+            `
+        );
+        res.json(`l'association avec article_id=${id} a bien été supprimée`);
+    }
 };
 
 module.exports = articleHasCategoryController;

@@ -12,14 +12,14 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/17
+GET {{baseUrl}}/article/11
 
 ### POST
 POST {{baseUrl}}/article
 Content-Type: application/json
 
 {
-    "reference": "222222",
+    "reference": "111222222",
     "name": "Chuvak",
     "description": "blanc",
     "image": "image/link",
@@ -29,12 +29,12 @@ Content-Type: application/json
     "discount": 30,
     "categories": [
         {
-        "title": "homme"
+        "title": "CHAKAL"
         }
     ],
     "sizes": [
       {
-        "size_name": "L",
+        "size_name": "SLLL",
         "stock": 12
       },
       {
@@ -45,29 +45,44 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/articles/3
+PUT {{baseUrl}}/article/1
 Content-Type: application/json
 
 {
     "reference":"1402303239",
-    "name": "capuche",
+    "name": "Tee-shirt",
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
     "pre_tax_price": 30,
     "vat_rate": 20,
-    "discount": 20
+    "discount": 20,
+    "categories": [
+        {
+            "title": "homme"
+        }
+    ],
+    "sizes": [
+      {
+        "size_name": "TAILLE TEST",
+        "stock": 3330000
+      },
+      {
+        "size_name": "L",
+        "stock": 20000
+      }
+    ]
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/1
+DELETE {{baseUrl}}/article/11
 
 
 ### GET
 GET {{baseUrl}}/categories
 
 ### GET
-GET {{baseUrl}}/category/11
+GET {{baseUrl}}/category/1
 
 ### POST 
 POST {{baseUrl}}/category
@@ -103,17 +118,17 @@ Content-Type: application/json
     // "order_number": à créer en back
     "user_id": 1,
     "address_id": 1,
-    "totalPrice": "100",
+    "total_price": "100",
     "articles": [
         {
-            "articleId": 2,
+            "article_id": 2,
             "quantity": 10,
-            "unitNetPrice": 10
+            "unit_net_price": 10
         },
         {
-            "articleId": 2,
+            "article_id": 2,
             "quantity": 10,
-            "unitNetPrice": 10
+            "unit_net_price": 10
         }
     ]
 }

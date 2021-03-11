@@ -42,8 +42,8 @@ router.post('/orders', orderController.create);
 // router.delete('/orders/:id', orderController.deleteById);
 
 // // USERS
- router.get('/users', userController.getAll);
- router.get('/users/:id', userController.getOne);
+router.get('/users', userController.getAll);
+router.get('/users/:id', userController.getOne);
 
 // // connecter un user ???
 router.post('/users', userController.login);
@@ -74,12 +74,12 @@ router.delete('/size/:id', sizeController.delete);
 // // ARTICLE_HAS_CATEGORY
 router.get('/article-has-category', articleHasCategoryController.getAll);
 router.get('/article-has-category/:id', articleHasCategoryController.getOne);
-// router.post('/article-has-size', articleHasCategoryController.create);
+router.get('/article-has-category/:id', articleHasCategoryController.delete);
 
 // // ARTICLE_HAS_SIZE
 router.get('/article-has-size', articleHasSizeController.getAll);
 router.get('/article-has-size/:id', articleHasSizeController.getOne);
-// router.post('/article-has-size', articleHasSizeController.create);
+router.post('/article-has-size/:id', articleHasCategoryController.delete);
 
 // // ORDER_HAS_ARTICLE
 // router.get('/order/article', orderHasArticleController.getAll);
