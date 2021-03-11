@@ -11,10 +11,9 @@ const testSchema = require('./joiSchemas/testSchema');
 const articleController = require('./controllers/articleController');
 const categoryController = require('./controllers/categoryController');
 const sizeController = require('./controllers/sizeController');
-const articleHasSizeController = require('./controllers/articleHasSizeController')
+const articleHasSizeController = require('./controllers/articleHasSizeController');
 
 const orderController = require('./controllers/orderController');
-const orderHasArticleController = require('./controllers/orderHasArticleController')
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
@@ -38,7 +37,7 @@ router.delete('/category/:id', categoryController.delete);
 // ORDERS
 router.get('/orders', orderController.getAll);
 router.get('/orders/:id', orderController.getOne);
-// router.post('/orders', orderController.create);
+router.post('/orders', orderController.create);
 // router.put('/orders/:id', orderController.updateById);
 // router.delete('/orders/:id', orderController.deleteById);
 
