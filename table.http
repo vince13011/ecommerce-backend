@@ -210,8 +210,7 @@ DELETE {{baseUrl}}/users/2
 GET {{baseUrl}}/addresses
 
 ### GET
-GET {{baseUrl}}/addresses/1
-
+GET {{baseUrl}}/address/3
 
 ### POST
 POST {{baseUrl}}/addresses
