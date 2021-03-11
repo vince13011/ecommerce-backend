@@ -16,7 +16,7 @@ const { OrderHasArticle, Article, Category, Size, User, Order, Address } = requi
                         exclude: ['id','','created_at', 'updated_at']
                     },
                     order: [
-                        ['updated_at', 'ASC']
+                        ['updated_at', 'DESC']
                     ]
                 }]
             });
@@ -45,7 +45,16 @@ const { OrderHasArticle, Article, Category, Size, User, Order, Address } = requi
     },
 
     create: async (req, res) => {
-        
+        const order_number =`${req.body.user_id}-${req.body.address_id}-`+Date.now() ;
+        console.log(order_number);
+
+
+    }
+
+
+};
+/*    create: async (req, res) => {
+     
         // ce qui va servir pour faire le nouvel order
         const order = {
             order_number:req.body.orderNumber,
@@ -66,12 +75,12 @@ const { OrderHasArticle, Article, Category, Size, User, Order, Address } = requi
                 unit_net_price: req.body.unitNetPrice
             }
       
-            // on met à jour le prix total qui en req.body
+            // on met à jour dans l'order le prix total qui en req.body
            const updateOrder = await Order.update(
                                 {total_price : req.body.totalPrice},
                                 {where:{id : searchOrder.id}}
                              )
-            // on récupère ses info avec un findOne                 
+            // on récupère ses infos avec un findOne                 
             const infoOrder = await Order.findOne({ where:{order_number:order.order_number} });
             
             //on insert notre nouvel orderHasArticle
@@ -122,8 +131,11 @@ const { OrderHasArticle, Article, Category, Size, User, Order, Address } = requi
             res.json(allInfoOrder)
         
     }
-    }
+ 
 
-};
 
+
+
+}
+*/  
 module.exports = OrderController;

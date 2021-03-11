@@ -100,14 +100,23 @@ POST {{baseUrl}}/orders
 Content-Type: application/json
 
 {
-    "orderNumber": 123456,
-    "totalPrice": "23040",
-    "addressId": 1,
-    "articleId":3,
-    "quantity": 1,
-    "unitNetPrice":"10"
+    // "order_number": à créer en back
+    "user_id": 1,
+    "address_id": 1,
+    "totalPrice": "100",
+    "articles": [
+        {
+            "articleId": 2,
+            "quantity": 10,
+            "unitNetPrice": 10
+        },
+        {
+            "articleId": 2,
+            "quantity": 10,
+            "unitNetPrice": 10
+        }
+    ]
 }
-
 
 ### PUT /orders/:id
 PUT {{baseUrl}}/orders/4
