@@ -159,7 +159,7 @@ const userController = {
                 const theAddressUser = await Address.findOne({
                     where: { user_id: infoUser.id },
                     attributes: {
-                        exclude: [created_at']
+                        exclude: ['created_at']
                     },
                     include: [{
                         association: 'address_orders',
