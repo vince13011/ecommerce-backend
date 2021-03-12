@@ -1,4 +1,4 @@
-const Article = require('./Article');
+const Article = require('./article');
 const Category = require('./Category');
 const Size = require('./Size');
 const Order = require('./Order');
