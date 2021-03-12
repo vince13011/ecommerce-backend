@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/10
+GET {{baseUrl}}/order/9
 
 ### POST
 POST {{baseUrl}}/order
@@ -119,21 +119,23 @@ Content-Type: application/json
     "user_id": 2,
     "address_id": 2,
     "total_price": "200",
+    "quantity_total": 10,
     "articles": [
         {
             "article_id": 4,
-            "quantity": 10,
-            "unit_net_price": 10
+            "unit_net_price": 10,
+            "sizes": {
+                "size": "L",
+                "quantity": 30
+            }
         },
         {
-            "article_id": 5,
-            "quantity": 10,
-            "unit_net_price": 10
-        },
-        {
-            "article_id": 2,
-            "quantity": 11,
-            "unit_net_price": 11
+            "article_id": 4,
+            "unit_net_price": 10,
+            "sizes": {
+                "size": "XL",
+                "quantity": 30
+            }
         }
     ]
 }
@@ -143,7 +145,7 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/user/4
+GET {{baseUrl}}/user/31
 
 
 ### POST
@@ -161,7 +163,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"vincen@gmail.com",
+    "email":"vadad@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",

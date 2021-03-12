@@ -110,18 +110,18 @@ VALUES
 
 
 INSERT INTO "order_has_article"
-(order_id,article_id,quantity,unit_net_price,created_at,updated_at) 
+(order_id,article_id,size_id,quantity,unit_net_price,created_at,updated_at) 
 VALUES
-(1,1,2,'17,50',NOW(),NOW()),
-(1,2,4,'62',NOW(),NOW()),
-(3,1,2,'17,50',NOW(),NOW()),
-(4,4,2,'43,50',NOW(),NOW()),
-(4,3,2,'12,00',NOW(),NOW()),
-(4,1,4,'45,50',NOW(),NOW()),
-(5,4,2,'35,10',NOW(),NOW()),
-(6,1,4,'17,50',NOW(),NOW()),
-(7,3,2,'67,00',NOW(),NOW()),
-(8,2,2,'17,50',NOW(),NOW());
+(1,1,1,2,'17,50',NOW(),NOW()),
+(1,2,2,4,'62',NOW(),NOW()),
+(3,1,2,2,'17,50',NOW(),NOW()),
+(4,4,1,2,'43,50',NOW(),NOW()),
+(4,3,3,2,'12,00',NOW(),NOW()),
+(4,1,4,4,'45,50',NOW(),NOW()),
+(5,4,1,2,'35,10',NOW(),NOW()),
+(6,1,3,4,'17,50',NOW(),NOW()),
+(7,3,2,2,'67,00',NOW(),NOW()),
+(8,2,1,2,'17,50',NOW(),NOW());
 
 INSERT INTO "article_has_size"
 (article_id,size_id,stock,created_at,updated_at) 

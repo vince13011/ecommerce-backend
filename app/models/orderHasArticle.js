@@ -4,7 +4,6 @@ const connection = require('../database');
 class OrderHasArticle extends Model { };
 
 OrderHasArticle = connection.define('order_has_article', {
-    // pour récupèrer l'id, sinon il n'envoi pas l'id
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -15,6 +14,9 @@ OrderHasArticle = connection.define('order_has_article', {
     unit_net_price: DataTypes.TEXT,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
+    size_id: {
+        type: DataTypes.INTEGER,
+    },
 }, {
     sequelize: connection,
     tableName: "order_has_article"
