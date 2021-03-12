@@ -14,7 +14,7 @@ const OrderController = {
                 },
                 {
                     association: 'orderArticles',
-                    attributes: { exclude: ['reference', 'name', 'description', 'image', 'color', 'pre_tax_price', 'vat_rate', 'discount', 'created_at', 'updated_at'] }
+                    attributes: { exclude: ['id', 'description', 'image', 'color', 'pre_tax_price', 'vat_rate', 'discount', 'created_at', 'updated_at'] }
                 }],
             limit,
             order: [
@@ -37,7 +37,7 @@ const OrderController = {
                 },
                 {
                     association: 'orderArticles',
-                    attributes: { exclude: ['reference', 'name', 'description', 'image', 'color', 'pre_tax_price', 'vat_rate', 'discount', 'created_at', 'updated_at'] }
+                    attributes: { exclude: ['id', 'description', 'image', 'color', 'pre_tax_price', 'vat_rate', 'discount', 'created_at', 'updated_at'] }
                 }],
             order: [
                 ['created_at', 'ASC']

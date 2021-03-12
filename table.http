@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/29
+GET {{baseUrl}}/order/38
 
 ### POST
 POST {{baseUrl}}/order
@@ -116,19 +116,24 @@ Content-Type: application/json
 
 {
     // "order_number": à créer en back
-    "user_id": 1,
-    "address_id": 1,
-    "total_price": "100",
+    "user_id": 2,
+    "address_id": 2,
+    "total_price": "200",
     "articles": [
         {
-            "article_id": 1,
+            "article_id": 4,
+            "quantity": 10,
+            "unit_net_price": 10
+        },
+        {
+            "article_id": 5,
             "quantity": 10,
             "unit_net_price": 10
         },
         {
             "article_id": 2,
-            "quantity": 10,
-            "unit_net_price": 10
+            "quantity": 11,
+            "unit_net_price": 11
         }
     ]
 }
