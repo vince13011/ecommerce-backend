@@ -110,6 +110,7 @@ const OrderController = {
         res.json(order);
     },
 
+    // route pour récupérer toutes les orders d'un user/id
     userOrders: async (req, res) => {
         const { id } = req.params;
         const order = await Order.findOne({
