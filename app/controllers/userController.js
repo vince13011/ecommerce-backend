@@ -28,15 +28,16 @@ const userController = {
      },
 */
 
-    getAll: async (req, res) =>{
-        const {limit} = req.query;
+    getAll: async (req, res) => {
+        const { limit } = req.query;
         const users = await User.findAll({
-           attributes:{
-               exclude:['id','password','created_at','role_id']
-           } 
-         })
-          res.json(users);
-     },
+            attributes: {
+                exclude: ['id', 'password', 'created_at', 'role_id']
+            }
+        })
+        res.json(users);
+    },
+
 
      //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
      getOne: async (req, res) =>{
@@ -69,8 +70,9 @@ const userController = {
         const userWithAddress = [infoUser , theAddressUser];
         res.json(userWithAddress)
     
+
     },
-    
+
     create: async (req, res) => {
         const newUserData = {
             email: req.body.email,
@@ -78,7 +80,7 @@ const userController = {
             lastname: req.body.lastname,
             password: req.body.password,
             phone_number: req.body.phoneNumber,
-            role_id:req.body.roleId
+            role_id: req.body.roleId
         };
         // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
         // qu'on va faire ne passe pas
@@ -127,56 +129,57 @@ const userController = {
             }
 
             else {
-                    const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
-                    newUserData.password = hashedPassword;
-                
-                    await User.create(newUserData);
-                    
-                    const infoUser= await User.findOne({
-                                    where: { email: newUserData.email }, 
-                                    attributes:{
-                                                exclude:['password','role_id']
-                                                }
-                                    })
+                const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
+                newUserData.password = hashedPassword;
 
-                    // les infos de l'address à ajouter
-                    const newAddressData ={
-                        country: req.body.country,
-                        city: req.body.city,
-                        zip_code: req.body.zipCode,
-                        number: req.body.number,
-                        street_name: req.body.streetName,
-                        additional: req.body.additional,
-                        user_id: infoUser.id
-                        };
 
-                    await Address.create(newAddressData);
+                await User.create(newUserData);
 
-                    const theAddressUser = await Address.findOne({
-                        where: {user_id: infoUser.id},
-                        attributes:{
-                            exclude:['id','created_at']
-                        },
-                            include:[{ 
-                                    association:'address_orders',
-                                        include:[{
-                                            association:'orderArticles',
-                                            order: [
-                                                ['updated_at', 'ASC']
-                                            ]
-                                        }]
-                            }]  
-                                
-                    })
+                const infoUser = await User.findOne({
+                    where: { email: newUserData.email },
+                    attributes: {
+                        exclude: ['password', 'role_id']
+                    }
+                })
+
+                // les infos de l'address à ajouter
+                const newAddressData = {
+                    country: req.body.country,
+                    city: req.body.city,
+                    zip_code: req.body.zipCode,
+                    number: req.body.number,
+                    street_name: req.body.streetName,
+                    additional: req.body.additional,
+                    user_id: infoUser.id
+                };
+
+                await Address.create(newAddressData);
+
+                const theAddressUser = await Address.findOne({
+                    where: { user_id: infoUser.id },
+                    attributes: {
+                        exclude: ['id', 'created_at']
+                    },
+                    include: [{
+                        association: 'address_orders',
+                        include: [{
+                            association: 'orderArticles',
+                            order: [
+                                ['updated_at', 'ASC']
+                            ]
+                        }]
+                    }]
+
+                })
 
                 const user = await User.findOne({
-                    where:{ id : infoUser.id},
-                    attributes:{exclude:['role_id','password','created_at','updated_at']}
+                    where: { id: infoUser.id },
+                    attributes: { exclude: ['role_id', 'password', 'created_at', 'updated_at'] }
                 })
-                const userWithAddress = [user , theAddressUser];
+                const userWithAddress = [user, theAddressUser];
                 res.json(userWithAddress)
             }
-         }
+        }
     },
 
 
@@ -203,22 +206,22 @@ const userController = {
         }
         // sinon on chercher l'utilisateur en BDD
         else {
-            const user = await User.findOne({where:{email:req.body.email}})
-           
-                console.log('user :', user);
+            const user = await User.findOne({ where: { email: req.body.email } })
+
+            console.log('user :', user);
 
             // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
             // si le user est null on redirige sur la page d'inscription 
             if (!user) {
                 errors.push('Veuillez vérifier vos identifiants');
-                
+
                 res.json({ errors });
             }
             else {
                 // si on a trouvé un utilisateur, il va falloir comparer le mdp
                 // des données en post avec le hash de la BDD
                 // pour faire ça bcrypt propose une fonction compareSync
-                console.log('user :',user)
+                console.log('user :', user)
                 const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
                 console.log('isValidPassword : ', isValidPassword)
 
@@ -228,29 +231,32 @@ const userController = {
                 if (isValidPassword) {
                     //maintenant que tout est validé on renvoit les informations demandées
                     const theAddressUser = await Address.findOne({
+
                         where: {user_id:user.id},
                         attributes:{
                             exclude:['id','created_at']
+
                         },
-                            include:[
-                                {association:'address_orders',
-                                        include:[{
-                                            association:'orderArticles',
-                                            order: [
-                                                ['updated_at', 'ASC']
-                                            ]
-                                        }]
-                                }
-                            ]  
-                        })
+                        include: [
+                            {
+                                association: 'address_orders',
+                                include: [{
+                                    association: 'orderArticles',
+                                    order: [
+                                        ['updated_at', 'ASC']
+                                    ]
+                                }]
+                            }
+                        ]
+                    })
 
                     const infoUser = await User.findOne({
-                        where:{ id : user.id},
-                        attributes:{
-                                    exclude:['role_id','password','created_at','updated_at']
+                        where: { id: user.id },
+                        attributes: {
+                            exclude: ['role_id', 'password', 'created_at', 'updated_at']
                         }
                     })
-                    const userWithAddress = [infoUser , theAddressUser];
+                    const userWithAddress = [infoUser, theAddressUser];
                     res.json(userWithAddress)
                 }
                 else {
@@ -260,13 +266,14 @@ const userController = {
             }
         }
     },
-    updateById:async (req,res)=>{
-        const {id} = req.params;
+  
+    updateById: async (req, res) => {
+        const { id } = req.params;
         const data = req.body;
         //const oldUser = await User.findOne({where:{id}});
-        await User.update({ ...data},{where: {id}})
+        await User.update({ ...data }, { where: { id } })
         const newUser = await User.findByPk(id)
-        res.json(newUser)  
+        res.json(newUser)
     },
 
     deleteById:async(req,res)=>{
@@ -277,8 +284,9 @@ const userController = {
         User.destroy({where:{id}})
         //await user.destroy();
         res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+
         }
-        catch{
+        catch {
             res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
