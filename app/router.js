@@ -17,6 +17,7 @@ const orderController = require('./controllers/orderController');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
+const payController = require('./controllers/payController');
 
 
 
@@ -83,6 +84,9 @@ router.post('/article-has-size/:id', articleHasCategoryController.delete);
 router.get('/order-has-article', orderHasArticleController.getAll);
 router.get('/order-has-article/:id', orderHasArticleController.getOne);
 // router.post('/order-has-article', orderHasArticleController.create);
+
+// STRIPE
+router.post('/pay', payController.payment);
 
 // ROUTER
 module.exports = router;
