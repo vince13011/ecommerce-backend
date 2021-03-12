@@ -51,9 +51,7 @@ const OrderController = {
 
     create: async (req, res) => {
         const data = req.body;
-        /* let order_number = `479${data.user_id}${data.address_id}${data.total_price}` + Date.now();
-        order_number = Number(order_number) */
-        const order_number = '5646';
+        const order_number = `UI${data.user_id}AI${data.address_id}TP${data.total_price}DN` + Date.now();
         data.order_number = order_number;
         // create juste un order avec les donnes du body
         const order = await Order.create({

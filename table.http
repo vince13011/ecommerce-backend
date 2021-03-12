@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/38
+GET {{baseUrl}}/order/10
 
 ### POST
 POST {{baseUrl}}/order
@@ -143,7 +143,7 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/users/2
+GET {{baseUrl}}/users/4
 
 
 ### POST
@@ -193,7 +193,7 @@ Content-Type: application/json
 
 ### DELETE /users/:id
 
-DELETE {{baseUrl}}/users/2
+DELETE {{baseUrl}}/users/4
 
 
 
