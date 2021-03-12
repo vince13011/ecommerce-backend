@@ -18,16 +18,18 @@ const orderHasArticleController = {
         res.json(response);
     },
 
-
     create: async (order_id, data) => {
-        console.log(order_id, data);
-
-        // je boucle sur les data que je vais récupérer dans le orderController
-        data.forEach(async (article) => {
-            // là, on donne des valeurs aux champs nécessaires de cette table
+        data.articles.forEach(async (article) => {
+            const searchSizeId = await Size.findOne({
+                where: {
+                    size_name: article.sizes.size,
+                }
+            });
+            const sizeId = searchSizeId.dataValues.id;
             await OrderHasArticle.create({
                 article_id: article.article_id,
-                quantity: article.quantity,
+                size_id: sizeId,
+                quantity: article.sizes.quantity,
                 unit_net_price: article.unit_net_price,
                 order_id: order_id
             });
