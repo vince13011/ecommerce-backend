@@ -2,7 +2,6 @@ const { Article, Category, Size, User, Order, Address } = require('../models/ind
 const articleHasSizeController = require('./articleHasSizeController');
 const articleHasCategoryController = require('./articleHasCategoryController');
 const sequelize = require('../database');
-const { findOne } = require('../models/Article');
 
 const articleController = {
     getAll: async (req, res) => {

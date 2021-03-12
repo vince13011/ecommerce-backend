@@ -1,6 +1,5 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
 const sequelize = require('../database');
-const { findOne } = require('../models/Article');
 var validator = require("email-validator");
 const bcrypt = require('bcrypt');
 
@@ -39,37 +38,39 @@ const userController = {
     },
 
 
-     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
-     getOne: async (req, res) =>{
-        const {id} = req.params;
+    //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
+    getOne: async (req, res) => {
+        const { id } = req.params;
 
 
         const infoUser = await User.findOne({
-            where:{id},
-            attributes:{
-                        exclude:['role_id','password','created_at','updated_at']
-            }})
+            where: { id },
+            attributes: {
+                exclude: ['role_id', 'password', 'created_at', 'updated_at']
+            }
+        })
 
         const theAddressUser = await Address.findOne({
-            where: {user_id: infoUser.id},
-            attributes:{
-                exclude:['id','created_at']
+            where: { user_id: infoUser.id },
+            attributes: {
+                exclude: ['id', 'created_at']
             },
-                include:[
-                    {association:'address_orders',
-                            include:[{
-                                association:'orderArticles',
-                                order: [
-                                    ['updated_at', 'ASC']
-                                ]
-                            }]
-                    }
-                ]  
-            })
+            include: [
+                {
+                    association: 'address_orders',
+                    include: [{
+                        association: 'orderArticles',
+                        order: [
+                            ['updated_at', 'ASC']
+                        ]
+                    }]
+                }
+            ]
+        })
 
-        const userWithAddress = [infoUser , theAddressUser];
+        const userWithAddress = [infoUser, theAddressUser];
         res.json(userWithAddress)
-    
+
 
     },
 
@@ -232,9 +233,9 @@ const userController = {
                     //maintenant que tout est validé on renvoit les informations demandées
                     const theAddressUser = await Address.findOne({
 
-                        where: {user_id:user.id},
-                        attributes:{
-                            exclude:['id','created_at']
+                        where: { user_id: user.id },
+                        attributes: {
+                            exclude: ['id', 'created_at']
 
                         },
                         include: [
@@ -266,7 +267,7 @@ const userController = {
             }
         }
     },
-  
+
     updateById: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
@@ -276,14 +277,14 @@ const userController = {
         res.json(newUser)
     },
 
-    deleteById:async(req,res)=>{
-        try{
-        const {id} = req.params;
-        console.log('id:',id)
-        const user = await User.findByPk(id);
-        User.destroy({where:{id}})
-        //await user.destroy();
-        res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+    deleteById: async (req, res) => {
+        try {
+            const { id } = req.params;
+            console.log('id:', id)
+            const user = await User.findByPk(id);
+            User.destroy({ where: { id } })
+            //await user.destroy();
+            res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
 
         }
         catch {
