@@ -38,34 +38,39 @@ const userController = {
         res.json(users);
     },
 
-    //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
-    getOne: async (req, res) => {
-        const user_id = req.params.id;
-        const users = await Address.findOne({
-            where: { user_id },
-            attributes: {
-                exclude: ['created_at']
-            },
-            include: [
-                {
-                    association: 'address_user',
-                    attributes: {
-                        exclude: ['password', 'created_at']
-                    }
-                },
-                {
-                    association: 'address_orders',
-                    include: [{
-                        association: 'orderArticles',
-                        order: [
-                            ['updated_at', 'ASC']
-                        ]
-                    }]
-                }
-            ]
 
-        })
-        res.json(users);
+     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
+     getOne: async (req, res) =>{
+        const {id} = req.params;
+
+
+        const infoUser = await User.findOne({
+            where:{id},
+            attributes:{
+                        exclude:['role_id','password','created_at','updated_at']
+            }})
+
+        const theAddressUser = await Address.findOne({
+            where: {user_id: infoUser.id},
+            attributes:{
+                exclude:['id','created_at']
+            },
+                include:[
+                    {association:'address_orders',
+                            include:[{
+                                association:'orderArticles',
+                                order: [
+                                    ['updated_at', 'ASC']
+                                ]
+                            }]
+                    }
+                ]  
+            })
+
+        const userWithAddress = [infoUser , theAddressUser];
+        res.json(userWithAddress)
+    
+
     },
 
     create: async (req, res) => {
@@ -127,6 +132,7 @@ const userController = {
                 const hashedPassword = bcrypt.hashSync(newUserData.password, 10);
                 newUserData.password = hashedPassword;
 
+
                 await User.create(newUserData);
 
                 const infoUser = await User.findOne({
@@ -152,7 +158,7 @@ const userController = {
                 const theAddressUser = await Address.findOne({
                     where: { user_id: infoUser.id },
                     attributes: {
-                        exclude: ['created_at']
+                        exclude: ['id', 'created_at']
                     },
                     include: [{
                         association: 'address_orders',
@@ -225,9 +231,11 @@ const userController = {
                 if (isValidPassword) {
                     //maintenant que tout est validé on renvoit les informations demandées
                     const theAddressUser = await Address.findOne({
-                        where: { user_id: user.id },
-                        attributes: {
-                            exclude: ['created_at']
+
+                        where: {user_id:user.id},
+                        attributes:{
+                            exclude:['id','created_at']
+
                         },
                         include: [
                             {
@@ -258,6 +266,7 @@ const userController = {
             }
         }
     },
+  
     updateById: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
@@ -266,14 +275,16 @@ const userController = {
         const newUser = await User.findByPk(id)
         res.json(newUser)
     },
-    deleteById: async (req, res) => {
-        try {
-            const { id } = req.params;
-            console.log('id:', id)
-            const user = await User.findByPk(id);
-            User.destroy({ where: { id } })
-            //await user.destroy();
-            res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+
+    deleteById:async(req,res)=>{
+        try{
+        const {id} = req.params;
+        console.log('id:',id)
+        const user = await User.findByPk(id);
+        User.destroy({where:{id}})
+        //await user.destroy();
+        res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+
         }
         catch {
             res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
