@@ -143,16 +143,16 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/users/5
+GET {{baseUrl}}/user/4
 
 
 ### POST
-POST {{baseUrl}}/users
+POST {{baseUrl}}/user
 Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "vincentgiglio@gmail.com",
+"email": "vincen@gmail.com",
 "password":"ABCDEFGH"
 }
 
@@ -161,7 +161,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"vincentgiglio@gmail.com",
+    "email":"vincen@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",
@@ -176,8 +176,8 @@ Content-Type: application/json
     "additional":"étage 5"
 }
 
-###PUT /users/:id
-PUT {{baseUrl}}/users/2
+###PUT /user/:id
+PUT {{baseUrl}}/user/2
 
 Content-Type: application/json
 
@@ -190,9 +190,9 @@ Content-Type: application/json
     "role_id": 1
 }
 
-### DELETE /users/:id
+### DELETE /user/:id
 
-DELETE {{baseUrl}}/users/4
+DELETE {{baseUrl}}/user/4
 
 
 

@@ -41,12 +41,12 @@ router.post('/order', orderController.create);
 
 // // USERS
 router.get('/users', userController.getAll);
-router.get('/users/:id', userController.getOne);
+router.get('/user/:id', userController.getOne);
 
 // // connecter un user ???
-router.post('/users', userController.login);
-router.put('/users/:id', userController.updateById);
-router.delete('/users/:id', userController.deleteById);
+router.post('/user', userController.login);
+router.put('/user/:id', userController.updateById);
+router.delete('/user/:id', userController.deleteById);
 
 
 // // CREER UN NOUVEL UTILISATEUR
