@@ -73,6 +73,7 @@ CREATE TABLE order_has_article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_id posint NOT NULL REFERENCES "order"(id) ON DELETE CASCADE,
     article_id posint REFERENCES article(id) ON DELETE SET NULL,
+    size_id posint NOT NULL REFERENCES "size"(id) ON DELETE CASCADE,
     quantity posint NOT NULL DEFAULT 1,
     unit_net_price text NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
