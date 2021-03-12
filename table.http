@@ -262,3 +262,12 @@ Content-Type: application/json
 }
 ### DELETE
 DELETE {{baseUrl}}/size/12
+
+
+### POST
+POST {{baseUrl}}/pay
+Content-Type: application/json
+
+{
+
+}
