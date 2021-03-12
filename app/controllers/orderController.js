@@ -1,5 +1,6 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
 const orderHasArticleController = require('./orderHasArticleController');
+
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;

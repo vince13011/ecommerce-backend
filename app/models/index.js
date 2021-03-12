@@ -1,12 +1,12 @@
-const Article = require('./Article');
-const Category = require('./Category');
-const Size = require('./Size');
-const Order = require('./Order');
-const User = require('./User');
-const Address = require('./Address');
-const ArticleHasSize = require('./ArticleHasSize');
-const Role = require('./Role');
-const OrderHasArticle = require('./OrderHasArticle')
+const Article = require('./article');
+const Category = require('./category');
+const Size = require('./size');
+const Order = require('./order');
+const User = require('./user');
+const Address = require('./address');
+const ArticleHasSize = require('./articleHasSize');
+const Role = require('./role');
+const OrderHasArticle = require('./orderHasArticle')
 
 // une question a plusieurs answers
 Article.belongsToMany(Category, {
