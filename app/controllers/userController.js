@@ -40,29 +40,35 @@ const userController = {
 
      //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
      getOne: async (req, res) =>{
-        const user_id = req.params.id;
-        const users = await Address.findOne({
-                    where: {user_id},
-                    attributes:{
-                        exclude:['created_at']
-                    },
-                        include:[
-                            {association:'address_user',
-                                attributes:{
-                                exclude:['password','created_at']}
-                            },
-                            {association:'address_orders',
-                                    include:[{
-                                        association:'orderArticles',
-                                        order: [
-                                            ['updated_at', 'ASC']
-                                        ]
-                                    }]
-                            }
-                        ]  
-                            
-                    })
-        res.json(users);
+        const {id} = req.params;
+
+
+        const infoUser = await User.findOne({
+            where:{id},
+            attributes:{
+                        exclude:['role_id','password','created_at','updated_at']
+            }})
+
+        const theAddressUser = await Address.findOne({
+            where: {user_id: infoUser.id},
+            attributes:{
+                exclude:['id','created_at']
+            },
+                include:[
+                    {association:'address_orders',
+                            include:[{
+                                association:'orderArticles',
+                                order: [
+                                    ['updated_at', 'ASC']
+                                ]
+                            }]
+                    }
+                ]  
+            })
+
+        const userWithAddress = [infoUser , theAddressUser];
+        res.json(userWithAddress)
+    
     },
     
     create: async (req, res) => {
@@ -149,7 +155,7 @@ const userController = {
                     const theAddressUser = await Address.findOne({
                         where: {user_id: infoUser.id},
                         attributes:{
-                            exclude:['created_at']
+                            exclude:['id','created_at']
                         },
                             include:[{ 
                                     association:'address_orders',
@@ -224,7 +230,7 @@ const userController = {
                     const theAddressUser = await Address.findOne({
                         where: {user_id:user.id},
                         attributes:{
-                            exclude:['created_at']
+                            exclude:['id','created_at']
                         },
                             include:[
                                 {association:'address_orders',
@@ -262,6 +268,7 @@ const userController = {
         const newUser = await User.findByPk(id)
         res.json(newUser)  
     },
+
     deleteById:async(req,res)=>{
         try{
         const {id} = req.params;
