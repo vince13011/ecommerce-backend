@@ -39,6 +39,8 @@ router.delete('/category/:id', categoryController.delete);
 router.get('/orders', orderController.getAll);
 router.get('/order/:id', orderController.getOne);
 router.post('/order', orderController.create);
+// renvoie toutes les orders d'un utilisateur
+router.get('/user-orders/:id', orderController.userOrders);
 
 // // USERS
 router.get('/users', userController.getAll);
@@ -49,10 +51,8 @@ router.post('/user', userController.login);
 router.put('/user/:id', userController.updateById);
 router.delete('/user/:id', userController.deleteById);
 
-
 // // CREER UN NOUVEL UTILISATEUR
 router.post('/signup', userController.create);
-
 
 // // ADDRESSES
 router.get('/addresses', addressController.getAll);
@@ -61,14 +61,12 @@ router.get('/address/:id', addressController.getOne);
 // router.put('/addresses/:id', addressController.updateById);
 // router.delete('/addresses/:id', addressController.deleteById);
 
-
 // // SIZES
 router.get('/sizes', sizeController.getAll);
 router.get('/size/:id', sizeController.getOne);
 router.post('/sizes', sizeController.create);
 router.patch('/size/:id', sizeController.update);
 router.delete('/size/:id', sizeController.delete);
-
 
 // // ARTICLE_HAS_CATEGORY
 router.get('/article-has-category', articleHasCategoryController.getAll);
