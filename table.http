@@ -101,14 +101,17 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE {{baseUrl}}/category/11
+DELETE {{baseUrl}}/category/7
 
 
 ### GET
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/30
+GET {{baseUrl}}/order/5
+
+### GET 
+GET {{baseUrl}}/user-orders/5
 
 ### POST
 POST {{baseUrl}}/order

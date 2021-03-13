@@ -113,7 +113,7 @@ const OrderController = {
     // route pour récupérer toutes les orders d'un user/id
     userOrders: async (req, res) => {
         const { id } = req.params;
-        const order = await Order.findOne({
+        const order = await Order.findAll({
             include: [
                 {
                     association: 'order_has_address',
@@ -136,7 +136,7 @@ const OrderController = {
                     }
                 }],
             order: [
-                ['created_at', 'ASC']
+                ['created_at', 'DESC']
             ],
         });
 
