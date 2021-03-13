@@ -1,7 +1,7 @@
 const sanitizeHtml = require('sanitize-html');
 
 // Le but de ce middleware est d'assainir les données envoyer par les utilisateurs
-module.exports = (request, response, next) => {
+const bodySanitizer = (request, response, next) => {
     // 1ère chose on vérifie que l'on a un body, rienne sert d'éxécuter ce middleware si jamais on récupère de l'information
     if (request.body) {
         for (const propName in request.body) {
@@ -11,3 +11,5 @@ module.exports = (request, response, next) => {
     }
     next();
 }
+
+module.exports = bodySanitizer;
