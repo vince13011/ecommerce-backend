@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/11
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/9
+GET {{baseUrl}}/order/30
 
 ### POST
 POST {{baseUrl}}/order
