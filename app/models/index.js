@@ -30,7 +30,8 @@ Article.belongsToMany(Order, {
     through: OrderHasArticle,
     as: "orders",
     foreignKey: 'article_id',
-    otherKey: 'order_id'
+    otherKey: 'order_id',
+    otherKey: 'size_id'
 });
 
 // réciproque : une answer est lié à une seule question
@@ -39,6 +40,7 @@ Order.belongsToMany(Article, {
     as: "orderArticles",
     foreignKey: 'order_id',
     otherKey: 'article_id',
+    otherKey: 'size_id'
 });
 
 Article.belongsToMany(Size, {
