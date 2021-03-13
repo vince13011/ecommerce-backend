@@ -3,71 +3,142 @@ const orderHasArticleController = require('./orderHasArticleController');
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
-        const orders = await Order.findAll({
-            attributes: {
-                exclude: ['created_at', 'updated_at']
+        const searchOrders = await Order.findAll({
+            include: [{
+                association: 'orderArticles',
             },
-            include: [
-                {
-                    association: 'order_has_address',
-                    attributes: ['user_id']
-                },
-                {
-                    association: 'orderArticles',
-                    include: [{
-                        association: 'sizes',
-                    }],
-                    attributes: {
-                        exclude: [
-                            'reference', 'name',
-                            'description',
-                            'color', 'pre_tax_price',
-                            'vat_rate', 'discount',
-                            'created_at', 'updated_at'
-                        ]
-                    }
-                }
+            {
+                association: 'order_has_address',
+                attributes:
+                    [
+                        'id', 'user_id',
+                        'country', 'city',
+                        'zip_code', 'number',
+                        'street_name', 'additional'
+                    ],
+            },
+
             ],
             limit,
             order: [
-                ['created_at', 'ASC']
+                ['created_at', 'DESC']
             ]
         });
-        res.json(orders);
+        const searchSize = await Size.findAll();
+        const orders = searchOrders;
+        const reponseOrders = [];
+        orders.forEach(async (orderElement) => {
+            const order = orderElement.dataValues;
+            let adressResponse = [];
+            adressResponse.push({
+                address_id: order.order_has_address.id,
+                city: order.order_has_address.city,
+                zip_code: order.order_has_address.zip_code,
+                number: order.order_has_address.number,
+                street_name: order.order_has_address.street_name,
+                additional: order.order_has_address.additional
+            });
+            let articleResponse = [];
+            orderElement.orderArticles.forEach(async (article) => {
+                let size_name = '';
+                searchSize.forEach((size) => {
+                    if (size.id === article.order_has_article.size_id) {
+                        size_name = size.size_name;
+                    }
+                });
+                articleResponse.push({
+                    article_id: article.id,
+                    article_image: article.image,
+                    unit_net_price: article.order_has_article.unit_net_price,
+                    sizes: {
+                        size: size_name,
+                        quantity: article.order_has_article.quantity
+                    }
+                });
+            })
+            let objetOrder = {
+                id: order.id,
+                order_number: order.order_number,
+                total_price: order.total_price,
+                created_at: order.created_at,
+                updated_at: order.updated_at,
+                address: adressResponse,
+                user_id: order.order_has_address.dataValues.user_id,
+                articles: articleResponse
+            };
+            reponseOrders.push(objetOrder);
+        });
+        res.json(reponseOrders);
     },
 
     getOne: async (req, res) => {
         const { id } = req.params;
-        const order = await Order.findOne({
-            attributes: {
-                exclude: ['created_at', 'updated_at']
-            },
+        const orderElement = await Order.findOne({
             include: [
                 {
-                    association: 'order_has_address',
-                    attributes: ['user_id']
+                    association: 'orderArticles',
                 },
                 {
-                    association: 'orderArticles',
-                    include: ['sizes'],
-                    attributes: {
-                        exclude: [
-                            'reference', 'name',
-                            'description',
-                            'color', 'pre_tax_price',
-                            'vat_rate', 'discount',
-                            'created_at', 'updated_at'
-                        ]
-                    }
-                }],
+                    association: 'order_has_address',
+                    attributes:
+                        [
+                            'id', 'user_id',
+                            'country', 'city',
+                            'zip_code', 'number',
+                            'street_name', 'additional'
+                        ],
+                },
+            ],
             order: [
-                ['created_at', 'ASC']
+                ['updated_at', 'DESC']
             ],
             where: {
                 id,
             }
         });
-        res.json(order);
+        const searchSize = await Size.findAll();
+        const reponseOrders = [];
+        const order = orderElement.dataValues;
+        let adressResponse = [];
+        adressResponse.push({
+            address_id: order.order_has_address.id,
+            city: order.order_has_address.city,
+            zip_code: order.order_has_address.zip_code,
+            number: order.order_has_address.number,
+            street_name: order.order_has_address.street_name,
+            additional: order.order_has_address.additional
+        });
+        let articleResponse = [];
+        orderElement.orderArticles.forEach(async (article) => {
+            let size_name = '';
+            searchSize.forEach((size) => {
+                if (size.id === article.order_has_article.size_id) {
+                    size_name = size.size_name;
+                }
+            });
+            articleResponse.push({
+                article_id: article.order_has_article.article_id,
+                article_image: article.image,
+                unit_net_price: article.order_has_article.unit_net_price,
+                sizes: {
+                    size: size_name,
+                    quantity: article.order_has_article.quantity
+                }
+            });
+        })
+        let objetOrder = {
+            id: order.id,
+            order_number: order.order_number,
+            total_price: order.total_price,
+            created_at: order.created_at,
+            updated_at: order.updated_at,
+            address: adressResponse,
+            user_id: order.order_has_address.dataValues.user_id,
+            articles: articleResponse
+        };
+        reponseOrders.push(objetOrder);
+
+        res.json(reponseOrders);
     },
 
     create: async (req, res) => {
@@ -110,37 +181,78 @@ const OrderController = {
         res.json(order);
     },
 
-    // route pour récupérer toutes les orders d'un user/id
     userOrders: async (req, res) => {
         const { id } = req.params;
-        const order = await Order.findAll({
-            include: [
-                {
-                    association: 'order_has_address',
-                    attributes: ['user_id'],
-                    where: {
-                        user_id: id,
-                    }
-                },
-                {
-                    association: 'orderArticles',
-                    include: ['sizes'],
-                    attributes: {
-                        exclude: [
-                            'reference', 'name',
-                            'description',
-                            'color', 'pre_tax_price',
-                            'vat_rate', 'discount',
-                            'created_at', 'updated_at'
-                        ]
-                    }
-                }],
+        const { limit } = req.query;
+        const searchOrders = await Order.findAll({
+            include: [{
+                association: 'orderArticles',
+            },
+            {
+                association: 'order_has_address',
+                attributes:
+                    [
+                        'id', 'user_id',
+                        'country', 'city',
+                        'zip_code', 'number',
+                        'street_name', 'additional'
+                    ],
+                where: {
+                    user_id: id,
+                }
+            },
+
+            ],
+            limit,
             order: [
                 ['created_at', 'DESC']
-            ],
+            ]
         });
-
-        res.json(order);
+        const searchSize = await Size.findAll();
+        const orders = searchOrders;
+        const reponseOrders = [];
+        orders.forEach(async (orderElement) => {
+            const order = orderElement.dataValues;
+            let adressResponse = [];
+            adressResponse.push({
+                address_id: order.order_has_address.id,
+                city: order.order_has_address.city,
+                zip_code: order.order_has_address.zip_code,
+                number: order.order_has_address.number,
+                street_name: order.order_has_address.street_name,
+                additional: order.order_has_address.additional
+            });
+            let articleResponse = [];
+            orderElement.orderArticles.forEach(async (article) => {
+                let size_name = '';
+                searchSize.forEach((size) => {
+                    if (size.id === article.order_has_article.size_id) {
+                        size_name = size.size_name;
+                    }
+                });
+                articleResponse.push({
+                    article_id: article.id,
+                    article_image: article.image,
+                    unit_net_price: article.order_has_article.unit_net_price,
+                    sizes: {
+                        size: size_name,
+                        quantity: article.order_has_article.quantity
+                    }
+                });
+            })
+            let objetOrder = {
+                id: order.id,
+                order_number: order.order_number,
+                total_price: order.total_price,
+                created_at: order.created_at,
+                updated_at: order.updated_at,
+                address: adressResponse,
+                user_id: order.order_has_address.dataValues.user_id,
+                articles: articleResponse
+            };
+            reponseOrders.push(objetOrder);
+        });
+        res.json(reponseOrders);
     }
 };
 
