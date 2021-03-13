@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 const router = require('./app/router.js')
-const sanitizer = require('./app/services/bodySanitier')
+const sanitizer = require('./app/services/bodySanitizer');
 app.use(express.urlencoded({ extended: true }));
 
 //parser json qui récupère le payload et le transforme en objet js dispo sous request.body
