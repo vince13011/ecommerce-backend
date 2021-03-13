@@ -14,9 +14,9 @@ OrderHasArticle = connection.define('order_has_article', {
     unit_net_price: DataTypes.TEXT,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
-    size_id: {
-        type: DataTypes.INTEGER,
-    },
+    // size_id: {
+    //     type: DataTypes.INTEGER,
+    // },
 }, {
     sequelize: connection,
     tableName: "order_has_article"
