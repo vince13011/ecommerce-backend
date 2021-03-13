@@ -1,6 +1,7 @@
 const { Article, Category, Size, User, Order, Address } = require('../models/index');
 const sequelize = require('../database');
-var validator = require("email-validator");
+const jwtUtils = require('../services/jwt.utils')
+const validator = require("email-validator");
 const bcrypt = require('bcrypt');
 
 const userController = {
@@ -177,7 +178,8 @@ const userController = {
                     where: { id: infoUser.id },
                     attributes: { exclude: ['role_id', 'password', 'created_at', 'updated_at'] }
                 })
-                const userWithAddress = [user, theAddressUser];
+                const token= jwtUtils.generateTokenForUser(user);
+                const userWithAddress = [token,user, theAddressUser];
                 res.json(userWithAddress)
             }
         }
@@ -257,7 +259,8 @@ const userController = {
                             exclude: ['role_id', 'password', 'created_at', 'updated_at']
                         }
                     })
-                    const userWithAddress = [infoUser, theAddressUser];
+                    const token= jwtUtils.generateTokenForUser(user);
+                    const userWithAddress = [token, infoUser, theAddressUser];
                     res.json(userWithAddress)
                 }
                 else {
