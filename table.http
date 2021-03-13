@@ -274,3 +274,29 @@ Content-Type: application/json
 {
 
 }
+
+
+### GET
+GET {{baseUrl}}/status
+
+### GET
+GET {{baseUrl}}/status/7
+
+### POST
+POST {{baseUrl}}/status
+Content-Type: application/json
+
+{
+    "status_name": "test"
+}
+
+### PUT
+PUT {{baseUrl}}/status/7
+Content-Type: application/json
+
+{
+    "status_name": "re test"
+}
+
+### DELETE
+DELETE {{baseUrl}}/status/7

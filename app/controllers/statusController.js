@@ -6,7 +6,7 @@ const statusController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await Status.findAll({
-            limit: limit,
+            // limit: limit,
         });
         res.json(response);
     },
@@ -24,12 +24,7 @@ const statusController = {
         }
         */
         const data = req.body;
-
-        // 1) je crée Status avec les req.body
         const status = await Status.create({ ...data });
-        console.log(status);
-        // on renvoie le JSON article
-
         res.json(status);
     },
 
