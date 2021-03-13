@@ -60,14 +60,23 @@ CREATE TABLE "address" (
 
 );
 
+CREATE TABLE "status" (
+    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    status_name text NOT NULL
+);
+
 CREATE TABLE "order" (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_number text NOT NULL,
     total_price text NOT NULL,
     "address_id" INTEGER NOT NULL REFERENCES "address"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    "status_id" INTEGER NOT NULL REFERENCES "status"("id") DEFAULT 1,
+    tracking_number text DEFAULT '',
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- ALTER TABLE "order" ALTER COLUMN "status_id" ON UPDATE CASCADE;
 
 CREATE TABLE order_has_article (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

@@ -88,4 +88,6 @@ Role.hasMany(User, {
     as: "role_user"
 });
 
+// Order.belongsTo()
+
 module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize, OrderHasArticle };

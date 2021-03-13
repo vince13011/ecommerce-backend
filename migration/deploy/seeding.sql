@@ -2,10 +2,15 @@
 
 BEGIN;
 
- INSERT INTO "role"
+INSERT INTO "role"
  ("name")
  VALUES
  ('admin'),('user');
+
+ INSERT INTO "status"
+ ("status_name")
+ VALUES
+ ('pending'),('cancelled'),('confirmed'),('sent'),('delivered'),('returned');
 
 INSERT INTO article (
     reference,"name","description","image",color,
@@ -97,16 +102,16 @@ VALUES
 ('unique'),('S'),('M'),('L'),('XL'),('36'),('38'),('40'),('42'),('44');
 
 INSERT INTO "order"
-(order_number,total_price,address_id,created_at,updated_at) 
+(order_number, total_price, address_id, status_id, created_at, updated_at) 
 VALUES
-(25676972,'39,00',1,NOW(),NOW()),
-(2567624,'249,40',1,NOW(),NOW()),
-(25327624,'100,25',1,NOW(),NOW()),
-(267624,'29,00',3,NOW(),NOW()),
-(250987625,'73,50',2,NOW(),NOW()),
-(256237624,'21,30',1,NOW(),NOW()),
-(256767628,'32,10',1,NOW(),NOW()),
-(25090691,'43,40',2,NOW(),NOW());
+(25676972,'39,00',1,1,NOW(),NOW()),
+(2567624,'249,40',1, 1,NOW(),NOW()),
+(25327624,'100,25',1,2,NOW(),NOW()),
+(267624,'29,00',3,3,NOW(),NOW()),
+(250987625,'73,50',2,4,NOW(),NOW()),
+(256237624,'21,30',1,5,NOW(),NOW()),
+(256767628,'32,10',1,5,NOW(),NOW()),
+(25090691,'43,40',2,6,NOW(),NOW());
 
 
 INSERT INTO "order_has_article"
