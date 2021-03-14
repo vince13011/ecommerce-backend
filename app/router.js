@@ -17,6 +17,7 @@ const orderController = require('./controllers/orderController');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const articleHasCategoryController = require('./controllers/articleHasCategoryController');
+const statusController = require('./controllers/statusController');
 const payController = require('./controllers/payController');
 
 
@@ -41,6 +42,16 @@ router.get('/order/:id', orderController.getOne);
 router.post('/order', orderController.create);
 // renvoie toutes les orders d'un utilisateur
 router.get('/user-orders/:id', orderController.userOrders);
+router.put('/order/:id', orderController.update);
+
+
+// STATUS
+router.get('/status', statusController.getAll);
+router.get('/status/:id', statusController.getOne);
+router.post('/status', statusController.create);
+router.put('/status/:id', statusController.update);
+router.delete('/status/:id', statusController.delete);
+
 
 // // USERS
 router.get('/users', userController.getAll);
