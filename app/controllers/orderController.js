@@ -31,6 +31,7 @@ const OrderController = {
         // res.json(searchOrders);
 
         const searchSize = await Size.findAll();
+        const searchArticle = await Article.findAll();
         const reponseOrders = [];
         orders.forEach((orderElement) => {
             const order = orderElement.dataValues;
@@ -51,9 +52,19 @@ const OrderController = {
                         size_name = size.size_name;
                     }
                 });
+                // je prends une image vide, je parcours tous les articles, 
+                // et je cherche l'id qui correspond à l'id de l'article qu'on a 
+                // dans le order
+                // du coup cette image = à ce qu'a été trouvé . image
+                let image = '';
+                searchArticle.forEach((art) => {
+                    if (art.id === article.order_has_article.article_id) {
+                        image = art.dataValues.image;
+                    }
+                });
                 articleResponse.push({
-                    article_id: article.id,
-                    article_image: article.image,
+                    article_id: article.order_has_article.article_id,
+                    article_image: image,
                     unit_net_price: article.order_has_article.unit_net_price,
                     sizes: {
                         size: size_name,
@@ -107,6 +118,7 @@ const OrderController = {
             }
         });
         const searchSize = await Size.findAll();
+        const searchArticle = await Article.findAll();
         const reponseOrders = [];
         const order = orderElement.dataValues;
         let adressResponse = [];
@@ -126,9 +138,19 @@ const OrderController = {
                     size_name = size.size_name;
                 }
             });
+            // je prends une image vide, je parcours tous les articles, 
+            // et je cherche l'id qui correspond à l'id de l'article qu'on a 
+            // dans le order
+            // du coup cette image = à ce qu'a été trouvé . image
+            let image = '';
+            searchArticle.forEach((art) => {
+                if (art.id === article.order_has_article.article_id) {
+                    image = art.dataValues.image;
+                }
+            });
             articleResponse.push({
                 article_id: article.order_has_article.article_id,
-                article_image: article.image,
+                article_image: image,
                 unit_net_price: article.order_has_article.unit_net_price,
                 sizes: {
                     size: size_name,
@@ -224,6 +246,7 @@ const OrderController = {
             ]
         });
         const searchSize = await Size.findAll();
+        const searchArticle = await Article.findAll();
         const orders = searchOrders;
         const reponseOrders = [];
         orders.forEach(async (orderElement) => {
@@ -245,9 +268,19 @@ const OrderController = {
                         size_name = size.size_name;
                     }
                 });
+                // je prends une image vide, je parcours tous les articles, 
+                // et je cherche l'id qui correspond à l'id de l'article qu'on a 
+                // dans le order
+                // du coup cette image = à ce qu'a été trouvé . image
+                let image = '';
+                searchArticle.forEach((art) => {
+                    if (art.id === article.order_has_article.article_id) {
+                        image = art.dataValues.image;
+                    }
+                });
                 articleResponse.push({
-                    article_id: article.id,
-                    article_image: article.image,
+                    article_id: article.order_has_article.article_id,
+                    article_image: image,
                     unit_net_price: article.order_has_article.unit_net_price,
                     sizes: {
                         size: size_name,
