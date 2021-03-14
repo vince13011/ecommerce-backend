@@ -42,6 +42,7 @@ router.get('/order/:id', orderController.getOne);
 router.post('/order', orderController.create);
 // renvoie toutes les orders d'un utilisateur
 router.get('/user-orders/:id', orderController.userOrders);
+router.put('/order/:id', orderController.update);
 
 
 // STATUS

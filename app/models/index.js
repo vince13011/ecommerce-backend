@@ -95,7 +95,7 @@ Order.belongsTo(Status, {
 });
 
 Status.hasMany(Order, {
-    foreignKey: 'order_id',
+    foreignKey: 'status_id',
     as: 'status_has_orders'
 });
 

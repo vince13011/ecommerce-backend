@@ -108,10 +108,10 @@ DELETE {{baseUrl}}/category/7
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/5
+GET {{baseUrl}}/order/11
 
 ### GET 
-GET {{baseUrl}}/user-orders/5
+GET {{baseUrl}}/user-orders/1
 
 ### POST
 POST {{baseUrl}}/order
@@ -141,6 +141,16 @@ Content-Type: application/json
             }
         }
     ]
+}
+
+
+### PUT
+PUT {{baseUrl}}/order/11
+Content-Type: application/json
+
+{
+    "status_name": "confirmed",
+    "tracking_number":""
 }
 
 
