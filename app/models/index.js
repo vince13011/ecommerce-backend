@@ -6,7 +6,8 @@ const User = require('./user');
 const Address = require('./address');
 const ArticleHasSize = require('./articleHasSize');
 const Role = require('./role');
-const OrderHasArticle = require('./orderHasArticle')
+const OrderHasArticle = require('./orderHasArticle');
+const Status = require('./status');
 
 // une question a plusieurs answers
 Article.belongsToMany(Category, {
@@ -88,6 +89,14 @@ Role.hasMany(User, {
     as: "role_user"
 });
 
-// Order.belongsTo()
+Order.belongsTo(Status, {
+    foreignKey: 'status_id',
+    as: 'order_has_status'
+});
 
-module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize, OrderHasArticle };
+Status.hasMany(Order, {
+    foreignKey: 'status_id',
+    as: 'status_has_orders'
+});
+
+module.exports = { Article, Category, Size, User, Role, Order, Address, ArticleHasSize, OrderHasArticle, Status };

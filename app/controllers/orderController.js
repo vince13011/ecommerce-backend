@@ -1,11 +1,15 @@
-const { Article, Category, Size, User, Order, Address, ArticleHasSize } = require('../models/index');
+const { response } = require('express');
+const { Article, Category, Size, User, Order, Address, ArticleHasSize, Status } = require('../models/index');
 const orderHasArticleController = require('./orderHasArticleController');
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
-        const searchOrders = await Order.findAll({
+        const orders = await Order.findAll({
             include: [{
                 association: 'orderArticles',
+            },
+            {
+                association: 'order_has_status',
             },
             {
                 association: 'order_has_address',
@@ -24,10 +28,11 @@ const OrderController = {
                 ['created_at', 'DESC']
             ]
         });
+        // res.json(searchOrders);
+
         const searchSize = await Size.findAll();
-        const orders = searchOrders;
         const reponseOrders = [];
-        orders.forEach(async (orderElement) => {
+        orders.forEach((orderElement) => {
             const order = orderElement.dataValues;
             let adressResponse = [];
             adressResponse.push({
@@ -39,7 +44,7 @@ const OrderController = {
                 additional: order.order_has_address.additional
             });
             let articleResponse = [];
-            orderElement.orderArticles.forEach(async (article) => {
+            orderElement.orderArticles.forEach((article) => {
                 let size_name = '';
                 searchSize.forEach((size) => {
                     if (size.id === article.order_has_article.size_id) {
@@ -59,6 +64,8 @@ const OrderController = {
             let objetOrder = {
                 id: order.id,
                 order_number: order.order_number,
+                status_name: order.order_has_status.status_name,
+                tracking_number: order.tracking_number,
                 total_price: order.total_price,
                 created_at: order.created_at,
                 updated_at: order.updated_at,
@@ -77,6 +84,9 @@ const OrderController = {
             include: [
                 {
                     association: 'orderArticles',
+                },
+                {
+                    association: 'order_has_status',
                 },
                 {
                     association: 'order_has_address',
@@ -129,6 +139,8 @@ const OrderController = {
         let objetOrder = {
             id: order.id,
             order_number: order.order_number,
+            status_name: order.order_has_status.status_name,
+            tracking_number: order.tracking_number,
             total_price: order.total_price,
             created_at: order.created_at,
             updated_at: order.updated_at,
@@ -189,6 +201,9 @@ const OrderController = {
                 association: 'orderArticles',
             },
             {
+                association: 'order_has_status',
+            },
+            {
                 association: 'order_has_address',
                 attributes:
                     [
@@ -243,6 +258,8 @@ const OrderController = {
             let objetOrder = {
                 id: order.id,
                 order_number: order.order_number,
+                status_name: order.order_has_status.status_name,
+                tracking_number: order.tracking_number,
                 total_price: order.total_price,
                 created_at: order.created_at,
                 updated_at: order.updated_at,
@@ -253,7 +270,34 @@ const OrderController = {
             reponseOrders.push(objetOrder);
         });
         res.json(reponseOrders);
-    }
+    },
+
+    update: async (req, res) => {
+        const data = req.body;
+        const { id } = req.params;
+        /*
+            {
+                "status_name": "sent",
+                "tracking_number": '12OOE03991030'
+            }
+        */
+        const findStatusId = await Status.findOne({
+            where: {
+                status_name: data.status_name,
+            }
+        });
+
+        const statusId = findStatusId.dataValues.id;
+        const order = await Order.update({
+            tracking_number: data.tracking_number,
+            status_id: statusId,
+        }, {
+            where: {
+                id: id,
+            }
+        });
+        res.json(`l'order ${id} a bien été modifié, le nouveau status de la commande est : ${data.status_name}`)
+    },
 };
 
 module.exports = OrderController;

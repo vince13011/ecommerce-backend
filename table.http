@@ -108,10 +108,10 @@ DELETE {{baseUrl}}/category/7
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/5
+GET {{baseUrl}}/order/11
 
 ### GET 
-GET {{baseUrl}}/user-orders/5
+GET {{baseUrl}}/user-orders/1
 
 ### POST
 POST {{baseUrl}}/order
@@ -141,6 +141,16 @@ Content-Type: application/json
             }
         }
     ]
+}
+
+
+### PUT
+PUT {{baseUrl}}/order/11
+Content-Type: application/json
+
+{
+    "status_name": "confirmed",
+    "tracking_number":""
 }
 
 
@@ -274,3 +284,29 @@ Content-Type: application/json
 {
 
 }
+
+
+### GET
+GET {{baseUrl}}/status
+
+### GET
+GET {{baseUrl}}/status/7
+
+### POST
+POST {{baseUrl}}/status
+Content-Type: application/json
+
+{
+    "status_name": "test"
+}
+
+### PUT
+PUT {{baseUrl}}/status/7
+Content-Type: application/json
+
+{
+    "status_name": "re test"
+}
+
+### DELETE
+DELETE {{baseUrl}}/status/7

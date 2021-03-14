@@ -9,7 +9,7 @@ Order.init({
     // status_id: {
     //     type: DataTypes.INTEGER,
     // },
-    // tracking_number: DataTypes.TEXT,
+    tracking_number: DataTypes.TEXT,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
 }, {
