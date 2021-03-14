@@ -54,6 +54,8 @@ CREATE TABLE "address" (
     "number" text NOT NULL,
     street_name text NOT NULL,
     additional text ,
+    "firstname_address" text,
+    "lastname_address" text,
     "user_id" INTEGER NOT NULL REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

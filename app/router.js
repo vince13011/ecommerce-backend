@@ -68,7 +68,7 @@ router.post('/signup', userController.create);
 // // ADDRESSES
 router.get('/addresses', addressController.getAll);
 router.get('/address/:id', addressController.getOne);
-// router.post('/addresses', addressController.create);
+ router.post('/addresses', addressController.create);
 // router.put('/addresses/:id', addressController.updateById);
 // router.delete('/addresses/:id', addressController.deleteById);
 

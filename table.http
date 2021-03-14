@@ -224,11 +224,13 @@ Content-Type: application/json
 {
     "country": "France",
     "city": "marignane",
-    "zip_code": "13000",
+    "zipCode": "13000",
     "number": 10,
-    "street_name": "rue de Vincent",
+    "streetName": "rue de Vincent",
     "additional":"étage 5",
-    "user_id": 1
+    "firstNameAddress":"Noël",
+    "lastNameAddress":"Flantier",
+    "userId": 1
 }
 
 
