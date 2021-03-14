@@ -72,9 +72,20 @@ const addressController = {
     },
     updateById: async (req, res) => {
         const { id } = req.params;
-        const data = req.body;
+        const newAddressData = {
+            country: req.body.country,
+            city: req.body.city,
+            zip_code: req.body.zipCode,
+            number: req.body.number,
+            street_name: req.body.streetName,
+            additional: req.body.additional,
+            firstname_address: req.body.firstNameAddress,
+            lastname_address: req.body.lastNameAddress,
+            user_id: req.body.userId
+        };
+        console.log('data renvoyée:',newAddressData)
         //const oldUser = await Address.findOne({where:{id}});
-        await Address.update({ ...data }, { where: { id } })
+        await Address.update({...newAddressData }, { where: { id } })
         const newUser = await Address.findByPk(id)
         res.json(newUser)
     },

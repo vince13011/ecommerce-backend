@@ -158,7 +158,7 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/user/31
+GET {{baseUrl}}/user/2
 
 
 ### POST
@@ -193,7 +193,6 @@ Content-Type: application/json
 
 ###PUT /user/:id
 PUT {{baseUrl}}/user/2
-
 Content-Type: application/json
 
 {
@@ -235,17 +234,19 @@ Content-Type: application/json
 
 
 ### PUT /addresses/:id
-PUT {{baseUrl}}/addresses/1
+PUT {{baseUrl}}/addresses/3
 Content-Type: application/json
 
 {
     "country": "France",
     "city": "Aix",
-    "zip_code": "83000",
+    "zipCode": "83000",
     "number": 11,
-    "street_name": "rue de Mega",
+    "streetName": "rue de Mega",
     "additional": "étage 8",
-    "user_id": 1
+    "firstNameAddress":"Noël",
+    "lastNameAddress":"cagette",
+    "userId": 1
 }
 
 ### DELETE
