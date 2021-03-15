@@ -33,7 +33,7 @@ router.delete('/article/:id', articleController.delete);
 router.get('/categories', categoryController.getAll);
 router.get('/category/:id', categoryController.getOne);
 router.post('/category', categoryController.create);
-router.patch('/category/:id', categoryController.update);
+router.put('/category/:id', categoryController.update);
 router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
@@ -68,15 +68,15 @@ router.post('/signup', userController.create);
 // // ADDRESSES
 router.get('/addresses', addressController.getAll);
 router.get('/address/:id', addressController.getOne);
-// router.post('/addresses', addressController.create);
-// router.put('/addresses/:id', addressController.updateById);
-// router.delete('/addresses/:id', addressController.deleteById);
+ router.post('/address', addressController.create);
+ router.put('/address/:id', addressController.updateById);
+ router.delete('/address/:id', addressController.deleteById);
 
 // // SIZES
 router.get('/sizes', sizeController.getAll);
 router.get('/size/:id', sizeController.getOne);
-router.post('/sizes', sizeController.create);
-router.patch('/size/:id', sizeController.update);
+router.post('/size', sizeController.create);
+router.put('/size/:id', sizeController.update);
 router.delete('/size/:id', sizeController.delete);
 
 // // ARTICLE_HAS_CATEGORY

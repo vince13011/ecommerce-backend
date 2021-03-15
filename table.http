@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/11
+GET {{baseUrl}}/article/10
 
 ### POST
 POST {{baseUrl}}/article
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/article/1
+PUT {{baseUrl}}/article/3
 Content-Type: application/json
 
 {
@@ -64,18 +64,18 @@ Content-Type: application/json
     ],
     "sizes": [
       {
-        "size_name": "TAILLE TEST",
+        "size_name": "TLLE TEST",
         "stock": 3330000
       },
       {
-        "size_name": "L",
+        "size_name": "Azaaze",
         "stock": 20000
       }
     ]
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/11
+DELETE {{baseUrl}}/article/10
 
 
 ### GET
@@ -92,8 +92,8 @@ Content-Type: application/json
     "title": "décontracté"
 }
 
-### PUT /categories/:id
-PUT {{baseUrl}}/categories/1
+### PUT /category/:id
+PUT {{baseUrl}}/category/1
 Content-Type: application/json
 
 {
@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/7
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/11
+GET {{baseUrl}}/order/30
 
 ### GET 
 GET {{baseUrl}}/user-orders/1
@@ -125,7 +125,7 @@ Content-Type: application/json
     "quantity_total": 10,
     "articles": [
         {
-            "article_id": 4,
+            "article_id": 1,
             "unit_net_price": 10,
             "sizes": {
                 "size": "L",
@@ -133,7 +133,7 @@ Content-Type: application/json
             }
         },
         {
-            "article_id": 4,
+            "article_id": 2,
             "unit_net_price": 10,
             "sizes": {
                 "size": "XL",
@@ -158,7 +158,7 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/user/31
+GET {{baseUrl}}/user/2
 
 
 ### POST
@@ -167,7 +167,7 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "vincen@gmail.com",
+"email": "vadad@gmail.com",
 "password":"ABCDEFGH"
 }
 
@@ -176,7 +176,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"vadad@gmail.com",
+    "email":"aad@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",
@@ -193,7 +193,6 @@ Content-Type: application/json
 
 ###PUT /user/:id
 PUT {{baseUrl}}/user/2
-
 Content-Type: application/json
 
 {
@@ -207,7 +206,7 @@ Content-Type: application/json
 
 ### DELETE /user/:id
 
-DELETE {{baseUrl}}/user/4
+DELETE {{baseUrl}}/user/1
 
 
 
@@ -215,39 +214,43 @@ DELETE {{baseUrl}}/user/4
 GET {{baseUrl}}/addresses
 
 ### GET
-GET {{baseUrl}}/address/3
+GET {{baseUrl}}/address/2
 
 ### POST
-POST {{baseUrl}}/addresses
+POST {{baseUrl}}/address
 Content-Type: application/json
 
 {
     "country": "France",
     "city": "marignane",
-    "zip_code": "13000",
+    "zipCode": "13000",
     "number": 10,
-    "street_name": "rue de Vincent",
+    "streetName": "rue de Vincent",
     "additional":"étage 5",
-    "user_id": 1
+    "firstNameAddress":"Noël",
+    "lastNameAddress":"Flantier",
+    "userId": 2
 }
 
 
 ### PUT /addresses/:id
-PUT {{baseUrl}}/addresses/1
+PUT {{baseUrl}}/address/16
 Content-Type: application/json
 
 {
     "country": "France",
     "city": "Aix",
-    "zip_code": "83000",
+    "zipCode": "83000",
     "number": 11,
-    "street_name": "rue de Mega",
+    "streetName": "rue de Mega",
     "additional": "étage 8",
-    "user_id": 1
+    "firstNameAddress":"Noël",
+    "lastNameAddress":"cagette",
+    "userId": 2
 }
 
 ### DELETE
-DELETE {{baseUrl}}/addresses/5
+DELETE {{baseUrl}}/address/3
 
 
 # SIZES
@@ -255,11 +258,11 @@ DELETE {{baseUrl}}/addresses/5
 GET {{baseUrl}}/sizes
 
 ### GET
-GET {{baseUrl}}/size/14
+GET {{baseUrl}}/size/16
 
 
 ### POST
-POST {{baseUrl}}/sizes
+POST {{baseUrl}}/size
 Content-Type: application/json
 
 {
@@ -267,14 +270,14 @@ Content-Type: application/json
 }
 
 ### PUT /sizes/:id
-PUT {{baseUrl}}/sizes/3
+PUT {{baseUrl}}/size/16
 Content-Type: application/json
 
 {
     "size_name": "45"
 }
 ### DELETE
-DELETE {{baseUrl}}/size/12
+DELETE {{baseUrl}}/size/16
 
 
 ### POST
