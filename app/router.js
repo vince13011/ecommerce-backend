@@ -68,9 +68,9 @@ router.post('/signup', userController.create);
 // // ADDRESSES
 router.get('/addresses', addressController.getAll);
 router.get('/address/:id', addressController.getOne);
-// router.post('/addresses', addressController.create);
-// router.put('/addresses/:id', addressController.updateById);
-// router.delete('/addresses/:id', addressController.deleteById);
+ router.post('/address', addressController.create);
+ router.put('/address/:id', addressController.updateById);
+ router.delete('/address/:id', addressController.deleteById);
 
 // // SIZES
 router.get('/sizes', sizeController.getAll);

@@ -13,6 +13,8 @@ Address.init({
     number: DataTypes.TEXT,
     street_name: DataTypes.TEXT,
     additional: DataTypes.TEXT,
+    firstname_address: DataTypes.TEXT,
+    lastname_address: DataTypes.TEXT,
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
 }, {
