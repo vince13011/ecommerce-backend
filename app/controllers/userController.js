@@ -48,7 +48,8 @@ const userController = {
             where: { id },
             attributes: {
                 exclude: ['role_id', 'password', 'created_at', 'updated_at']
-            }
+            },
+            include: [ { association: 'user_has_role' }]
         })
 
         const theAddressUser = await Address.findOne({
@@ -57,7 +58,7 @@ const userController = {
                 exclude: ['created_at']
             },
             include: [
-                {
+                {   
                     association: 'address_orders',
                     include: [{
                         association: 'orderArticles',
@@ -176,7 +177,9 @@ const userController = {
 
                 const user = await User.findOne({
                     where: { id: infoUser.id },
-                    attributes: { exclude: ['role_id', 'password', 'created_at', 'updated_at'] }
+                    attributes: { exclude: [ 'password', 'created_at', 'updated_at'] },
+                    include: [ { association: 'user_has_role' }]
+
                 })
                 const token= jwtUtils.generateTokenForUser(user);
                 const userWithAddress = [token,user, theAddressUser];
@@ -256,8 +259,10 @@ const userController = {
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
-                            exclude: ['role_id', 'password', 'created_at', 'updated_at']
-                        }
+                            exclude: ['password', 'created_at', 'updated_at']
+                        },
+                        include: [ { association: 'user_has_role' }]
+
                     })
                     const token= jwtUtils.generateTokenForUser(user);
                     const userWithAddress = [token, infoUser, theAddressUser];
