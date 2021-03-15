@@ -70,6 +70,7 @@ const articleHasSizeController = {
                 DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
             `
         );
+        console.log('data : ',data);
         // on boucle sur data.sizes 
          [...data].forEach(async (size) => {
             // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title

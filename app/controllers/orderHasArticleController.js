@@ -22,10 +22,10 @@ const orderHasArticleController = {
 
         console.log('data.articles: ', data.articles)
         console.log('data.articles.length: ', data.articles.length)
-        console.log(Array.isArray(data.articles))
+        console.log(Array.isArray(data.articles));
 
-        for(article of data.articles){
-            (async (article) => {
+//for(article of data.articles)
+        [...data.articles].forEach(async (article) => {
                 const searchSizeId = await Size.findOne({
                     where: {
                         size_name: article.sizes.size,
@@ -39,9 +39,8 @@ const orderHasArticleController = {
                     unit_net_price: article.unit_net_price,
                     order_id: order_id
                 });
+            })
             }
-            )}
-    },
 
 };
 

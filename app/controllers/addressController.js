@@ -46,7 +46,7 @@ const addressController = {
             lastname_address: req.body.lastNameAddress,
             user_id: req.body.userId
         };
-
+        console.log('newaddressdata :',newAddressData)
         const newAddress=await Address.create(newAddressData);
         console.log('newaddress :',newAddress)
 

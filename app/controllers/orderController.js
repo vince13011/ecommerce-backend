@@ -186,7 +186,7 @@ const OrderController = {
         // recupération du id
         const orderID = order.id;
         // renvoie vers le create de orderorderHasArticleController avec deux arguments orderID et data.articles
-        orderHasArticleController.create(orderID, data);
+        await orderHasArticleController.create(orderID, data);
 
         for(article of data.articles){async (article) => {
             const searchSizeId = await Size.findOne({
