@@ -188,7 +188,7 @@ const OrderController = {
         // renvoie vers le create de orderorderHasArticleController avec deux arguments orderID et data.articles
         orderHasArticleController.create(orderID, data);
 
-        data.articles.forEach(async (article) => {
+        for(article of data.articles){async (article) => {
             const searchSizeId = await Size.findOne({
                 where: {
                     size_name: article.sizes.size,
@@ -210,7 +210,7 @@ const OrderController = {
                     size_id: sizeId,
                 }
             })
-        });
+        }};
 
         res.json(order);
     },

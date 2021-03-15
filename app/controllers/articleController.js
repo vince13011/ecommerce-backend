@@ -53,16 +53,16 @@ const articleController = {
         // console.log(newArticleId);
 
         // 2) LIER des CATEGORIES à l'article
-        data.categories.forEach(async (category) => {
+        for(category of data.categories){async (category) => {
             articleHasCategoryController.create(newArticleId, category);
-        });
+        }};
 
         // 3) LIER des SIZES à l'article
-        data.sizes.forEach(async (size) => {
+        for(size of data.sizes){async (size) => {
             // on récupère la fonction create depuis le controller articleHasSize
             // on la boucle pour autant de fois qu'il y a d'éléments : data.sizes
             articleHasSizeController.create(newArticleId, size);
-        });
+        }};
 
         // on renvoie le JSON article
         res.json(article);
