@@ -123,6 +123,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'FTE00001',
 'TSHIRT oversize EPX',
 'tshirt gris de la marque EPX pour femme disponible en plusieurs tailles',
@@ -134,6 +135,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'HCC00001',
 'Converse montante ',
 'Paire  de Converse montante de couleur noire homme disponible en plusieurs tailles',
@@ -145,6 +147,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'HCNLV00001',
 'Sneackers Nike Edition LV ',
 'Paire  de sneackers nike montante édition LV de couleur orange homme disponible en plusieurs tailles',
@@ -156,6 +159,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'HCC00001',
 'Chaussures Dr Martens ',
 'Paire  de chaussures montante de marque Dr Martens de couleur jaunes homme disponible en plusieurs tailles',
@@ -167,6 +171,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'HCS00001',
 'Chaussures En cuir Scarosso ',
 'Paire  de chaussures en cuir montante de marque Scarosso de couleur marron foncé homme disponible en plusieurs tailles',
@@ -178,6 +183,7 @@ NOW()
 NOW(),
 NOW()
 ),
+(
 'HCN00002',
 'Sneackers Nike 2021',
 'Paire  de sneackers montante de marque Nike de couleur jaunes homme disponible en plusieurs tailles',
@@ -202,32 +208,31 @@ INSERT INTO "article_has_category" (
 VALUES
 (1,1),(1,3),(2,1),(2,3),(3,1),(3,3),(4,1),(4,3),(5,1),(5,3),
 (6,2),(6,3),(7,2),(7,3),(8,2),(8,3),(9,2),(9,3),(10,2),(10,3),
-(11,1),(1,4),(12,1),(12,4),(13,1),(13,4),(14,1),(14,4),(15,1),(15,4)
+(11,1),(1,4),(12,1),(12,4),(13,1),(13,4),(14,1),(14,4),(15,1),(15,4);
 
 
 INSERT INTO "size" ("size_name") 
 VALUES
-('unique'),('S'),('M'),('L'),('XL'),('XXL')('36'),('38'),('40'),('42'),('44'),
-('36'),('37'),('38'),('39'),('40'),('41'),('42'),('43'),('44')
+('unique'),('S'),('M'),('L'),('XL'),('XXL'),('36'),('38'),('40'),('42'),('44'),
+('36'),('37'),('38'),('39'),('40'),('41'),('42'),('43'),('44');
 
-INSERT INTO "article_has_size" ("article_id","size_id","quantity","created_at","updated_at") 
+INSERT INTO "article_has_size" ("article_id","size_id","stock","created_at","updated_at") 
 VALUES
 (1,2,20,NOW(),NOW()),(1,3,20,NOW(),NOW()),(1,4,20,NOW(),NOW()),(1,5,20,NOW(),NOW()),(1,6,20,NOW(),NOW()),
 (2,2,20,NOW(),NOW()),(2,3,20,NOW(),NOW()),(2,4,20,NOW(),NOW()),(2,5,20,NOW(),NOW()),(2,6,20,NOW(),NOW()),
 (3,2,20,NOW(),NOW()),(3,3,20,NOW(),NOW()),(3,4,20,NOW(),NOW()),(3,5,20,NOW(),NOW()),(3,6,20,NOW(),NOW()),
 (4,2,20,NOW(),NOW()),(4,3,20,NOW(),NOW()),(4,4,20,NOW(),NOW()),(4,5,20,NOW(),NOW()),(4,6,20,NOW(),NOW()),
 (5,2,20,NOW(),NOW()),(5,3,20,NOW(),NOW()),(5,4,20,NOW(),NOW()),(5,5,20,NOW(),NOW()),(5,6,20,NOW(),NOW()),
-(6,2,20,NOW(),NOW()),(6,3,20,NOW(),
-(7,2,20,NOW(),NOW()),(7,3,20,NOW(),
-(8,2,20,NOW(),NOW()),(8,3,20,NOW(),
-(9,2,20,NOW(),NOW()),(9,3,20,NOW(),
-(10,2,20,NOW(),NOW()),(10,3,20,NOW(),
+(6,2,20,NOW(),NOW()),(6,3,20,NOW(),NOW()),
+(7,2,20,NOW(),NOW()),(7,3,20,NOW(),NOW()),
+(8,2,20,NOW(),NOW()),(8,3,20,NOW(),NOW()),
+(9,2,20,NOW(),NOW()),(9,3,20,NOW(),NOW()),
+(10,2,20,NOW(),NOW()),(10,3,20,NOW(),NOW()),
 (11,14,20,NOW(),NOW()),(11,15,20,NOW(),NOW()),(11,16,20,NOW(),NOW()),(11,17,20,NOW(),NOW()),(11,18,20,NOW(),NOW()),
 (12,15,20,NOW(),NOW()),(12,16,20,NOW(),NOW()),(12,17,20,NOW(),NOW()),(12,18,20,NOW(),NOW()),(12,19,20,NOW(),NOW()),
-(13,17,20,NOW(),NOW()),(17,18,20,NOW(),NOW()),(17,19,20,NOW(),NOW()),
+(13,17,20,NOW(),NOW()),(13,18,20,NOW(),NOW()),(13,19,20,NOW(),NOW()),
 (14,14,20,NOW(),NOW()),(14,15,20,NOW(),NOW()),(14,16,20,NOW(),NOW()),(14,17,20,NOW(),NOW()),
-(15,20,20,NOW(),NOW()),(15,18,20,NOW(),NOW()),(15,17,20,NOW(),NOW()),(15,14,20,NOW(),NOW()),(4,6,20,NOW(),NOW())
-
+(15,20,20,NOW(),NOW()),(15,18,20,NOW(),NOW()),(15,17,20,NOW(),NOW()),(15,14,20,NOW(),NOW());
 
 
 INSERT INTO "user" (
