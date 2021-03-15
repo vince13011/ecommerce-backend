@@ -96,10 +96,10 @@ const addressController = {
             const user = await Address.findByPk(id);
             Address.destroy({ where: { id } })
             //await user.destroy();
-            res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
+            res.json(`l'addresse avec l'id ${id} est bien supprimé`)
         }
         catch {
-            res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
+            res.json(`l'addresse avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
     

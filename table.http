@@ -217,7 +217,7 @@ GET {{baseUrl}}/addresses
 GET {{baseUrl}}/address/3
 
 ### POST
-POST {{baseUrl}}/addresses
+POST {{baseUrl}}/address
 Content-Type: application/json
 
 {
@@ -234,7 +234,7 @@ Content-Type: application/json
 
 
 ### PUT /addresses/:id
-PUT {{baseUrl}}/addresses/3
+PUT {{baseUrl}}/address/3
 Content-Type: application/json
 
 {
@@ -250,7 +250,7 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE {{baseUrl}}/addresses/5
+DELETE {{baseUrl}}/address/3
 
 
 # SIZES
