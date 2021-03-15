@@ -71,6 +71,9 @@ const articleController = {
     update: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
+
+        console.log('data  dans articlecontroller: ',data);
+
         // on update Article avec les données de req.body
         await Article.update(
             {
@@ -83,18 +86,18 @@ const articleController = {
             }
         });
         // je renvoie vers la fonction update de articleHasCategoryController
-        articleHasCategoryController.update(id, data.categories);
+        await articleHasCategoryController.update(id, data.categories);
         // je renvoie vers la fonction update de articleHasSizeController
-        articleHasSizeController.update(id, data.sizes);
+        await articleHasSizeController.update(id, data.sizes);
         // en essaye de prendre le nouveau article modifé
         const updatedArticle = await Article.findOne({
-            // SELECT * FROM "article" WHERE "id"=id
             where: {
                 id,
             },
-            // SELECT * FROM "article" LEFT JOIN etc...
-            include: ['categories', 'sizes']
-        })
+            include: [
+                'categories',
+                'sizes'
+            ],})
         res.json(updatedArticle)
     },
 
@@ -104,7 +107,7 @@ const articleController = {
             const { id } = req.params;
             const article = await Article.findByPk(id);
             article.destroy();
-            res.json(article);
+            res.json(`l'article avec l'id ${id} vient d' être supprimé`);
         } catch (error) {
             console.log('error', error)
         }

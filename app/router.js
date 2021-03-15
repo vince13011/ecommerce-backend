@@ -33,7 +33,7 @@ router.delete('/article/:id', articleController.delete);
 router.get('/categories', categoryController.getAll);
 router.get('/category/:id', categoryController.getOne);
 router.post('/category', categoryController.create);
-router.patch('/category/:id', categoryController.update);
+router.put('/category/:id', categoryController.update);
 router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
@@ -75,8 +75,8 @@ router.get('/address/:id', addressController.getOne);
 // // SIZES
 router.get('/sizes', sizeController.getAll);
 router.get('/size/:id', sizeController.getOne);
-router.post('/sizes', sizeController.create);
-router.patch('/size/:id', sizeController.update);
+router.post('/size', sizeController.create);
+router.put('/size/:id', sizeController.update);
 router.delete('/size/:id', sizeController.delete);
 
 // // ARTICLE_HAS_CATEGORY

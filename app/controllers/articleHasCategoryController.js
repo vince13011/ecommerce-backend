@@ -54,7 +54,7 @@ const articleHasCategoryController = {
             `
         );
         // on boucle sur data.categories 
-        data.forEach(async (category) => {
+        [...data].forEach(async (category) => {
             // soit on cherche une id soit on creer ET on cherche l'id d'une category avec son title
             const categoryId = await Category.findOrCreate({
                 where: {
