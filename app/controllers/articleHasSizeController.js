@@ -71,7 +71,7 @@ const articleHasSizeController = {
             `
         );
         // on boucle sur data.sizes 
-        data.forEach(async (size) => {
+         [...data].forEach(async (size) => {
             // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title
             const sizeId = await Size.findOrCreate({
                 where: {

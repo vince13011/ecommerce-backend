@@ -23,7 +23,7 @@ app.use(cors('*'));
 app.use(express.json());
 
 
-app.use(sanitizer);
+//app.use(sanitizer);
 
 
 app.use('/v1', router);

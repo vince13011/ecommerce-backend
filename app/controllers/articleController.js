@@ -83,9 +83,9 @@ const articleController = {
             }
         });
         // je renvoie vers la fonction update de articleHasCategoryController
-        articleHasCategoryController.update(id, data.categories);
+        await articleHasCategoryController.update(id, data.categories);
         // je renvoie vers la fonction update de articleHasSizeController
-        articleHasSizeController.update(id, data.sizes);
+        await articleHasSizeController.update(id, data.sizes);
         // en essaye de prendre le nouveau article modifé
         const updatedArticle = await Article.findOne({
             // SELECT * FROM "article" WHERE "id"=id
