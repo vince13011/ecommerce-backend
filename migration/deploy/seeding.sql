@@ -20,7 +20,7 @@ INSERT INTO article (
 'HTOB0001',
 'TSHIRT Oversize ',
 'tshirt violet oversize pour homme disponible en plusieurs tailles',
-'https://ibb.https://i.ibb.co/84Kfrzv/pexels-nathan-thomas-1.jpg',
+'https://i.ibb.co/GvgGcXD/pexels-nathan-thomas-1.jpg',
 'violet',
 45,
 20,
