@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/10
+GET {{baseUrl}}/article/7
 
 ### POST
 POST {{baseUrl}}/article
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/article/3
+PUT {{baseUrl}}/article/7
 Content-Type: application/json
 
 {
@@ -59,7 +59,7 @@ Content-Type: application/json
     "discount": 20,
     "categories": [
         {
-            "title": "homme"
+            "title": "femme"
         }
     ],
     "sizes": [
