@@ -42,7 +42,7 @@ CREATE TABLE "user" (
     lastname text NOT NULL,
     "password" text NOT NULL,
     phone_number text NOT NULL,
-    "role_id" INTEGER NOT NULL REFERENCES "role"("id"),
+    "role_id" INTEGER NOT NULL REFERENCES "role"("id") DEFAULT 2,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()  
 );

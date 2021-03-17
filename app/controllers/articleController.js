@@ -2,6 +2,8 @@ const { Article, Category, Size, User, Order, Address } = require('../models/ind
 const articleHasSizeController = require('./articleHasSizeController');
 const articleHasCategoryController = require('./articleHasCategoryController');
 const sequelize = require('../database');
+const { error } = require('../joiSchemas/testSchema');
+
 
 const articleController = {
     getAll: async (req, res) => {
@@ -39,6 +41,11 @@ const articleController = {
                 'sizes'
             ],
         });
+    
+        if(!article){
+        res.json(`l'article avec l'id ${id} n'existe pas`);
+        return next()
+        }
         res.json(article);
     },
 
@@ -68,47 +75,50 @@ const articleController = {
         res.json(article);
     },
 
-    update: async (req, res) => {
+    update: async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
-
-        console.log('data  dans articlecontroller: ',data);
-
+       try{
+    
+                (async ()=>{
+                const verification = await Article.findByPk(id)
+                if(!verification){
+                res.json(`l'article avec l'id ${id} n'existe pas`);
+                return next()
+                }
         // on update Article avec les données de req.body
-        await Article.update(
-            {
-                // déscruturation d'un ojet 
-                ...data
-            }, {
-            // SELECT * FROM "article" WHERE "id"=id
-            where: {
-                id: id,
-            }
-        });
-        
-        try {
-            
-        // je renvoie vers la fonction update de articleHasCategoryController
-        await articleHasCategoryController.update(id, data.categories);
-        // je renvoie vers la fonction update de articleHasSizeController
-        await articleHasSizeController.update(id, data.sizes);
-        // en essaye de prendre le nouvel article modifé
-        const updatedArticle = await Article.findOne({
-            where: {
-                id,
-            },
-            include: [
+                await Article.update(
+                    {
+                        ...data
+                    }, {
+                    where: {
+                        id: id,
+                    }
+                });
                 
-                'categories',
-                'sizes'
-            ]})
+                // je renvoie vers la fonction update de articleHasCategoryController
+            const updateCategory= await articleHasCategoryController.update(id, data.categories);
+            // je renvoie vers la fonction update de articleHasSizeController
+            const updatesize= await articleHasSizeController.update(id, data.sizes);
+                
+                // en essaye de prendre le nouvel article modifé
+            const updatedArticle = await Article.findOne({
+                where: {
+                    id,
+                },
+                include: [
+                    'categories',
+                    'sizes']
+            })
+    
+            res.json(`l'article avec l'id ${id} a bien était modifié`) 
+            })();
+    }
 
-        console.log('updatedArticle : ',updatedArticle)
-        res.json(updatedArticle)
+    catch(err){
+        console.error(err.stack)
     }
-     catch (error) {
-            console.log('erreur')
-    }
+
     },
 
     delete: async (req, res) => {
@@ -116,10 +126,14 @@ const articleController = {
         try {
             const { id } = req.params;
             const article = await Article.findByPk(id);
+                if(!article){
+                res.json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                return next()
+                }
             article.destroy();
             res.json(`l'article avec l'id ${id} vient d' être supprimé`);
         } catch (error) {
-            console.log('error', error)
+            console.log( error.stack)
         }
     },
 };

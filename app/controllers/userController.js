@@ -83,7 +83,7 @@ const userController = {
             lastname: req.body.lastname,
             password: req.body.password,
             phone_number: req.body.phoneNumber,
-            role_id: req.body.roleId
+            
         };
         // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
         // qu'on va faire ne passe pas
