@@ -14,12 +14,11 @@ const addressController = {
                     association: 'address_user',
                 }
             ]
-
         })
         res.json(addresses);
     },
 
-    // renvoi l'address avec son user
+    // renvoi l'address avec son user par rapport au user_id
     getOne: async (req, res) => {
         const user_id = req.params.id;
         const address = await Address.findByPk(user_id, {
@@ -29,6 +28,10 @@ const addressController = {
                 }
             ]
         })
+        if(!address){
+        res.json(`l'addresse avec le user_id ${user_id} n'existe pas`);
+        return next()
+        }
         res.json(address);
     },
 

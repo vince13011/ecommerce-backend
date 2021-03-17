@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/7
+GET {{baseUrl}}/article/3
 
 ### POST
 POST {{baseUrl}}/article
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/article/7
+PUT {{baseUrl}}/article/3
 Content-Type: application/json
 
 {
@@ -54,9 +54,9 @@ Content-Type: application/json
     "description":"tshirt BLEU",
     "image": "c:/repertoire/image/b",
     "color":"blue",
-    "pre_tax_price": 30,
-    "vat_rate": 20,
-    "discount": 20,
+    "pre_tax_price": 30.90,
+    "vat_rate": 27.4,
+    "discount": 20.20,
     "categories": [
         {
             "title": "femme"
@@ -75,7 +75,7 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/10
+DELETE {{baseUrl}}/article/34
 
 
 ### GET
@@ -101,7 +101,7 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE {{baseUrl}}/category/7
+DELETE {{baseUrl}}/category/1
 
 
 ### GET
@@ -167,8 +167,8 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "vadad@gmail.com",
-"password":"ABCDEFGH"
+"email": "vad@gmail.com",
+"password":"BCDEFGH"
 }
 
 ### POST
@@ -182,7 +182,6 @@ Content-Type: application/json
     "password":"ABCDEFGH",
     "passwordConfirm":"ABCDEFGH",
     "phoneNumber":"0123456789",
-    "roleId": 1,
     "country": "France",
     "city": "marignane",
     "zipCode": "13000",
@@ -214,7 +213,7 @@ DELETE {{baseUrl}}/user/1
 GET {{baseUrl}}/addresses
 
 ### GET
-GET {{baseUrl}}/address/2
+GET {{baseUrl}}/address/1
 
 ### POST
 POST {{baseUrl}}/address

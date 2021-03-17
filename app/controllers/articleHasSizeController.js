@@ -1,5 +1,6 @@
 const { Article, Category, Size, User, Order, Address, ArticleHasSize } = require('../models/index');
 const sequelize = require('../database');
+const { Query } = require('pg');
 
 const articleHasSizeController = {
     getAll: async (req, res) => {
@@ -65,12 +66,13 @@ const articleHasSizeController = {
     },
 
     update: async (article_id, data) => {
+        
         await sequelize.query(
             `
                 DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
             `
         );
-        console.log('data : ',data);
+    
         // on boucle sur data.sizes 
          [...data].forEach(async (size) => {
             // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title
@@ -79,7 +81,7 @@ const articleHasSizeController = {
                     size_name: size.size_name,
                 }
             });
-
+            
             // on insert l'id du size et l'article id et stock dans article has size
             await sequelize.query(
                 `
@@ -87,7 +89,9 @@ const articleHasSizeController = {
                     VALUES (${article_id}, ${sizeId[0].id}, ${size.stock})
                 `
             )
+            
         });
+
     },
 
 
