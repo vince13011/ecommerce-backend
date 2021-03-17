@@ -33,7 +33,7 @@ const OrderController = {
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
         const reponseOrders = [];
-        orders.forEach((orderElement) => {
+        [...orders].forEach((orderElement) => {
             const order = orderElement.dataValues;
             let adressResponse = [];
             adressResponse.push({
@@ -47,7 +47,7 @@ const OrderController = {
             let articleResponse = [];
             orderElement.orderArticles.forEach((article) => {
                 let size_name = '';
-                searchSize.forEach((size) => {
+                [...searchSize].forEach((size) => {
                     if (size.id === article.order_has_article.size_id) {
                         size_name = size.size_name;
                     }
@@ -57,7 +57,7 @@ const OrderController = {
                 // dans le order
                 // du coup cette image = à ce qu'a été trouvé . image
                 let image = '';
-                searchArticle.forEach((art) => {
+                [...searchArticle].forEach((art) => {
                     if (art.id === article.order_has_article.article_id) {
                         image = art.dataValues.image;
                     }
@@ -188,7 +188,7 @@ const OrderController = {
         // renvoie vers le create de orderorderHasArticleController avec deux arguments orderID et data.articles
         await orderHasArticleController.create(orderID, data);
 
-        for(article of data.articles){async (article) => {
+         [...data.articles].forEach(async (article) => {
             const searchSizeId = await Size.findOne({
                 where: {
                     size_name: article.sizes.size,
@@ -210,7 +210,7 @@ const OrderController = {
                     size_id: sizeId,
                 }
             })
-        }};
+        });
 
         res.json(order);
     },

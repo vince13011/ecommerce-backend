@@ -80,6 +80,7 @@ const articleController = {
         const data = req.body;
        try{
     
+
                 (async ()=>{
                 const verification = await Article.findByPk(id)
                 if(!verification){
