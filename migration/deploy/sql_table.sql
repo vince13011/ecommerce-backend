@@ -18,9 +18,9 @@ CREATE TABLE article (
    "description" text NOT NULL,
    "image" text NOT NULL,
    color text DEFAULT NULL,
-   pre_tax_price posint NOT NULL,
-   vat_rate posint NOT NULL,
-   discount int DEFAULT NULL,
+   pre_tax_price  FLOAT NOT NULL,
+   vat_rate  FLOAT NOT NULL,
+   discount FLOAT DEFAULT NULL,
    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -42,7 +42,7 @@ CREATE TABLE "user" (
     lastname text NOT NULL,
     "password" text NOT NULL,
     phone_number text NOT NULL,
-    "role_id" INTEGER NOT NULL REFERENCES "role"("id"),
+    "role_id" INTEGER NOT NULL REFERENCES "role"("id") DEFAULT 2,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()  
 );
