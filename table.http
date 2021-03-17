@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/3
+GET {{baseUrl}}/article/1
 
 ### POST
 POST {{baseUrl}}/article
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/article/3
+PUT {{baseUrl}}/article/34
 Content-Type: application/json
 
 {
@@ -108,7 +108,7 @@ DELETE {{baseUrl}}/category/1
 GET {{baseUrl}}/orders
 
 ### GET
-GET {{baseUrl}}/order/30
+GET {{baseUrl}}/order/1
 
 ### GET 
 GET {{baseUrl}}/user-orders/1
@@ -129,7 +129,7 @@ Content-Type: application/json
             "unit_net_price": 10,
             "sizes": {
                 "size": "L",
-                "quantity": 30
+                "quantity": 3
             }
         },
         {
@@ -137,7 +137,7 @@ Content-Type: application/json
             "unit_net_price": 10,
             "sizes": {
                 "size": "XL",
-                "quantity": 30
+                "quantity": 3
             }
         }
     ]

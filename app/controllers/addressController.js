@@ -14,7 +14,7 @@ const addressController = {
                     association: 'address_user',
                 }
             ]
-        })
+        });
         res.json(addresses);
     },
 
@@ -30,7 +30,7 @@ const addressController = {
         })
         if(!address){
         res.json(`l'addresse avec le user_id ${user_id} n'existe pas`);
-        return next()
+        return next();
         }
         res.json(address);
     },
@@ -68,9 +68,9 @@ const addressController = {
                 }]
             }]
 
-        })
+        });
 
-        res.json(theAddressUser)
+        res.json(theAddressUser);
     
     },
     updateById: async (req, res) => {

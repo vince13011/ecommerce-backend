@@ -97,5 +97,9 @@ router.get('/order-has-article/:id', orderHasArticleController.getOne);
 // STRIPE
 router.post('/pay', payController.payment);
 
+//404
+router.use((request, response) => {
+    response.status(404).json('404 Not Found');
+});
 // ROUTER
 module.exports = router;
