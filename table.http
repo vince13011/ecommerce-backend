@@ -158,7 +158,9 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/user/2
+GET {{baseUrl}}/user/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJFbWFpbCI6ImVkQGdtYWlsLmNvbSIsImlhdCI6MTYxNTk5MjY3NCwiZXhwIjoxNjE1OTk2Mjc0fQ.AZbYlo_Nwl_cq04P2EKVra5SDKpWntYCUYbSbv7cmOk
 
 
 ### POST
@@ -167,8 +169,8 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "vad@gmail.com",
-"password":"BCDEFGH"
+"email": "ed@gmail.com",
+"password":"ABCDEFGH"
 }
 
 ### POST
