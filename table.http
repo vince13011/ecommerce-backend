@@ -176,13 +176,13 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"aad@gmail.com",
+    "email":"ed@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",
     "passwordConfirm":"ABCDEFGH",
     "phoneNumber":"0123456789",
-    "roleId": 1,
+    "roleId": 2,
     "country": "France",
     "city": "marignane",
     "zipCode": "13000",
