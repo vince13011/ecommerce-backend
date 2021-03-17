@@ -53,16 +53,16 @@ const articleController = {
         // console.log(newArticleId);
 
         // 2) LIER des CATEGORIES à l'article
-        for(category of data.categories){async (category) => {
+        [...data.categories].forEach(async (category) => {
             articleHasCategoryController.create(newArticleId, category);
-        }};
+        });
 
         // 3) LIER des SIZES à l'article
-        for(size of data.sizes){async (size) => {
+        [...data.sizes].forEach(async (size) => {
             // on récupère la fonction create depuis le controller articleHasSize
             // on la boucle pour autant de fois qu'il y a d'éléments : data.sizes
             articleHasSizeController.create(newArticleId, size);
-        }};
+        });
 
         // on renvoie le JSON article
         res.json(article);
@@ -85,20 +85,30 @@ const articleController = {
                 id: id,
             }
         });
+        
+        try {
+            
         // je renvoie vers la fonction update de articleHasCategoryController
         await articleHasCategoryController.update(id, data.categories);
         // je renvoie vers la fonction update de articleHasSizeController
         await articleHasSizeController.update(id, data.sizes);
-        // en essaye de prendre le nouveau article modifé
+        // en essaye de prendre le nouvel article modifé
         const updatedArticle = await Article.findOne({
             where: {
                 id,
             },
             include: [
+                
                 'categories',
                 'sizes'
-            ],})
+            ]})
+
+        console.log('updatedArticle : ',updatedArticle)
         res.json(updatedArticle)
+    }
+     catch (error) {
+            console.log('erreur')
+    }
     },
 
     delete: async (req, res) => {
