@@ -42,6 +42,11 @@ const userController = {
     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
     getOne: async (req, res) => {
         const { id } = req.params;
+        var headerAuth  = req.headers['authorization'];
+        var userId      = jwtUtils.getUserId(headerAuth);
+    
+        if (userId < 0)
+          return res.status(400).json({ 'error': 'token absent' });
 
 
         const infoUser = await User.findOne({
@@ -69,7 +74,7 @@ const userController = {
                 }
             ]
         })
-
+    
         const userWithAddress = [infoUser, theAddressUser];
         res.json(userWithAddress)
 
@@ -239,7 +244,7 @@ const userController = {
                 // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
-                    //maintenant que tout est validé on renvoit les informations demandées
+                 /*   //maintenant que tout est validé on renvoit les informations demandées
                     const theAddressUser = await Address.findOne({
 
                         where: { user_id: user.id },
@@ -268,8 +273,9 @@ const userController = {
                         include: [ { association: 'user_has_role' }]
 
                     })
+                    */
                     const token= jwtUtils.generateTokenForUser(user);
-                    const userWithAddress = [token, infoUser, theAddressUser];
+                    const userWithAddress = [token, user.id];
                     res.json(userWithAddress)
                 }
                 else {
