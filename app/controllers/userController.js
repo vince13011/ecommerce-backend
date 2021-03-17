@@ -219,7 +219,7 @@ const userController = {
             // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
             // si le user est null on redirige sur la page d'inscription 
             if (!user) {
-                errors.push('Veuillez vérifier vos identifiants');
+                errors.push('Aucun Compte avec cet email');
 
                 res.json({ errors });
             }
@@ -269,7 +269,7 @@ const userController = {
                     res.json(userWithAddress)
                 }
                 else {
-                    errors.push('Veuillez vérifier vos identifiants');
+                    errors.push('Mot de passe invalide pour cet email');
                     res.json({ errors });
                 }
             }

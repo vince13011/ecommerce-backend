@@ -14,7 +14,6 @@ const addressController = {
                     association: 'address_user',
                 }
             ]
-
         })
         res.json(addresses);
     },
