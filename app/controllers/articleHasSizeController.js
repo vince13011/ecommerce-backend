@@ -16,6 +16,9 @@ const articleHasSizeController = {
                 id,
             }
         });
+        if(!response){
+            res.status(400).json(`pas de liaison article_has_category avec l'id ${id}`)
+        }
         res.json(response);
     },
 

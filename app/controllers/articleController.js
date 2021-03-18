@@ -43,8 +43,8 @@ const articleController = {
         });
     
         if(!article){
-        res.json(`l'article avec l'id ${id} n'existe pas`);
-        return next()
+            res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
+        return next();
         }
         res.json(article);
     },
@@ -84,8 +84,8 @@ const articleController = {
                 (async ()=>{
                 const verification = await Article.findByPk(id)
                 if(!verification){
-                res.json(`l'article avec l'id ${id} n'existe pas`);
-                return next()
+                res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
+                return next();
                 }
         // on update Article avec les données de req.body
                 await Article.update(
@@ -110,14 +110,14 @@ const articleController = {
                 include: [
                     'categories',
                     'sizes']
-            })
+            });
     
             res.json(`l'article avec l'id ${id} a bien était modifié`) 
             })();
     }
 
     catch(err){
-        console.error(err.stack)
+        res.status(400).json(err.stack)
     }
 
     },
@@ -128,13 +128,13 @@ const articleController = {
             const { id } = req.params;
             const article = await Article.findByPk(id);
                 if(!article){
-                res.json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                    res.status(400).json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
                 return next()
                 }
             article.destroy();
             res.json(`l'article avec l'id ${id} vient d' être supprimé`);
         } catch (error) {
-            console.log( error.stack)
+            res.status(400).json( error.stack)
         }
     },
 };

@@ -57,6 +57,10 @@ const userController = {
             include: [ { association: 'user_has_role' }]
         })
 
+        if(!infoUser){
+            res.status(400).json(`aucun compte avec l'id ${id}`)
+        }
+
         const theAddressUser = await Address.findOne({
             where: { user_id: infoUser.id },
             attributes: {
@@ -190,8 +194,8 @@ const userController = {
                     include: [ { association: 'user_has_role' }]
 
                 })
-                const token= jwtUtils.generateTokenForUser(user);
-                const userWithAddress = [token,user, theAddressUser];
+             
+                const userWithAddress = [user, theAddressUser];
                 res.json(userWithAddress)
             }
         }
@@ -306,7 +310,7 @@ const userController = {
 
         }
         catch {
-            res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
+            res.status(400).json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
 }

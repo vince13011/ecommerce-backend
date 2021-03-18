@@ -17,6 +17,9 @@ const categoryController = {
                 id,
             }
         });
+        if(!category){
+            res.status(400).json(`pas d'article avec l'id ${id}`)
+        }
         res.json(category);
     },
 
@@ -32,7 +35,9 @@ const categoryController = {
         const category = await Category.create({ ...data });
         console.log(category);
         // on renvoie le JSON article
-
+        if(!category){
+            res.status(400).json(`La création de la catégorie a échoué`)
+        }
         res.json(category);
     },
 
@@ -59,7 +64,7 @@ const categoryController = {
 
             res.json(category);
         } catch (error) {
-            console.log('error', error)
+            res.status(400).json('error', error.stack)
         }
 
     },

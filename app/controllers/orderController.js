@@ -171,6 +171,9 @@ const OrderController = {
             articles: articleResponse
         };
         reponseOrders.push(objetOrder);
+        if(!reponseOrders){
+            res.status(400).json(`pas d'order avec l'id ${id}`)
+        }
 
         res.json(reponseOrders);
     },
@@ -211,6 +214,9 @@ const OrderController = {
                 }
             })
         });
+        if(!order){
+            res.status(400).json(`La création de l'order a échoué`)
+        }
 
         res.json(order);
     },
@@ -302,6 +308,8 @@ const OrderController = {
             };
             reponseOrders.push(objetOrder);
         });
+
+        
         res.json(reponseOrders);
     },
 

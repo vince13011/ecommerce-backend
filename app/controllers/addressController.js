@@ -29,7 +29,7 @@ const addressController = {
             ]
         })
         if(!address){
-        res.json(`l'addresse avec le user_id ${user_id} n'existe pas`);
+            res.status(400).json(`l'addresse avec le user_id ${user_id} n'existe pas`);
         return next();
         }
         res.json(address);
@@ -102,7 +102,7 @@ const addressController = {
             res.json(`l'addresse avec l'id ${id} est bien supprimé`)
         }
         catch {
-            res.json(`l'addresse avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
+            res.status(400).json(`l'addresse avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
     
