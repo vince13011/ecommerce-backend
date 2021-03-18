@@ -36,7 +36,7 @@ router.get('/orders', orderController.getAll); //token ADMIN
 router.get('/order/:id', orderController.getOne);
 router.post('/order', orderController.create);//token USER //ADMIN
 // renvoie toutes les orders d'un utilisateur
-router.get('/user-orders/:id', orderController.userOrders);
+router.get('/user-orders/:id', orderController.userOrders);//token USER //ADMIN
 router.put('/order/:id', orderController.update);
 
 

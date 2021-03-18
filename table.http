@@ -117,6 +117,8 @@ GET {{baseUrl}}/order/1
 
 ### GET 
 GET {{baseUrl}}/user-orders/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYwODc3NzAsImV4cCI6MTYxNjA5MTM3MH0.vs8j7X-f13lhyyO60XTagk8F-2CRCqARnN3eEoHSFvI
 
 ### POST
 POST {{baseUrl}}/order
