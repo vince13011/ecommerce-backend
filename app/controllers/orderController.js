@@ -6,10 +6,13 @@ const jwtUtils = require('../services/jwt.utils');
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
+        const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
+
             if (userId < 0) {
                 return res.status(400).json({ 'error': 'token absent' });
             }
+            
         const orders = await Order.findAll({
             include: [{
                 association: 'orderArticles',
@@ -240,6 +243,16 @@ const OrderController = {
     userOrders: async (req, res) => {
         const { id } = req.params;
         const { limit } = req.query;
+        const headerAuth = req.headers['authorization'];
+        let userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId < 0) {
+            let userId = jwtUtils.getAdminId(headerAuth);
+            if (userId < 0) {
+                return res.status(400).json({ 'error': 'token absent' });
+            }
+        }
+
         const searchOrders = await Order.findAll({
             include: [{
                 association: 'orderArticles',
