@@ -42,12 +42,12 @@ const userController = {
     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
     getOne: async (req, res) => {
         const { id } = req.params;
-        const headerAuth  = req.headers['authorization'];
-         let userId      = jwtUtils.getUserId(headerAuth);
-    
-        if (userId < 0){  
+        const headerAuth = req.headers['authorization'];
+        let userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId < 0) {
             let userId = jwtUtils.getAdminId(headerAuth);
-            if (userId < 0){
+            if (userId < 0) {
                 return res.status(400).json({ 'error': 'token absent' });
             }
         }
@@ -58,10 +58,10 @@ const userController = {
             attributes: {
                 exclude: ['role_id', 'password', 'created_at', 'updated_at']
             },
-            include: [ { association: 'user_has_role' }]
+            include: [{ association: 'user_has_role' }]
         })
 
-        if(!infoUser){
+        if (!infoUser) {
             res.status(400).json(`aucun compte avec l'id ${id}`)
         }
 
@@ -71,7 +71,7 @@ const userController = {
                 exclude: ['created_at']
             },
             include: [
-                {   
+                {
                     association: 'address_orders',
                     include: [{
                         association: 'orderArticles',
@@ -82,7 +82,7 @@ const userController = {
                 }
             ]
         })
-    
+
         const userWithAddress = [infoUser, theAddressUser];
         res.json(userWithAddress)
 
@@ -98,9 +98,9 @@ const userController = {
             phone_number: req.body.phoneNumber
         }
 
-            if(req.body.roleId){
-                newUserData.role_id = req.body.roleId;
-            };
+        if (req.body.roleId) {
+            newUserData.role_id = req.body.roleId;
+        };
 
         // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
         // qu'on va faire ne passe pas
@@ -194,11 +194,11 @@ const userController = {
 
                 const user = await User.findOne({
                     where: { id: infoUser.id },
-                    attributes: { exclude: [ 'password', 'created_at', 'updated_at'] },
-                    include: [ { association: 'user_has_role' }]
+                    attributes: { exclude: ['password', 'created_at', 'updated_at'] },
+                    include: [{ association: 'user_has_role' }]
 
                 })
-             
+
                 const userWithAddress = [user, theAddressUser];
                 res.json(userWithAddress)
             }
@@ -252,50 +252,50 @@ const userController = {
                 // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
-                 /*   //maintenant que tout est validé on renvoit les informations demandées
-                    const theAddressUser = await Address.findOne({
-
-                        where: { user_id: user.id },
-                        attributes: {
-                            exclude: [ 'created_at']
-
-                        },
-                        include: [
-                            {
-                                association: 'address_orders',
-                                include: [{
-                                    association: 'orderArticles',
-                                    order: [
-                                        ['updated_at', 'ASC']
-                                    ]
-                                }]
-                            }
-                        ]
-                    })
-                 */
+                    /*   //maintenant que tout est validé on renvoit les informations demandées
+                       const theAddressUser = await Address.findOne({
+   
+                           where: { user_id: user.id },
+                           attributes: {
+                               exclude: [ 'created_at']
+   
+                           },
+                           include: [
+                               {
+                                   association: 'address_orders',
+                                   include: [{
+                                       association: 'orderArticles',
+                                       order: [
+                                           ['updated_at', 'ASC']
+                                       ]
+                                   }]
+                               }
+                           ]
+                       })
+                    */
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
                             exclude: ['password', 'created_at', 'updated_at']
                         },
-                        include: [ { association: 'user_has_role' }]
+                        include: [{ association: 'user_has_role' }]
 
                     })
-                    console.log('infouser role id: ',infoUser.role_id)
-                   
-                    if(infoUser.role_id === 2){
-                    const token= jwtUtils.generateTokenForUser(user);
-                    const userWithAddress = [token, user.id];
-                   res.json(userWithAddress);
-                }
+                    console.log('infouser role id: ', infoUser.role_id)
 
-                    if(infoUser.role_id === 1){
-                        const token= jwtUtils.generateTokenForAdmin(user);
+                    if (infoUser.role_id === 2) {
+                        const token = jwtUtils.generateTokenForUser(user);
                         const userWithAddress = [token, user.id];
-                        res.json(userWithAddress);    
+                        res.json(userWithAddress);
                     }
-                        
-                    
+
+                    if (infoUser.role_id === 1) {
+                        const token = jwtUtils.generateTokenForAdmin(user);
+                        const userWithAddress = [token, user.id];
+                        res.json(userWithAddress);
+                    }
+
+
                 }
                 else {
                     errors.push('Vérifiez vos identifiants');

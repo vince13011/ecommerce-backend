@@ -28,16 +28,16 @@ const addressController = {
                 }
             ]
         })
-        if(!address){
+        if (!address) {
             res.status(400).json(`l'addresse avec le user_id ${user_id} n'existe pas`);
-        return next();
+            return next();
         }
         res.json(address);
     },
 
-    
+
     create: async (req, res) => {
-    
+
         const newAddressData = {
             country: req.body.country,
             city: req.body.city,
@@ -49,9 +49,9 @@ const addressController = {
             lastname_address: req.body.lastNameAddress,
             user_id: req.body.userId
         };
-        console.log('newaddressdata :',newAddressData)
-        const newAddress=await Address.create(newAddressData);
-        console.log('newaddress :',newAddress)
+        console.log('newaddressdata :', newAddressData)
+        const newAddress = await Address.create(newAddressData);
+        console.log('newaddress :', newAddress)
 
         const theAddressUser = await Address.findOne({
             where: { id: newAddress.id },
@@ -71,7 +71,7 @@ const addressController = {
         });
 
         res.json(theAddressUser);
-    
+
     },
     updateById: async (req, res) => {
         const { id } = req.params;
@@ -86,9 +86,9 @@ const addressController = {
             lastname_address: req.body.lastNameAddress,
             user_id: req.body.userId
         };
-        console.log('data renvoyée:',newAddressData)
+        console.log('data renvoyée:', newAddressData)
         //const oldUser = await Address.findOne({where:{id}});
-        await Address.update({...newAddressData }, { where: { id } })
+        await Address.update({ ...newAddressData }, { where: { id } })
         const newUser = await Address.findByPk(id)
         res.json(newUser)
     },
@@ -105,6 +105,6 @@ const addressController = {
             res.status(400).json(`l'addresse avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
-    
+
 }
 module.exports = addressController;

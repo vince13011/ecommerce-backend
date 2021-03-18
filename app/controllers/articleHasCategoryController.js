@@ -11,7 +11,7 @@ const articleHasCategoryController = {
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await sequelize.query(`SELECT * FROM article_has_category WHERE "id"=${id};`);
-        if(!response){
+        if (!response) {
             res.status(400).json(`pas de liaison article_has_category avec l'id ${id}`)
         }
         res.json(response);

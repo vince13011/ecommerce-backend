@@ -42,23 +42,23 @@ const articleController = {
                 'sizes'
             ],
         });
-    
-        if(!article){
+
+        if (!article) {
             res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
-        return next();
+            return next();
         }
         res.json(article);
     },
 
     create: async (req, res) => {
         const data = req.body;
-        const headerAuth  = req.headers['authorization'];
+        const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
-           
-        if (userId < 0){
-               return res.status(400).json({ 'error': 'token absent' });
-           }
-       
+
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'token absent' });
+        }
+
 
 
         // 1) je crée l'article avec les req.body
@@ -86,23 +86,23 @@ const articleController = {
     update: async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
-        const headerAuth  = req.headers['authorization'];
+        const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
-           
-        if (userId < 0){
-               return res.status(400).json({ 'error': 'token absent' });
-           }
 
-       try{
-    
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'token absent' });
+        }
 
-                (async ()=>{
+        try {
+
+
+            (async () => {
                 const verification = await Article.findByPk(id)
-                if(!verification){
-                res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
-                return next();
+                if (!verification) {
+                    res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
+                    return next();
                 }
-        // on update Article avec les données de req.body
+                // on update Article avec les données de req.body
                 await Article.update(
                     {
                         ...data
@@ -111,52 +111,52 @@ const articleController = {
                         id: id,
                     }
                 });
-                
-                // je renvoie vers la fonction update de articleHasCategoryController
-            const updateCategory= await articleHasCategoryController.update(id, data.categories);
-            // je renvoie vers la fonction update de articleHasSizeController
-            const updatesize= await articleHasSizeController.update(id, data.sizes);
-                
-                // en essaye de prendre le nouvel article modifé
-            const updatedArticle = await Article.findOne({
-                where: {
-                    id,
-                },
-                include: [
-                    'categories',
-                    'sizes']
-            });
-    
-            res.json(`l'article avec l'id ${id} a bien était modifié`) 
-            })();
-    }
 
-    catch(err){
-        res.status(400).json(err.stack)
-    }
+                // je renvoie vers la fonction update de articleHasCategoryController
+                const updateCategory = await articleHasCategoryController.update(id, data.categories);
+                // je renvoie vers la fonction update de articleHasSizeController
+                const updatesize = await articleHasSizeController.update(id, data.sizes);
+
+                // en essaye de prendre le nouvel article modifé
+                const updatedArticle = await Article.findOne({
+                    where: {
+                        id,
+                    },
+                    include: [
+                        'categories',
+                        'sizes']
+                });
+
+                res.json(`l'article avec l'id ${id} a bien était modifié`)
+            })();
+        }
+
+        catch (err) {
+            res.status(400).json(err.stack)
+        }
 
     },
 
     delete: async (req, res) => {
-        const headerAuth  = req.headers['authorization'];
+        const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
-           
-        if (userId < 0){
-               return res.status(400).json({ 'error': 'token absent' });
-           }
+
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'token absent' });
+        }
 
         console.log('object')
         try {
             const { id } = req.params;
             const article = await Article.findByPk(id);
-                if(!article){
-                    res.status(400).json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+            if (!article) {
+                res.status(400).json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
                 return next()
-                }
+            }
             article.destroy();
             res.json(`l'article avec l'id ${id} vient d' être supprimé`);
         } catch (error) {
-            res.status(400).json( error.stack)
+            res.status(400).json(error.stack)
         }
     },
 };
