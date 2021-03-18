@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 
-const JWT_SIGN_SECRET= 's0G8S7AGED7ZG534T7909UHGGVCFYRD%HSH%DH%HUG$';
+const JWT_SIGN_SECRET= 's0G8S7AGED7ZG534T7909UHGGVCFYRD%H$';
+const JWT_SIGN_SECRET_ADMIN= 's0G8S7AGED7ZG534T7909UHGGVCFYRD%HSH%DH%HUG$';
 
 module.exports = {
 
@@ -14,6 +15,16 @@ module.exports = {
         expiresIn: '1h'
         })
     },
+    generateTokenForAdmin : (userData)=>{
+      return jwt.sign({
+          userId: userData.id,
+          userEmail:userData.email
+          },
+          JWT_SIGN_SECRET_ADMIN,
+          {
+      expiresIn: '1h'
+      })
+  },
     
     parseAuthorization: function(authorization) {
         return (authorization != null) ? authorization.replace('Bearer ', '') : null;
@@ -24,6 +35,18 @@ module.exports = {
         if(token != null) {
           try {
             var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+            if(jwtToken != null)
+              userId = jwtToken.userId;
+          } catch(err) { }
+        }
+        return userId;
+      },
+      getAdminId: function(authorization) {
+        var userId = -1;
+        var token = module.exports.parseAuthorization(authorization);
+        if(token != null) {
+          try {
+            var jwtToken = jwt.verify(token, JWT_SIGN_SECRET_ADMIN);
             if(jwtToken != null)
               userId = jwtToken.userId;
           } catch(err) { }

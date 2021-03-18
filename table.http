@@ -158,9 +158,9 @@ Content-Type: application/json
 GET {{baseUrl}}/users
 
 ### GET
-GET {{baseUrl}}/user/30
+GET {{baseUrl}}/user/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6ImVkQGdtYWlsLmNvbSIsImlhdCI6MTYxNjA1Njg3MywiZXhwIjoxNjE2MDYwNDczfQ.9Vc8cj34TFVRrLynRPceQUPpgTCiPZdc-Cm7eZeJ9eA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6ImVkQGdtYWlsLmNvbSIsImlhdCI6MTYxNjA2MjUwOCwiZXhwIjoxNjE2MDY2MTA4fQ.Uipnx06XRDLZqvElzotJILrO8kwYMzMFwzeWAUKsw4E
 
 
 ### POST
@@ -178,13 +178,13 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"ed@gmail.com",
+    "email":"ead@gmail.com",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"ABCDEFGH",
     "passwordConfirm":"ABCDEFGH",
     "phoneNumber":"0123456789",
-    "roleId": 2,
+    "roleId": 1,
     "country": "France",
     "city": "marignane",
     "zipCode": "13000",

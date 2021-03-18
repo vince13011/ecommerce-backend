@@ -42,11 +42,15 @@ const userController = {
     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
     getOne: async (req, res) => {
         const { id } = req.params;
-        var headerAuth  = req.headers['authorization'];
-        var userId      = jwtUtils.getUserId(headerAuth);
+        const headerAuth  = req.headers['authorization'];
+         let userId      = jwtUtils.getUserId(headerAuth);
     
-        if (userId < 0)
-          return res.status(400).json({ 'error': 'token absent' });
+        if (userId < 0){  
+            let userId = jwtUtils.getAdminId(headerAuth);
+            if (userId < 0){
+                return res.status(400).json({ 'error': 'token absent' });
+            }
+        }
 
 
         const infoUser = await User.findOne({
@@ -268,7 +272,7 @@ const userController = {
                             }
                         ]
                     })
-
+                 */
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
@@ -277,10 +281,21 @@ const userController = {
                         include: [ { association: 'user_has_role' }]
 
                     })
-                    */
+                    console.log('infouser role id: ',infoUser.role_id)
+                   
+                    if(infoUser.role_id === 2){
                     const token= jwtUtils.generateTokenForUser(user);
                     const userWithAddress = [token, user.id];
-                    res.json(userWithAddress)
+                   res.json(userWithAddress);
+                }
+
+                    if(infoUser.role_id === 1){
+                        const token= jwtUtils.generateTokenForAdmin(user);
+                        const userWithAddress = [token, user.id];
+                        res.json(userWithAddress);    
+                    }
+                        
+                    
                 }
                 else {
                     errors.push('Mot de passe invalide pour cet email');
