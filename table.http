@@ -174,8 +174,8 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "ead@gmail.com",
-"password":"ABCDEFGH"
+"email": "toto@tata.com",
+"password":"123456789"
 }
 
 ### POST
@@ -183,11 +183,11 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"ead@gmail.com",
+    "email":"toto@tata.com",
     "firstname":"rard",
     "lastname":"poulpos",
-    "password":"ABCDEFGH",
-    "passwordConfirm":"ABCDEFGH",
+    "password":"123456789",
+    "passwordConfirm":"123456789",
     "phoneNumber":"0123456789",
     "roleId": 1,
     "country": "France",
