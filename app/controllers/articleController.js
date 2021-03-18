@@ -2,7 +2,8 @@ const { Article, Category, Size, User, Order, Address } = require('../models/ind
 const articleHasSizeController = require('./articleHasSizeController');
 const articleHasCategoryController = require('./articleHasCategoryController');
 const sequelize = require('../database');
-const { error } = require('../joiSchemas/testSchema');
+const jwtUtils = require('../services/jwt.utils');
+
 
 
 const articleController = {
@@ -51,6 +52,13 @@ const articleController = {
 
     create: async (req, res) => {
         const data = req.body;
+        const headerAuth  = req.headers['authorization'];
+        let userId = jwtUtils.getAdminId(headerAuth);
+           
+        if (userId < 0){
+               return res.status(400).json({ 'error': 'token absent' });
+           }
+       
 
 
         // 1) je crée l'article avec les req.body
@@ -78,6 +86,13 @@ const articleController = {
     update: async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
+        const headerAuth  = req.headers['authorization'];
+        let userId = jwtUtils.getAdminId(headerAuth);
+           
+        if (userId < 0){
+               return res.status(400).json({ 'error': 'token absent' });
+           }
+
        try{
     
 
@@ -123,6 +138,13 @@ const articleController = {
     },
 
     delete: async (req, res) => {
+        const headerAuth  = req.headers['authorization'];
+        let userId = jwtUtils.getAdminId(headerAuth);
+           
+        if (userId < 0){
+               return res.status(400).json({ 'error': 'token absent' });
+           }
+
         console.log('object')
         try {
             const { id } = req.params;

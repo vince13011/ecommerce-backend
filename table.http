@@ -17,6 +17,7 @@ GET {{baseUrl}}/article/1
 ### POST
 POST {{baseUrl}}/article
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 {
     "reference": "111222222",
@@ -45,8 +46,9 @@ Content-Type: application/json
 }
 
 ### PUT /articles/:id
-PUT {{baseUrl}}/article/34
+PUT {{baseUrl}}/article/3
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 {
     "reference":"1402303239",
@@ -75,8 +77,9 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/34
-
+DELETE {{baseUrl}}/article/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 ### GET
 GET {{baseUrl}}/categories
@@ -116,6 +119,7 @@ GET {{baseUrl}}/user-orders/1
 ### POST
 POST {{baseUrl}}/order
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 {
     // "order_number": à créer en back
@@ -147,6 +151,7 @@ Content-Type: application/json
 ### PUT
 PUT {{baseUrl}}/order/11
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 {
     "status_name": "confirmed",
@@ -160,7 +165,7 @@ GET {{baseUrl}}/users
 ### GET
 GET {{baseUrl}}/user/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6ImVkQGdtYWlsLmNvbSIsImlhdCI6MTYxNjA2MjUwOCwiZXhwIjoxNjE2MDY2MTA4fQ.Uipnx06XRDLZqvElzotJILrO8kwYMzMFwzeWAUKsw4E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
 
 
 ### POST
@@ -169,7 +174,7 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "ed@gmail.com",
+"email": "ead@gmail.com",
 "password":"ABCDEFGH"
 }
 

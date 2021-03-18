@@ -1,6 +1,8 @@
 const { response } = require('express');
 const { Article, Category, Size, User, Order, Address, ArticleHasSize, Status } = require('../models/index');
 const orderHasArticleController = require('./orderHasArticleController');
+const jwtUtils = require('../services/jwt.utils');
+
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
@@ -182,6 +184,16 @@ const OrderController = {
         const data = req.body;
         const order_number = `UI${data.user_id}AI${data.address_id}TP${data.total_price}DN` + Date.now();
         data.order_number = order_number;
+        const headerAuth  = req.headers['authorization'];
+        let userId      = jwtUtils.getUserId(headerAuth);
+   
+       if (userId < 0){  
+           let userId = jwtUtils.getAdminId(headerAuth);
+           if (userId < 0){
+               return res.status(400).json({ 'error': 'token absent' });
+           }
+       }
+
         // create juste un order avec les donnes du body
         const order = await Order.create({
             ...data,
@@ -316,6 +328,14 @@ const OrderController = {
     update: async (req, res) => {
         const data = req.body;
         const { id } = req.params;
+
+        const headerAuth  = req.headers['authorization'];
+        let userId = jwtUtils.getAdminId(headerAuth);
+           
+        if (userId < 0){
+               return res.status(400).json({ 'error': 'token absent' });
+           }
+
         /*
             {
                 "status_name": "sent",
