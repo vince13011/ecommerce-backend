@@ -109,6 +109,8 @@ DELETE {{baseUrl}}/category/1
 
 ### GET
 GET {{baseUrl}}/orders
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYwODUwNzMsImV4cCI6MTYxNjA4ODY3M30.OymZDdJBwINlVs3rKv0knT3MDTjo9549rjDraUyVT-w
 
 ### GET
 GET {{baseUrl}}/order/1

@@ -6,6 +6,7 @@ const jwtUtils = require('../services/jwt.utils');
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
+        const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
 
             if (userId < 0) {
