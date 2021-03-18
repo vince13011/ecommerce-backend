@@ -7,10 +7,11 @@ const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
         let userId = jwtUtils.getAdminId(headerAuth);
-        if (userId < 0) {
-            return res.status(400).json({ 'error': 'token absent' });
-        }
-        
+
+            if (userId < 0) {
+                return res.status(400).json({ 'error': 'token absent' });
+            }
+            
         const orders = await Order.findAll({
             include: [{
                 association: 'orderArticles',
