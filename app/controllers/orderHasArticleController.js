@@ -24,23 +24,23 @@ const orderHasArticleController = {
         console.log('data.articles.length: ', data.articles.length)
         console.log(Array.isArray(data.articles));
 
-//for(article of data.articles)
+        //for(article of data.articles)
         [...data.articles].forEach(async (article) => {
-                const searchSizeId = await Size.findOne({
-                    where: {
-                        size_name: article.sizes.size,
-                    }
-                });
-                const sizeId = searchSizeId.dataValues.id;
-                await OrderHasArticle.create({
-                    article_id: article.article_id,
-                    size_id: sizeId,
-                    quantity: article.sizes.quantity,
-                    unit_net_price: article.unit_net_price,
-                    order_id: order_id
-                });
-            })
-            }
+            const searchSizeId = await Size.findOne({
+                where: {
+                    size_name: article.sizes.size,
+                }
+            });
+            const sizeId = searchSizeId.dataValues.id;
+            await OrderHasArticle.create({
+                article_id: article.article_id,
+                size_id: sizeId,
+                quantity: article.sizes.quantity,
+                unit_net_price: article.unit_net_price,
+                order_id: order_id
+            });
+        })
+    }
 
 };
 

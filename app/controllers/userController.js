@@ -42,11 +42,15 @@ const userController = {
     //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
     getOne: async (req, res) => {
         const { id } = req.params;
-        var headerAuth  = req.headers['authorization'];
-        var userId      = jwtUtils.getUserId(headerAuth);
-    
-        if (userId < 0)
-          return res.status(400).json({ 'error': 'token absent' });
+        const headerAuth = req.headers['authorization'];
+        let userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId < 0) {
+            let userId = jwtUtils.getAdminId(headerAuth);
+            if (userId < 0) {
+                return res.status(400).json({ 'error': 'token absent' });
+            }
+        }
 
 
         const infoUser = await User.findOne({
@@ -54,8 +58,12 @@ const userController = {
             attributes: {
                 exclude: ['role_id', 'password', 'created_at', 'updated_at']
             },
-            include: [ { association: 'user_has_role' }]
+            include: [{ association: 'user_has_role' }]
         })
+
+        if (!infoUser) {
+            res.status(400).json(`aucun compte avec l'id ${id}`)
+        }
 
         const theAddressUser = await Address.findOne({
             where: { user_id: infoUser.id },
@@ -63,7 +71,7 @@ const userController = {
                 exclude: ['created_at']
             },
             include: [
-                {   
+                {
                     association: 'address_orders',
                     include: [{
                         association: 'orderArticles',
@@ -74,7 +82,7 @@ const userController = {
                 }
             ]
         })
-    
+
         const userWithAddress = [infoUser, theAddressUser];
         res.json(userWithAddress)
 
@@ -90,9 +98,9 @@ const userController = {
             phone_number: req.body.phoneNumber
         }
 
-            if(req.body.roleId){
-                newUserData.role_id = req.body.roleId;
-            };
+        if (req.body.roleId) {
+            newUserData.role_id = req.body.roleId;
+        };
 
         // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
         // qu'on va faire ne passe pas
@@ -186,12 +194,12 @@ const userController = {
 
                 const user = await User.findOne({
                     where: { id: infoUser.id },
-                    attributes: { exclude: [ 'password', 'created_at', 'updated_at'] },
-                    include: [ { association: 'user_has_role' }]
+                    attributes: { exclude: ['password', 'created_at', 'updated_at'] },
+                    include: [{ association: 'user_has_role' }]
 
                 })
-                const token= jwtUtils.generateTokenForUser(user);
-                const userWithAddress = [token,user, theAddressUser];
+
+                const userWithAddress = [user, theAddressUser];
                 res.json(userWithAddress)
             }
         }
@@ -228,7 +236,7 @@ const userController = {
             // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
             // si le user est null on redirige sur la page d'inscription 
             if (!user) {
-                errors.push('Aucun Compte avec cet email');
+                errors.push('Vérifiez vos identifiants');
 
                 res.json({ errors });
             }
@@ -244,42 +252,53 @@ const userController = {
                 // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
                 // afficher son nom et le lien déconnecter
                 if (isValidPassword) {
-                 /*   //maintenant que tout est validé on renvoit les informations demandées
-                    const theAddressUser = await Address.findOne({
-
-                        where: { user_id: user.id },
-                        attributes: {
-                            exclude: [ 'created_at']
-
-                        },
-                        include: [
-                            {
-                                association: 'address_orders',
-                                include: [{
-                                    association: 'orderArticles',
-                                    order: [
-                                        ['updated_at', 'ASC']
-                                    ]
-                                }]
-                            }
-                        ]
-                    })
-
+                    /*   //maintenant que tout est validé on renvoit les informations demandées
+                       const theAddressUser = await Address.findOne({
+   
+                           where: { user_id: user.id },
+                           attributes: {
+                               exclude: [ 'created_at']
+   
+                           },
+                           include: [
+                               {
+                                   association: 'address_orders',
+                                   include: [{
+                                       association: 'orderArticles',
+                                       order: [
+                                           ['updated_at', 'ASC']
+                                       ]
+                                   }]
+                               }
+                           ]
+                       })
+                    */
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
                             exclude: ['password', 'created_at', 'updated_at']
                         },
-                        include: [ { association: 'user_has_role' }]
+                        include: [{ association: 'user_has_role' }]
 
                     })
-                    */
-                    const token= jwtUtils.generateTokenForUser(user);
-                    const userWithAddress = [token, user.id];
-                    res.json(userWithAddress)
+                    console.log('infouser role id: ', infoUser.role_id)
+
+                    if (infoUser.role_id === 2) {
+                        const token = jwtUtils.generateTokenForUser(user);
+                        const userWithAddress = [token, user.id];
+                        res.json(userWithAddress);
+                    }
+
+                    if (infoUser.role_id === 1) {
+                        const token = jwtUtils.generateTokenForAdmin(user);
+                        const userWithAddress = [token, user.id];
+                        res.json(userWithAddress);
+                    }
+
+
                 }
                 else {
-                    errors.push('Mot de passe invalide pour cet email');
+                    errors.push('Vérifiez vos identifiants');
                     res.json({ errors });
                 }
             }
@@ -306,7 +325,7 @@ const userController = {
 
         }
         catch {
-            res.json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
+            res.status(400).json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
         }
     }
 }

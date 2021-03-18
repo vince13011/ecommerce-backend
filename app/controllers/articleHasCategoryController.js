@@ -11,11 +11,14 @@ const articleHasCategoryController = {
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await sequelize.query(`SELECT * FROM article_has_category WHERE "id"=${id};`);
+        if (!response) {
+            res.status(400).json(`pas de liaison article_has_category avec l'id ${id}`)
+        }
         res.json(response);
     },
 
 
-    create: async (/*req, res,*/ article_id, data) => {
+    create: async (article_id, data) => {
         /* Voici la structure que doit avoir le req.body
         on va mettre size name, par contre il faudra 
         faire une recherche pour retrouver l'id qui correspond 
