@@ -1,6 +1,8 @@
-const { response } = require('express');
+
 const { Article, Category, Size, User, Order, Address, ArticleHasSize, Status } = require('../models/index');
 const orderHasArticleController = require('./orderHasArticleController');
+const jwtUtils = require('../services/jwt.utils');
+
 const OrderController = {
     getAll: async (req, res) => {
         const { limit } = req.query;
@@ -171,6 +173,9 @@ const OrderController = {
             articles: articleResponse
         };
         reponseOrders.push(objetOrder);
+        if (!reponseOrders) {
+            res.status(400).json(`pas d'order avec l'id ${id}`)
+        }
 
         res.json(reponseOrders);
     },
@@ -179,6 +184,16 @@ const OrderController = {
         const data = req.body;
         const order_number = `UI${data.user_id}AI${data.address_id}TP${data.total_price}DN` + Date.now();
         data.order_number = order_number;
+        const headerAuth = req.headers['authorization'];
+        let userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId < 0) {
+            let userId = jwtUtils.getAdminId(headerAuth);
+            if (userId < 0) {
+                return res.status(400).json({ 'error': 'token absent' });
+            }
+        }
+
         // create juste un order avec les donnes du body
         const order = await Order.create({
             ...data,
@@ -188,7 +203,7 @@ const OrderController = {
         // renvoie vers le create de orderorderHasArticleController avec deux arguments orderID et data.articles
         await orderHasArticleController.create(orderID, data);
 
-         [...data.articles].forEach(async (article) => {
+        [...data.articles].forEach(async (article) => {
             const searchSizeId = await Size.findOne({
                 where: {
                     size_name: article.sizes.size,
@@ -211,6 +226,9 @@ const OrderController = {
                 }
             })
         });
+        if (!order) {
+            res.status(400).json(`La création de l'order a échoué`)
+        }
 
         res.json(order);
     },
@@ -302,12 +320,22 @@ const OrderController = {
             };
             reponseOrders.push(objetOrder);
         });
+
+
         res.json(reponseOrders);
     },
 
     update: async (req, res) => {
         const data = req.body;
         const { id } = req.params;
+
+        const headerAuth = req.headers['authorization'];
+        let userId = jwtUtils.getAdminId(headerAuth);
+
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'token absent' });
+        }
+
         /*
             {
                 "status_name": "sent",

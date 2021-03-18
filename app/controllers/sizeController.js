@@ -13,7 +13,11 @@ const sizeController = {
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await Size.findByPk(id);
+        if (!response) {
+            res.status(400).json(`La size avec l'id ${id} n'existe pas`)
+        }
         res.json(response);
+
     },
 
     create: async (req, res) => {
@@ -28,7 +32,9 @@ const sizeController = {
         const size = await Size.create({ ...data });
         console.log(size);
         // on renvoie le JSON article
-
+        if (!size) {
+            res.status(400).json(`La  création de cette size a échoué`)
+        }
         res.json(size);
     },
 
@@ -55,7 +61,7 @@ const sizeController = {
 
             res.json(size);
         } catch (error) {
-            console.log('error', error)
+            res.status(400).json('error', error)
         }
 
     },

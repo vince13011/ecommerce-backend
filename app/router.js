@@ -23,30 +23,30 @@ const payController = require('./controllers/payController');
 
 
 // ARTICLES
-router.get('/articles', articleController.getAll);
-router.get('/article/:id', articleController.getOne);
-router.post('/article', articleController.create);
-router.put('/article/:id', articleController.update);
-router.delete('/article/:id', articleController.delete);
+router.get('/articles', articleController.getAll);//pas de token
+router.get('/article/:id', articleController.getOne);//pas de token
+router.post('/article', articleController.create);//token ADMIN
+router.put('/article/:id', articleController.update);//token ADMIN
+router.delete('/article/:id', articleController.delete);//token ADMIN
 
 // // CATEGORIES
-router.get('/categories', categoryController.getAll);
+router.get('/categories', categoryController.getAll); //pas de token
 router.get('/category/:id', categoryController.getOne);
 router.post('/category', categoryController.create);
 router.put('/category/:id', categoryController.update);
 router.delete('/category/:id', categoryController.delete);
 
 // ORDERS
-router.get('/orders', orderController.getAll);
+router.get('/orders', orderController.getAll); //token ADMIN
 router.get('/order/:id', orderController.getOne);
-router.post('/order', orderController.create);
+router.post('/order', orderController.create);//token USER //ADMIN
 // renvoie toutes les orders d'un utilisateur
 router.get('/user-orders/:id', orderController.userOrders);
 router.put('/order/:id', orderController.update);
 
 
 // STATUS
-router.get('/status', statusController.getAll);
+router.get('/status', statusController.getAll); //pas de token
 router.get('/status/:id', statusController.getOne);
 router.post('/status', statusController.create);
 router.put('/status/:id', statusController.update);
@@ -73,7 +73,7 @@ router.get('/address/:id', addressController.getOne);
  router.delete('/address/:id', addressController.deleteById);
 
 // // SIZES
-router.get('/sizes', sizeController.getAll);
+router.get('/sizes', sizeController.getAll); // pas de token
 router.get('/size/:id', sizeController.getOne);
 router.post('/size', sizeController.create);
 router.put('/size/:id', sizeController.update);

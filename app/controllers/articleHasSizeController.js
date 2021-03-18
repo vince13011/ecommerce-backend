@@ -16,6 +16,9 @@ const articleHasSizeController = {
                 id,
             }
         });
+        if (!response) {
+            res.status(400).json(`pas de liaison article_has_category avec l'id ${id}`)
+        }
         res.json(response);
     },
 
@@ -66,22 +69,22 @@ const articleHasSizeController = {
     },
 
     update: async (article_id, data) => {
-        
+
         await sequelize.query(
             `
                 DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
             `
         );
-    
+
         // on boucle sur data.sizes 
-         [...data].forEach(async (size) => {
+        [...data].forEach(async (size) => {
             // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title
             const sizeId = await Size.findOrCreate({
                 where: {
                     size_name: size.size_name,
                 }
             });
-            
+
             // on insert l'id du size et l'article id et stock dans article has size
             await sequelize.query(
                 `
@@ -89,7 +92,7 @@ const articleHasSizeController = {
                     VALUES (${article_id}, ${sizeId[0].id}, ${size.stock})
                 `
             )
-            
+
         });
 
     },
