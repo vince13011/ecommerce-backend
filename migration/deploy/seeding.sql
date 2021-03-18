@@ -10,7 +10,7 @@ INSERT INTO "role"
  INSERT INTO "status"
  ("status_name")
  VALUES
- ('pending'),('cancelled'),('confirmed'),('sent'),('delivered'),('returned');
+ ('en attente'),('annulé'),('confirmé'),('envoyé'),('livré'),('renvoyé');
 
 INSERT INTO article (
     reference,"name","description","image",color,
