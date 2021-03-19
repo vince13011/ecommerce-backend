@@ -115,10 +115,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZ
 ### GET
 GET {{baseUrl}}/order/1
 
+
+
 ### GET 
 GET {{baseUrl}}/user-orders/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYwODc3NzAsImV4cCI6MTYxNjA5MTM3MH0.vs8j7X-f13lhyyO60XTagk8F-2CRCqARnN3eEoHSFvI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYxNDUxNTMsImV4cCI6MTYxNjE0ODc1M30.4ZzAepq9IBxrpygw49Sma2OzwRX0s-FZ3P5gdfLeGV8
 
 ### POST
 POST {{baseUrl}}/order
@@ -169,7 +171,7 @@ GET {{baseUrl}}/users
 ### GET
 GET {{baseUrl}}/user/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
+Authorization: Bearer eyJhbGciOiJIzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYxNTExMzIsImV4cCI6MTYxNjE1NDczMn0.Dbq1rNm4fm0ZCLM7dXEq_9jgv3Ozdd9gq5-tU_BuVA4
 
 
 ### POST

@@ -2,6 +2,8 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const categoryController = {
+
+     //retourne toutes les categories 
     getAll: async (req, res) => {
         const { limit } = req.query;
         const categories = await Category.findAll({
@@ -10,6 +12,7 @@ const categoryController = {
         res.json(categories);
     },
 
+    //retourne une seule category 
     getOne: async (req, res) => {
         const { id } = req.params;
         const category = await Category.findOne({
@@ -23,6 +26,7 @@ const categoryController = {
         res.json(category);
     },
 
+    // on crée une category
     create: async (req, res) => {
         /* Voici la structure que doit avoir le req.body
         {
@@ -42,8 +46,18 @@ const categoryController = {
     },
 
     update: async (req, res) => {
+        
         const { id } = req.params;
         const data = req.body;
+
+        //on vérifie que l'article existe
+        const verification = await Category.findByPk(id)
+        if (!verification) {
+            res.status(400).json(`la category avec l'id ${id} n'existe pas`);
+            return next();
+        }
+
+         // on update la category avec les données de req.body
         const categoryUpdate = await Category.update(
             {
                 ...data
@@ -56,16 +70,28 @@ const categoryController = {
         res.json(updatedCategory);
     },
 
+    //suppresion d'une category
     delete: async (req, res) => {
-        try {
+        
             const { id } = req.params;
+            
+            //on vérifie que l'article existe avant la suppresion
             const category = await Category.findByPk(id);
+            if (!category) {
+                res.status(400).json(`la category avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                return next()
+            }
+
             category.destroy();
 
+                //si l'article existe toujours on renvoie une erreur
+            const categoryExist = await Category.findByPk(id);
+            if (categoryExist) {
+                res.status(400).json(`la category avec l'id ${id} n'a pas était supprimé`);
+            };
+
             res.json(category);
-        } catch (error) {
-            res.status(400).json('error', error.stack)
-        }
+      
 
     },
 };

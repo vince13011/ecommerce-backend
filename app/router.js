@@ -87,7 +87,7 @@ router.post('/article-has-size/:id', articleHasCategoryController.delete);
 // // ORDER_HAS_ARTICLE
 router.get('/order-has-article', orderHasArticleController.getAll);
 router.get('/order-has-article/:id', orderHasArticleController.getOne);
-// router.post('/order-has-article', orderHasArticleController.create);
+
 
 // STRIPE
 router.post('/pay', payController.payment);
