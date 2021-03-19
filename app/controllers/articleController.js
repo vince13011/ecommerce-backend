@@ -7,12 +7,11 @@ const jwtUtils = require('../services/jwt.utils');
 
 
 const articleController = {
+
+    //retourne l'ensemble des articles avec ses différentes categories, tailles et stock en fonction des tailles
     getAll: async (req, res) => {
         const { limit } = req.query;
         const articles = await Article.findAll({
-            // attributes: {
-            //     exclude: ['updated_at']
-            // },
             include: [
                 {
                     association: 'categories',
@@ -31,6 +30,7 @@ const articleController = {
         res.json(articles);
     },
 
+    //retourne un seul article avec ses différentes categories, tailles et stock en fonction des tailles
     getOne: async (req, res) => {
         const { id } = req.params;
         const article = await Article.findOne({
@@ -50,6 +50,7 @@ const articleController = {
         res.json(article);
     },
 
+    //créé une nouvel article avec la possibilités de créer aussi ses catégories et tailles
     create: async (req, res) => {
         const data = req.body;
         const headerAuth = req.headers['authorization'];
@@ -65,10 +66,11 @@ const articleController = {
         const article = await Article.create({ ...data });
 
         const newArticleId = article.dataValues.id;
-        // console.log(newArticleId);
 
         // 2) LIER des CATEGORIES à l'article
         [...data.categories].forEach(async (category) => {
+            // on récupère la fonction create depuis le controller articleHasCategory
+            // on la boucle pour autant de fois qu'il y a d'éléments : data.categories
             articleHasCategoryController.create(newArticleId, category);
         });
 
@@ -79,7 +81,6 @@ const articleController = {
             articleHasSizeController.create(newArticleId, size);
         });
 
-        // on renvoie le JSON article
         res.json(article);
     },
 
@@ -93,10 +94,9 @@ const articleController = {
             return res.status(400).json({ 'error': 'token absent' });
         }
 
-        try {
-
-
+        
             (async () => {
+                //on vérifie que l'article existe
                 const verification = await Article.findByPk(id)
                 if (!verification) {
                     res.status(400).json(`l'article avec l'id ${id} n'existe pas`);
@@ -111,13 +111,13 @@ const articleController = {
                         id: id,
                     }
                 });
-
+                //pour modifier aussi les categories et sizes qui lui sont lié :
                 // je renvoie vers la fonction update de articleHasCategoryController
                 const updateCategory = await articleHasCategoryController.update(id, data.categories);
                 // je renvoie vers la fonction update de articleHasSizeController
                 const updatesize = await articleHasSizeController.update(id, data.sizes);
 
-                // en essaye de prendre le nouvel article modifé
+                // on récupère le nouvel article modifé avec ses categories et sizes
                 const updatedArticle = await Article.findOne({
                     where: {
                         id,
@@ -129,14 +129,10 @@ const articleController = {
 
                 res.json(`l'article avec l'id ${id} a bien était modifié`)
             })();
-        }
-
-        catch (err) {
-            res.status(400).json(err.stack)
-        }
-
+     
     },
 
+    //suppresion d'un article
     delete: async (req, res) => {
         const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
@@ -145,19 +141,24 @@ const articleController = {
             return res.status(400).json({ 'error': 'token absent' });
         }
 
-        console.log('object')
-        try {
+            //on vérifie que l'article existe avant la suppresion
             const { id } = req.params;
             const article = await Article.findByPk(id);
             if (!article) {
                 res.status(400).json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
                 return next()
             }
+            //on le supprime
             article.destroy();
+
+            //si l'article existe toujours on renvoie une erreur
+            const articleExist = await Article.findByPk(id);
+            if (articleExist) {
+                res.status(400).json(`l'article avec l'id ${id} n'a pas était supprimé`);
+            };
+
             res.json(`l'article avec l'id ${id} vient d' être supprimé`);
-        } catch (error) {
-            res.status(400).json(error.stack)
-        }
+
     },
 };
 

@@ -3,12 +3,15 @@ const sequelize = require('../database');
 const { Query } = require('pg');
 
 const articleHasSizeController = {
+
+    //retourne toutes les relations entre les articles et les size qui leurs sont liés
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await ArticleHasSize.findAll();
         res.json(response);
     },
 
+        //retourne toutes les relations entre un article et les sizes qui lui sont lié
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await ArticleHasSize.findOne({
@@ -69,7 +72,8 @@ const articleHasSizeController = {
     },
 
     update: async (article_id, data) => {
-
+             
+        // Premierement on delete toutes les sizes associé à l'article en question 
         await sequelize.query(
             `
                 DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
@@ -85,7 +89,7 @@ const articleHasSizeController = {
                 }
             });
 
-            // on insert l'id du size et l'article id et stock dans article has size
+            // on insert le size id et l'article id dans article_has_size pour les lier
             await sequelize.query(
                 `
                     INSERT INTO "article_has_size" ("article_id", "size_id", "stock")
@@ -97,7 +101,7 @@ const articleHasSizeController = {
 
     },
 
-
+    // on supprime les liaisons entre un article et ses sizes
     delete: async (req, res) => {
         const { id } = req.params;
         await sequelize.query(

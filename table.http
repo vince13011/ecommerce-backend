@@ -171,7 +171,7 @@ GET {{baseUrl}}/users
 ### GET
 GET {{baseUrl}}/user/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
+Authorization: Bearer eyJhbGciOiJIzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5jb20iLCJpYXQiOjE2MTYxNTExMzIsImV4cCI6MTYxNjE1NDczMn0.Dbq1rNm4fm0ZCLM7dXEq_9jgv3Ozdd9gq5-tU_BuVA4
 
 
 ### POST
