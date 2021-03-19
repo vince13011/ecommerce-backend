@@ -2,12 +2,15 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const articleHasCategoryController = {
+
+    //retourne toutes les relations entre les articles et les categories qui leurs sont liés
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await sequelize.query(`SELECT * FROM article_has_category;`);
         res.json(response);
     },
 
+    //retourne toutes les relations entre un article et les categories qui lui sont lié
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await sequelize.query(`SELECT * FROM article_has_category WHERE "id"=${id};`);
@@ -19,10 +22,10 @@ const articleHasCategoryController = {
 
 
     create: async (article_id, data) => {
-        /* Voici la structure que doit avoir le req.body
-        on va mettre size name, par contre il faudra 
-        faire une recherche pour retrouver l'id qui correspond 
-        à cet size_name
+
+        /* ici la data reçu nous vient articleController.create
+        Voici la structure que doit avoir le req.body
+        on va créer une categorie si elle n'existe pas déjà
         {
             "id": 1,
             "title": "homme"
@@ -50,7 +53,7 @@ const articleHasCategoryController = {
 
 
     update: async (article_id, data) => {
-        // Premierement on delete toutes les category associé a l'article en question 
+        // Premierement on delete toutes les category associé à l'article en question 
         await sequelize.query(
             `
                 DELETE FROM "article_has_category" WHERE "article_id"=${article_id}
@@ -58,13 +61,13 @@ const articleHasCategoryController = {
         );
         // on boucle sur data.categories 
         [...data].forEach(async (category) => {
-            // soit on cherche une id soit on creer ET on cherche l'id d'une category avec son title
+            // soit on crée une category soit on cherche son id avec son title
             const categoryId = await Category.findOrCreate({
                 where: {
                     title: category.title,
                 }
             });
-            // on insert l'id du category et l'article id dans article has category
+            // on insert le category id et l'article id dans article_has_category pour les lier
             await sequelize.query(
                 `
                     INSERT INTO "article_has_category" ("article_id", "category_id")
@@ -74,6 +77,7 @@ const articleHasCategoryController = {
         });
     },
 
+    // on supprime les liaisons entre un article et ses categories
     delete: async (req, res) => {
         const { id } = req.params;
         await sequelize.query(

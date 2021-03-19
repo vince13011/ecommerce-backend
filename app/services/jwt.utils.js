@@ -1,7 +1,8 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken')
 
-const JWT_SIGN_SECRET = 's0G8S7AGED7ZG534T7909UHGGVCFYRD%H$';
-const JWT_SIGN_SECRET_ADMIN = 's0G8S7AGED7ZG534T7909UHGGVCFYRD%HSH%DH%HUG$';
+const JWT_SIGN_SECRET = process.env.JWT_SIGN_SECRET;
+const JWT_SIGN_SECRET_ADMIN = process.env.JWT_SIGN_SECRET_ADMIN;
 
 module.exports = {
 
