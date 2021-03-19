@@ -103,7 +103,7 @@ CREATE TABLE article_has_size (
 CREATE TABLE article_has_category (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     article_id posint NOT NULL REFERENCES article(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    category_id int NOT NULL REFERENCES category(id) ON UPDATE CASCADE
+    category_id int NOT NULL REFERENCES category(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

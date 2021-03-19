@@ -180,7 +180,7 @@ Content-Type: application/json
 #les users seeding ne marche pas à cause de bcrypt
 
 {
-"email": "toto@tata.com",
+"email": "toto@tata.fr",
 "password":"123456789"
 }
 
@@ -189,7 +189,7 @@ POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email":"toto@tata.com",
+    "email":"toto@tata.fr",
     "firstname":"rard",
     "lastname":"poulpos",
     "password":"123456789",

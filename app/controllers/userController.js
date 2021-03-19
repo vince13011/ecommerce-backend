@@ -5,29 +5,8 @@ const validator = require("email-validator");
 const bcrypt = require('bcrypt');
 
 const userController = {
-    //renvoi tout les  user -> ses addresses -> ses commandes -> le contenu de ses commandes
-    /* getAll: async (req, res) =>{
-        const {limit} = req.query;
-        const users = await Address.findAll({
-           attributes:{
-               exclude:['created_at']
-           },
-                include:[
-                    {association:'address_user',
-                        attributes:{
-                        exclude:['password','created_at']}
-                    },
-                    {association:'address_orders',
-                            include:[{
-                                association:'orderArticles'
-                            }]
-                    }
-                 ]  
-         })
-          res.json(users);
-     },
-*/
-
+  
+    //renvoi tout les users
     getAll: async (req, res) => {
         const { limit } = req.query;
         const users = await User.findAll({
@@ -89,6 +68,7 @@ const userController = {
 
     },
 
+    //création d'un user
     create: async (req, res) => {
         const newUserData = {
             email: req.body.email,
@@ -218,10 +198,9 @@ const userController = {
         }
 
         // vérifier que l'email existe en BDD => User
-        // comparer le password du form avec le hash de ka BDD
+        // comparer le password du formulaire avec le hash de la BDD
         // si c'est pas bon lui donner un message d'erreur
         // si c'est bon le connecter
-        // persistance de la connexion => session
 
         // si on a des erreurs on rend la vue avec ces erreurs
         if (errors.length) {
@@ -248,31 +227,10 @@ const userController = {
                 const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
                 console.log('isValidPassword : ', isValidPassword)
 
-                // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
-                // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
-                // afficher son nom et le lien déconnecter
+   
                 if (isValidPassword) {
-                    /*   //maintenant que tout est validé on renvoit les informations demandées
-                       const theAddressUser = await Address.findOne({
-   
-                           where: { user_id: user.id },
-                           attributes: {
-                               exclude: [ 'created_at']
-   
-                           },
-                           include: [
-                               {
-                                   association: 'address_orders',
-                                   include: [{
-                                       association: 'orderArticles',
-                                       order: [
-                                           ['updated_at', 'ASC']
-                                       ]
-                                   }]
-                               }
-                           ]
-                       })
-                    */
+
+                     //maintenant que tout est validé on renvoit les informations demandées 
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
@@ -283,12 +241,16 @@ const userController = {
                     })
                     console.log('infouser role id: ', infoUser.role_id)
 
+                    //on envoie un token à l'utilisateur qu'il devra nous renvoyer sur certaines routes nécéssitant une autorisation
+                    //en fonction du role de l'utilisateur on revoie un token avec une signature différente
+                   //user
                     if (infoUser.role_id === 2) {
                         const token = jwtUtils.generateTokenForUser(user);
                         const userWithAddress = [token, user.id];
                         res.json(userWithAddress);
                     }
-
+                    
+                    //Admin
                     if (infoUser.role_id === 1) {
                         const token = jwtUtils.generateTokenForAdmin(user);
                         const userWithAddress = [token, user.id];
@@ -305,28 +267,48 @@ const userController = {
         }
     },
 
+    //on modifie une addresse
     updateById: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
+        
+        //on vérifie que le user existe
+        const verification = await User.findByPk(id)
+
+        if (!verification) {
+            res.status(400).json(`le user avec l'id ${id} n'existe pas`);
+            return next();
+        }
+
+
         //const oldUser = await User.findOne({where:{id}});
         await User.update({ ...data }, { where: { id } })
         const newUser = await User.findByPk(id)
         res.json(newUser)
     },
 
+    //suppression d'un user
     deleteById: async (req, res) => {
-        try {
+        
             const { id } = req.params;
-            console.log('id:', id)
             const user = await User.findByPk(id);
-            User.destroy({ where: { id } })
-            //await user.destroy();
-            res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
 
-        }
-        catch {
-            res.status(400).json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
-        }
+            if (!user) {
+                res.status(400).json(`le user avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                return next()
+            }
+
+            User.destroy({ where: { id } })
+
+                //si le user existe toujours on renvoie une erreur
+                const userExist = await User.findByPk(id);
+                if (userExist) {
+                    res.status(400).json(`le user avec l'id ${id} n'a pas était supprimé`);
+                };
+          
+            res.json(`le user avec l'id ${id} est bien supprimé`)
+
+        
     }
 }
 module.exports = userController;
