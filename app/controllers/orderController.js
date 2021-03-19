@@ -98,7 +98,7 @@ const OrderController = {
         res.json(reponseOrders);
     },
 
-    getOne: async (req, res) => {
+    getOne: async (req, res, next) => {
         const { id } = req.params;
         const orderElement = await Order.findOne({
             include: [
@@ -126,10 +126,17 @@ const OrderController = {
                 id,
             }
         });
+        console.log('orderElement oooooooooooooà:',orderElement);
+         if (!orderElement) {
+            res.status(400).json(`pas d'order avec l'id ${id}`);
+            next();
+         }
+
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
         const reponseOrders = [];
         const order = orderElement.dataValues;
+
         let adressResponse = [];
         adressResponse.push({
             address_id: order.order_has_address.id,
@@ -180,7 +187,7 @@ const OrderController = {
             articles: articleResponse
         };
         reponseOrders.push(objetOrder);
-        if (!reponseOrders) {
+       if (orderElement[-1]) {
             res.status(400).json(`pas d'order avec l'id ${id}`)
         }
 

@@ -2,13 +2,11 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const addressController = {
-    // renvoi toutes les address avec chacune leur user
+    // renvoi toutes les address avec chacun de leur user
     getAll: async (req, res) => {
         const { limit } = req.query;
         const addresses = await Address.findAll({
-            // attributes: {
-            //     exclude: ['created_at', 'updated_at']
-            // },
+
             include: [
                 {
                     association: 'address_user',
@@ -18,10 +16,10 @@ const addressController = {
         res.json(addresses);
     },
 
-    // renvoi l'address avec son user par rapport au user_id
+    // renvoi une address et son user
     getOne: async (req, res) => {
-        const user_id = req.params.id;
-        const address = await Address.findByPk(user_id, {
+        const { id } = req.params;
+        const address = await Address.findByPk(id, {
             include: [
                 {
                     association: 'address_user',
@@ -35,7 +33,7 @@ const addressController = {
         res.json(address);
     },
 
-
+    //cette fonction créée une addresse en fonction de son user id et la retourne 
     create: async (req, res) => {
 
         const newAddressData = {
@@ -57,22 +55,14 @@ const addressController = {
             where: { id: newAddress.id },
             attributes: {
                 exclude: ['created_at']
-            },
-            include: [{
-                association: 'address_orders',
-                include: [{
-                    association: 'orderArticles',
-                    order: [
-                        ['updated_at', 'ASC']
-                    ]
-                }]
-            }]
-
+            }
         });
 
         res.json(theAddressUser);
 
     },
+
+    //on modifie un enregistrement on fonction de son id
     updateById: async (req, res) => {
         const { id } = req.params;
         const newAddressData = {
