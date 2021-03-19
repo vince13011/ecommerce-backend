@@ -2,6 +2,8 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const sizeController = {
+
+     //retourne toutes les sizes
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await Size.findAll({
@@ -10,6 +12,7 @@ const sizeController = {
         res.json(response);
     },
 
+     //retourne une seule category 
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await Size.findByPk(id);
@@ -20,6 +23,7 @@ const sizeController = {
 
     },
 
+    // on crée une size
     create: async (req, res) => {
         /* Voici la structure que doit avoir le req.body
         {
@@ -41,6 +45,16 @@ const sizeController = {
     update: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
+
+
+        //on vérifie que la size existe
+        const verification = await Size.findByPk(id)
+        if (!verification) {
+            res.status(400).json(`la size avec l'id ${id} n'existe pas`);
+            return next();
+        }
+
+        // on update la size avec les données de req.body
         const sizeUpdate = await Size.update(
             {
                 ...data
@@ -53,16 +67,29 @@ const sizeController = {
         res.json(updatedSize);
     },
 
+    //suppresion d'une size
     delete: async (req, res) => {
-        try {
+
             const { id } = req.params;
-            const size = await Size.findByPk(id);
+
+              //on vérifie que la size existe avant la suppresion
+              const size = await Size.findByPk(id);
+              if (!size) {
+                  res.status(400).json(`la size avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                  return next()
+              }
+      
             size.destroy();
 
+             //si la size existe toujours on renvoie une erreur
+            const sizeExist = await Size.findByPk(id);
+            if (sizeExist) {
+                res.status(400).json(`la size avec l'id ${id} n'a pas était supprimé`);
+            };
+
             res.json(size);
-        } catch (error) {
-            res.status(400).json('error', error)
-        }
+       
+        
 
     },
 };

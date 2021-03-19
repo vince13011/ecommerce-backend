@@ -50,7 +50,7 @@ const categoryController = {
         const { id } = req.params;
         const data = req.body;
 
-        //on vérifie que l'article existe
+        //on vérifie que la category existe
         const verification = await Category.findByPk(id)
         if (!verification) {
             res.status(400).json(`la category avec l'id ${id} n'existe pas`);
@@ -75,7 +75,7 @@ const categoryController = {
         
             const { id } = req.params;
             
-            //on vérifie que l'article existe avant la suppresion
+            //on vérifie que la category existe avant la suppresion
             const category = await Category.findByPk(id);
             if (!category) {
                 res.status(400).json(`la category avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
@@ -84,13 +84,13 @@ const categoryController = {
 
             category.destroy();
 
-                //si l'article existe toujours on renvoie une erreur
+                //si la category existe toujours on renvoie une erreur
             const categoryExist = await Category.findByPk(id);
             if (categoryExist) {
                 res.status(400).json(`la category avec l'id ${id} n'a pas était supprimé`);
             };
 
-            res.json(category);
+            res.json(`La category est supprimée`);
       
 
     },
