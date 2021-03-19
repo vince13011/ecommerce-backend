@@ -6,7 +6,7 @@ const jwtUtils = require('../services/jwt.utils');
 const OrderController = {
 
     //retourne toutes les commandes avec le statut de traitement, les articles qu'elles contiennent et la quantité des articles avec leurs sizes
-    getAll: async (req, res) => {
+    getAll: async (req, res, next) => {
         const { limit } = req.query;
         const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
@@ -37,6 +37,13 @@ const OrderController = {
                 ['created_at', 'DESC']
             ]
         });
+
+        //si il n'y a pas d'order
+        if (!orders) {
+            res.status(400).json(`Il n'y a aucune commande`);
+            next();
+        }
+
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
         // 1) je déclare un tableau vide qui sera PUSH au fur et à mesure et sera renvoyé à la fin en res.JSON
