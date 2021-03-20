@@ -15,6 +15,13 @@ Il a pour but de montrer une partie de mes compétences en javaScript côté Bac
 - Bcrypt
 - Sqitch (migration)
 
+## MCD
+![image](./images/MCD.png) 
+
+ 
+## MLD
+![image](./images/MLD.png)
+
 ## Pour utiliser l'API
  - Clonner le projet  
  - installer sur sa machine Node.js, PostgreSQL et sqitch.  
