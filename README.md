@@ -16,11 +16,11 @@ Il a pour but de montrer une partie de mes compétences en javaScript côté Bac
 - Sqitch (migration)
 
 ## MCD
-![image](./images/MCD.png) 
+<img src="./images/MCD.png" width="400" height="300" />
 
  
 ## MLD
-![image](./images/MLD.png)
+<img src="./images/MLD.png" width="400" height="300" />
 
 ## Pour utiliser l'API
  - Clonner le projet  
