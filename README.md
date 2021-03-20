@@ -1,9 +1,5 @@
 # Projet e-commerce
-
-## API - SWITCH
-Dans ce projet j'ai créé une API REST qui sert à gérer tout ses jeux de société en base de données.  
-Il a pour but de montrer une partie de mes compétences en javaScript côté Back end ainsi que la diversité des outils que je peux utiliser
-
+## API - SWITCH 
 ## Stack
 
 - Node js 10+

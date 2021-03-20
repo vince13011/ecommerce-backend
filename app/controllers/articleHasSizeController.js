@@ -4,14 +4,15 @@ const { Query } = require('pg');
 
 const articleHasSizeController = {
 
-    //retourne toutes les relations entre les articles et les size qui leurs sont liés
+    // return all the relations between the articles and the size which are linked to them
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await ArticleHasSize.findAll();
         res.json(response);
     },
 
-        //retourne toutes les relations entre un article et les sizes qui lui sont lié
+
+    // return all the relations between an article and the sizes which are linked to it
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await ArticleHasSize.findOne({
@@ -26,11 +27,11 @@ const articleHasSizeController = {
     },
 
 
-    create: async (/*req, res,*/ article_id, data) => {
-        /* Voici la structure que doit avoir le req.body
-        on va mettre size name, par contre il faudra 
-        faire une recherche pour retrouver l'id qui correspond 
-        à cet size_name
+    create: async (article_id, data) => {
+        /* Here is the structure that the req.body must have
+        we will put size name, on the other hand it will be necessary
+        do a search to find the corresponding id
+        to this size_name
         {
             "stock": 20,
             "article_id": 2,
@@ -38,58 +39,58 @@ const articleHasSizeController = {
         }
         */
 
-        // celui-ci pour faire le test
+        // this one to do the test
         // const data = req.body;
 
-        // 1) on cherche à retrouver l'id de size_name, et s'il n'existe pas, on le crée
+        // 1) we try to find the id of size_name, and if it doesn't exist, we create it
         const sizeId = await Size.findOrCreate({
-            // attributes = permet un SELECT de "id" dans ce cas
+            // attributes = allow a SELECT of "id" in this case
             attributes: ['id'],
-            // size_name qui se trouve dans la table...
+            // size_name which is in the table ...
             where: {
                 size_name: data.size_name
             },
         });
 
-        // 2) insérer le tout : toutes les data qu'on a updaté dans ArticleHasSize
+        // 2) insert everything: all the data we have updated in ArticleHasSize
         const articleHasSize = await ArticleHasSize.create({
-            // data est en paramètre et sera récupéré dans le controller articleController
+            // data is in parameter and will be retrieved in the articleController controller
             stock: data.stock,
-            // lorsqu'on crée une nouvelle dans cette table, on a besoin 
-            // aussi de l'article_id, qui sera renvoyé / retrouvé dans le controller article
+            // when we create a new one in this table, we need
+            // also from the article_id, which will be returned / retrieved in the article controller
             article_id: article_id,
 
-            // celui ci pour faire le test directement dans le controller ici
+            // this one to do the test directly in the controller here
             // article_id: data.article_id,
 
-            // on met l'id 
+            // we put the id
             size_id: sizeId[0].id
         });
 
-        // on renvoie le JSON article
-        // res.json(sizeId);
-
+        // we return the JSON article
+        // res.json (sizeId);
     },
 
     update: async (article_id, data) => {
              
-        // Premierement on delete toutes les sizes associé à l'article en question 
+        // First we delete all the sizes associated with the article in question
         await sequelize.query(
             `
                 DELETE FROM "article_has_size" WHERE "article_id"=${article_id}
             `
         );
 
-        // on boucle sur data.sizes 
+        // we loop on data.sizes 
         [...data].forEach(async (size) => {
-            // soit on cherche une id soit on creer ET on cherche l'id d'une size avec son title
+
+            // either we look for an id or we create AND we look for the id of a size with its title
             const sizeId = await Size.findOrCreate({
                 where: {
                     size_name: size.size_name,
                 }
             });
 
-            // on insert le size id et l'article id dans article_has_size pour les lier
+            // we insert the size id and the article id in article_has_size to link them
             await sequelize.query(
                 `
                     INSERT INTO "article_has_size" ("article_id", "size_id", "stock")
@@ -101,7 +102,7 @@ const articleHasSizeController = {
 
     },
 
-    // on supprime les liaisons entre un article et ses sizes
+    // we remove the links between an article and its sizes
     delete: async (req, res) => {
         const { id } = req.params;
         await sequelize.query(

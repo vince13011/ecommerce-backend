@@ -5,15 +5,16 @@ const jwtUtils = require('../services/jwt.utils');
 
 const OrderController = {
 
-    //retourne toutes les commandes avec le statut de traitement, les articles qu'elles contiennent et la quantité des articles avec leurs sizes
+
+    // return all the orders with the processing status, the articles they contain and the quantity of the articles with their sizes
     getAll: async (req, res, next) => {
         const { limit } = req.query;
         const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
-            if (userId < 0) {
-                return res.status(400).json({ 'error': 'token absent' });
-            }
-            
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'token absent' });
+        }
+
         const orders = await Order.findAll({
             include: [{
                 association: 'orderArticles',
@@ -38,7 +39,7 @@ const OrderController = {
             ]
         });
 
-        //si il n'y a pas d'order
+        // if there is no order
         if (!orders) {
             res.status(400).json(`Il n'y a aucune commande`);
             next();
@@ -46,18 +47,18 @@ const OrderController = {
 
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
-        // 1) je déclare un tableau vide qui sera PUSH au fur et à mesure et sera renvoyé à la fin en res.JSON
+        // 1) I declare an empty array which will be PUSH as I go and will be returned at the end in res.JSON
         const reponseOrders = [];
 
-        // 2) on boucle sur TOUTES LES ORDERS que nous avons récupérés grace à la méthode findAll au dessus (ligne 16)
+        // 2) we loop through ALL THE ORDERS that we have retrieved using the findAll method above (line 16)
         [...orders].forEach((orderElement) => {
 
-            // pour chaque orderElement => les données, se trouvent DANS orderElement.dataValues
-            // c'est pour cette raison, qu'on RENOMME orderElement.dataValues = order
+            // for each orderElement => the data, is in orderElement.dataValues
+            // this is why we rename orderElement.dataValues ​​= order
             const order = orderElement.dataValues;
-            // 3) on déclare un tableau vide d'address qui sera push à chaque passage de boucle / requete
+            // 3) we declare an empty array of address which will be pushed each time a loop / request is passed
             let adressResponse = [];
-            // 4) on push dans addressResponse les informations SUIVANTES
+            // 4) we push in addressResponse the following information
             adressResponse.push({
                 address_id: order.order_has_address.id,
                 city: order.order_has_address.city,
@@ -66,24 +67,26 @@ const OrderController = {
                 street_name: order.order_has_address.street_name,
                 additional: order.order_has_address.additional
             });
-            // la même chose que pour le tebleau address mais pour les articles
+            // the same as for the tebleau address but for the articles
             let articleResponse = [];
 
             orderElement.orderArticles.forEach((article) => {
-              
+
                 let size_name = '';
 
-                // j'ai dans la const searchSize TOUTES les sizes, et je boucle sur TOUTES les sizes pour trouver la size qui correspond
-                // on cherche SEULEMENT les sizes qui sont dans order_has_article.size_id
+                // I have in the const searchSize all the sizes, and I loop through all the sizes to find the corresponding size
+                // we only look for the sizes that are in order_has_article.size_id
                 [...searchSize].forEach((size) => {
-                   
-                    // pour chacune des sizes, si elle est égale à article.order_has_article.size_id je donne sa valeur à size_name ci dessus 
+
+
+                    // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
                     if (size.id === article.order_has_article.size_id) {
                         size_name = size.size_name;
                     }
                 });
-               // je parcours tous les articles et je cherche l'id qui correspond à l'id de l'article qu'on a dans le order
-                // du coup let image = à ce qu'on a trouvé 
+
+                // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+                // so let image = what we found
                 let image = '';
                 [...searchArticle].forEach((art) => {
 
@@ -117,8 +120,8 @@ const OrderController = {
         });
         res.json(reponseOrders);
     },
-       
-    //retourne une commande avec le statut de traitement, les articles qu'elle contient et la quantité des articles
+
+    // return an order with the processing status, the articles it contains and the quantity of the articles
     getOne: async (req, res, next) => {
         const { id } = req.params;
         const orderElement = await Order.findOne({
@@ -147,23 +150,23 @@ const OrderController = {
                 id,
             }
         });
-        console.log('orderElement oooooooooooooà:',orderElement);
-         if (!orderElement) {
+        console.log('orderElement oooooooooooooà:', orderElement);
+        if (!orderElement) {
             res.status(400).json(`pas d'order avec l'id ${id}`);
             next();
-         }
+        }
 
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
 
-          // je déclare un tableau vide qui sera PUSH au fur et à mesure et sera renvoyé à la fin en res.JSON
+        // I declare an empty array which will be PUSH as I go along and will be returned at the end in res.JSON
         const reponseOrders = [];
-         const order = orderElement.dataValues;
-        
-        // on déclare un tableau vide d'address qui sera push à chaque passage de boucle / requete
+        const order = orderElement.dataValues;
+
+        // we declare an empty array of address which will be pushed each time a loop / request is passed
         let adressResponse = [];
-       
-        //  on push dans addressResponse les informations SUIVANTES
+
+        // we push in addressResponse the FOLLOWING information
         adressResponse.push({
             address_id: order.order_has_address.id,
             city: order.order_has_address.city,
@@ -173,23 +176,23 @@ const OrderController = {
             additional: order.order_has_address.additional
         });
 
-        // la même chose que pour le tebleau address mais pour les articles
+        // the same as for the array of address but for the articles       
         let articleResponse = [];
-
         orderElement.orderArticles.forEach(async (article) => {
 
             let size_name = '';
 
-             // j'ai dans la const searchSize TOUTES les sizes, et je boucle sur TOUTES les sizes pour trouver la size qui correspond
-            // on cherche SEULEMENT les sizes qui sont dans order_has_article.size_id
+            // I have in the const searchSize ALL the sizes, and I loop through ALL the sizes to find the corresponding size
+            // we ONLY look for the sizes that are in order_has_article.size_id
             searchSize.forEach((size) => {
                 if (size.id === article.order_has_article.size_id) {
                     size_name = size.size_name;
                 }
             });
 
-            // je parcours tous les articles et je cherche l'id qui correspond à l'id de l'article qu'on a dans le order
-            // du coup let image = à ce qu'on a trouvé 
+            
+            // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+            // so let image = what we found
             let image = '';
             searchArticle.forEach((art) => {
                 if (art.id === article.order_has_article.article_id) {
@@ -219,17 +222,19 @@ const OrderController = {
             articles: articleResponse
         };
         reponseOrders.push(objetOrder);
-       if (orderElement[-1]) {
+        if (orderElement[-1]) {
             res.status(400).json(`pas d'order avec l'id ${id}`)
         }
 
         res.json(reponseOrders);
     },
 
+    //creation of an order
     create: async (req, res) => {
         const data = req.body;
 
-        //on crée un numéro de commande
+
+        // we create an order number
         const order_number = `UI${data.user_id}AI${data.address_id}TP${data.total_price}DN` + Date.now();
         data.order_number = order_number;
         const headerAuth = req.headers['authorization'];
@@ -242,16 +247,16 @@ const OrderController = {
             }
         }
 
-        // create juste un order avec les donnes du body
+        // create an order with the data of the body
         const order = await Order.create({
             ...data,
         });
-        // recupération du id
+        // recovery of id
         const orderID = order.id;
-        // renvoie vers le create de orderHasArticleController avec deux arguments orderID et data.articles
+        // returns to the create of orderHasArticleController with two arguments orderID and data.articles
         await orderHasArticleController.create(orderID, data);
 
-        //pour chaque article on récupere da quantité dans la commande et on met le stock à jour
+        // for each item we get a quantity in the order and we update the stock
         [...data.articles].forEach(async (article) => {
 
             const searchSizeId = await Size.findOne({
@@ -283,6 +288,9 @@ const OrderController = {
         res.json(order);
     },
 
+
+ 
+// return the command of an user and its content
     userOrders: async (req, res) => {
         const { id } = req.params;
         const { limit } = req.query;
@@ -327,18 +335,19 @@ const OrderController = {
         const searchArticle = await Article.findAll();
         const orders = searchOrders;
 
-        // 1) je déclare un tableau vide qui sera PUSH au fur et à mesure et sera renvoyé à la fin en res.JSON
+        // 1) I declare an empty array which will be PUSH as I go and will be returned at the end in res.JSON
         const reponseOrders = [];
 
-         // 2) on boucle sur TOUTES LES ORDERS que nous avons récupérés grace à la méthode findAll au dessus (ligne 16)
+        // 2) we loop through ALL THE ORDERS that we have retrieved using the findAll method above (line 16)
         orders.forEach(async (orderElement) => {
 
-             // pour chaque orderElement => les données, se trouvent DANS orderElement.dataValues
-            // c'est pour cette raison, qu'on RENOMME orderElement.dataValues = order
+           
+            // for each orderElement => the data, is IN orderElement.dataValues
+            // this is why we RENAME orderElement.dataValues ​​= order
             const order = orderElement.dataValues;
-             // 3) on déclare un tableau vide d'address qui sera push à chaque passage de boucle / requete
+            // 3) we declare an empty array of address which will be pushed each time a loop / request is passed
             let adressResponse = [];
-            // 4) on push dans addressResponse les informations SUIVANTES
+            // 4) we push in addressResponse the FOLLOWING information
             adressResponse.push({
                 address_id: order.order_has_address.id,
                 city: order.order_has_address.city,
@@ -347,24 +356,25 @@ const OrderController = {
                 street_name: order.order_has_address.street_name,
                 additional: order.order_has_address.additional
             });
-            // la même chose que pour le tebleau address mais pour les articles
+
+            // the same as for the address array but for the articles
             let articleResponse = [];
 
             orderElement.orderArticles.forEach(async (article) => {
 
                 let size_name = '';
-                // j'ai dans la const searchSize TOUTES les sizes, et je boucle sur TOUTES les sizes pour trouver la size qui correspond
-                // on cherche SEULEMENT les sizes qui sont dans order_has_article.size_id
+                // I have in the const searchSize all the sizes, and I loop through ALL the sizes to find the corresponding size
+                // we only look for the sizes that are in order_has_article.size_id
                 searchSize.forEach((size) => {
 
-                    // pour chacune des sizes, si elle est égale à article.order_has_article.size_id je donne sa valeur à size_name ci dessus 
+                    // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
                     if (size.id === article.order_has_article.size_id) {
                         size_name = size.size_name;
                     }
                 });
 
-               // je parcours tous les articles et je cherche l'id qui correspond à l'id de l'article qu'on a dans le order
-               // du coup let image = à ce qu'on a trouvé 
+                // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+                // so let image = what we found
                 let image = '';
                 searchArticle.forEach((art) => {
                     if (art.id === article.order_has_article.article_id) {
@@ -400,7 +410,7 @@ const OrderController = {
         res.json(reponseOrders);
     },
 
-    //on met à jour le statut d'une commande
+    // we update the status of an order 
     update: async (req, res) => {
         const data = req.body;
         const { id } = req.params;
