@@ -3,7 +3,7 @@ const sequelize = require('../database');
 
 const statusController = {
 
-    //retourne tout les status
+    //return all status
     getAll: async (req, res) => {
         const { limit } = req.query;
         const status = await Status.findAll({
@@ -18,7 +18,7 @@ const statusController = {
         res.json(status);
     },
 
-    //retourne une size
+    //return a single status
     getOne: async (req, res) => {
         const { id } = req.params;
         const status = await Status.findByPk(id);
@@ -30,9 +30,9 @@ const statusController = {
         res.json(status);
     },
 
-    //création d'un status
+    //creation of a status
     create: async (req, res) => {
-        /* Voici la structure que doit avoir le req.body
+        /* This is the structure that the req.body should have
         {
             "status_name": ""
         }
@@ -42,12 +42,12 @@ const statusController = {
         res.json(status);
     },
 
-    //on modifie un status
+    // // we update a status
     update: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
 
-        //on vérifie que le status existe bien
+        // we check that this status does exist
         const status = await Status.findByPk(id);
 
         if (!status) {
@@ -71,7 +71,7 @@ const statusController = {
     delete: async (req, res) => {
         const { id } = req.params;
 
-        //on vérifie que le status existe avant la suppresion
+        // we check that the status exists before the deletion
         const status = await Status.findByPk(id);
 
         if (!status) {
@@ -80,7 +80,8 @@ const statusController = {
         }
         status.destroy();
 
-         //si le status existe toujours on renvoie une erreur
+
+        // if the status still exists, an error is returned
         const statusExist = await Status.findByPk(id);
         if (statusExist) {
             res.status(400).json(`le status avec l'id ${id} n'a pas était supprimé`);
