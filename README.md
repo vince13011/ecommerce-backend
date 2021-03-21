@@ -10,6 +10,7 @@
 - JWT Token
 - Sanitizer
 - Bcrypt
+- Stripe
 - Sqitch (migration)
 
 ## MCD
