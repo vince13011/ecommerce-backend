@@ -1,4 +1,5 @@
 # Projet e-commerce
+
 ## API - SWITCH 
 ## Stack
 
@@ -34,4 +35,5 @@
  
 You can now use the API.
  If you have the VSC Client Rest extension you can also use the table.http file to try out the routes.
+
 
