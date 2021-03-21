@@ -13,11 +13,10 @@
 - Sqitch (migration)
 
 ## MCD
-![image](./images/MCD.png) 
-
+<img src="./images/MCD.png" width="400" height ="400">
  
 ## MLD
-![image](./images/MLD.png)
+<img src="./images/MLD.png" width="500" height ="350">
 
 ## Pour utiliser l'API
  -Clone the repository
