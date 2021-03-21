@@ -20,7 +20,7 @@
 
 ## Pour utiliser l'API
  -Clone the repository
- - installer Node.js, PostgreSQL and sqitch.  
+ - install Node.js, PostgreSQL and sqitch.  
  https://nodejs.org/fr/download/  
  https://www.postgresql.org/download/  
  https://sqitch.org/download/      
