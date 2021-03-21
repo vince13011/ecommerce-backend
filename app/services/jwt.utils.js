@@ -1,13 +1,13 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 
-// les différents secret qui vont servir à la signature selon le role du user
+// the different secrets that will be used for the signature according to the role of the user
 const JWT_SIGN_SECRET = process.env.JWT_SIGN_SECRET;
 const JWT_SIGN_SECRET_ADMIN = process.env.JWT_SIGN_SECRET_ADMIN;
 
 module.exports = {
 
-  //génération du token user
+  // generation of  user token
   generateTokenForUser: (userData) => {
     return jwt.sign({
       userId: userData.id,
@@ -19,7 +19,7 @@ module.exports = {
       })
   },
 
-  //génération du token admin
+  // generation of  Admin token
   generateTokenForAdmin: (userData) => {
     return jwt.sign({
       userId: userData.id,
@@ -31,13 +31,13 @@ module.exports = {
       })
   },
 
-    // on parse le token que l'on reçoit du user et on le parse pour ne garder que le token
+  // we parse the token that we receive from the user and we parse it to keep only the token
   parseAuthorization: function (authorization) {
     return (authorization != null) ? authorization.replace('Bearer ', '') : null;
   },
   
-  //on vérifie l'identité de celui qui fetch nos requêtes
-  //si c'est un user
+  // we check the identity of the one who fetch our requests
+  // if it's a user
   getUserId: function (authorization) {
     var userId = -1;
     var token = module.exports.parseAuthorization(authorization);
@@ -51,7 +51,7 @@ module.exports = {
     return userId;
   },
 
-  //si c'est un admin
+  // if it's an Admin
   getAdminId: function (authorization) {
     var userId = -1;
     var token = module.exports.parseAuthorization(authorization);

@@ -18,8 +18,8 @@ const payController = require('./controllers/payController');
 
 
 // ARTICLES
-router.get('/articles', articleController.getAll);//pas de token
-router.get('/article/:id', articleController.getOne);//pas de token
+router.get('/articles', articleController.getAll);// no token
+router.get('/article/:id', articleController.getOne);// no token
 router.post('/article', articleController.create);//token ADMIN
 router.put('/article/:id', articleController.update);//token ADMIN
 router.delete('/article/:id', articleController.delete);//token ADMIN
@@ -41,7 +41,7 @@ router.put('/order/:id', orderController.update);
 
 
 // STATUS
-router.get('/status', statusController.getAll); //pas de token
+router.get('/status', statusController.getAll); //no token
 router.get('/status/:id', statusController.getOne);
 router.post('/status', statusController.create);
 router.put('/status/:id', statusController.update);
@@ -52,12 +52,12 @@ router.delete('/status/:id', statusController.delete);
 router.get('/users', userController.getAll);
 router.get('/user/:id', userController.getOne);
 
-// // connecter un user ???
+//  CONNECT AN USER
 router.post('/user', userController.login);
 router.put('/user/:id', userController.updateById);
 router.delete('/user/:id', userController.deleteById);
 
-// // CREER UN NOUVEL UTILISATEUR
+// // CREATE A NEW USER
 router.post('/signup', userController.create);
 
 // // ADDRESSES
@@ -68,7 +68,7 @@ router.get('/address/:id', addressController.getOne);
  router.delete('/address/:id', addressController.deleteById);
 
 // // SIZES
-router.get('/sizes', sizeController.getAll); // pas de token
+router.get('/sizes', sizeController.getAll); // no token
 router.get('/size/:id', sizeController.getOne);
 router.post('/size', sizeController.create);
 router.put('/size/:id', sizeController.update);
