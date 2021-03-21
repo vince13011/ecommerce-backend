@@ -19,21 +19,19 @@
 ![image](./images/MLD.png)
 
 ## Pour utiliser l'API
- - Clonner le projet  
- - installer sur sa machine Node.js, PostgreSQL et sqitch.  
+ -Clone the repository
+ - installer Node.js, PostgreSQL and sqitch.  
  https://nodejs.org/fr/download/  
  https://www.postgresql.org/download/  
  https://sqitch.org/download/      
- - créer un fichier .env en se basant sur le fichier .env.example  
- - créer une base de donnée PostgreSQL switch
+ - create an .env file based on the .env.example file  
+- create a PostgreSQL switch database
    
- ### Ensuite lancer les commandes suivantes dans sa CLI:  
+### Then run the following commands in CLI: 
  - npm i  
  - sqitch deploy db:pg:switch 
  - node index.js
  
- Vous pouvez maintenant utiliser l'API.  
- Si vous possedez l'extension Rest client de VSC  vous pouvez également utiliser le fichier table.http pour essayer les routes.
- Merci d'avoir consulté ce projet et n'hésitez pas à m'envoyer vos critiques et conseils afin que je puisse améliorer mes compétences.
- 
+You can now use the API.
+ If you have the VSC Client Rest extension you can also use the table.http file to try out the routes.
 

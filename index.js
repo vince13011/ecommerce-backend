@@ -8,7 +8,6 @@ const router = require('./app/router.js')
 const sanitizer = require('./app/services/bodySanitizer');
 app.use(express.urlencoded({ extended: true }));
 
-//parser json qui récupère le payload et le transforme en objet js dispo sous request.body
 
 
 // CORS
@@ -17,12 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 
 //app.use(cors(options));
 */
+
 app.use(cors('*'));
 
-
+// parser json which gets the payload and transforms it into a js object available under request.body
 app.use(express.json());
 
-
+//sanitizes the data received
 app.use(sanitizer);
 
 

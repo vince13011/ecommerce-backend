@@ -138,13 +138,14 @@ const articleController = {
    
     // delete an article
     delete: async (req, res) => {
+        const {id} = req.params;
         const headerAuth = req.headers['authorization'];
         let userId = jwtUtils.getAdminId(headerAuth);
 
         if (userId < 0) {
             return res.status(400).json({ 'error': 'token absent' });
         }
-
+            
             // we check that the article exists before the deletion            const { id } = req.params;
             const article = await Article.findByPk(id);
             if (!article) {

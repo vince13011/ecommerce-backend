@@ -18,7 +18,6 @@ Article.belongsToMany(Category, {
     timestamps: false
 });
 
-// réciproque : une answer est lié à une seule question
 Category.belongsToMany(Article, {
     as: "categoryArticle",
     through: 'article_has_category',
@@ -26,7 +25,6 @@ Category.belongsToMany(Article, {
     otherKey: 'article_id',
     timestamps: false
 });
-// une question a plusieurs answers
 Article.belongsToMany(Order, {
     through: OrderHasArticle,
     as: "orders",
@@ -35,7 +33,6 @@ Article.belongsToMany(Order, {
     otherKey: 'size_id'
 });
 
-// réciproque : une answer est lié à une seule question
 Order.belongsToMany(Article, {
     through: OrderHasArticle,
     as: "orderArticles",

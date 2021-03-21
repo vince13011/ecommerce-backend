@@ -12,7 +12,7 @@ GET {{baseUrl}}/articles
 GET {{baseUrl}}/articles?limit=3
 
 ### GET
-GET {{baseUrl}}/article/1
+GET {{baseUrl}}/article/11
 
 ### POST
 POST {{baseUrl}}/article
@@ -77,9 +77,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZ
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/4
+DELETE {{baseUrl}}/article/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5mciIsImlhdCI6MTYxNjMxODkxMywiZXhwIjoxNjE2MzIyNTEzfQ.ovBEfDbExlr3s718_sezbzuacBZloqdWS7D8QNWlclQ
 
 ### GET
 GET {{baseUrl}}/categories
