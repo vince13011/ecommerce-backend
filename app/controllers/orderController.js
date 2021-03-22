@@ -350,6 +350,7 @@ const OrderController = {
                 }) */
         let objetOrder = {
             id: order.id,
+            status_name: order.order_has_status.status_name,
             order_number: order.order_number,
             total_price: order.total_price,
             created_at: order.created_at,
