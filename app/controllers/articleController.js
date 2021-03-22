@@ -146,7 +146,7 @@ const articleController = {
             return res.status(400).json({ 'error': 'token absent' });
         }
             
-            // we check that the article exists before the deletion            const { id } = req.params;
+            // we check that the article exists before the deletion 
             const article = await Article.findByPk(id);
             if (!article) {
                 res.status(400).json(`l'article avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
