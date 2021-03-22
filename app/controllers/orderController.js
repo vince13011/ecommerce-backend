@@ -1,5 +1,5 @@
 
-const { Article, Category, Size, User, Order, Address, ArticleHasSize, Status } = require('../models/index');
+const { Article, Category, Size, User, Order, Address, ArticleHasSize, Status, OrderHasArticle } = require('../models/index');
 const orderHasArticleController = require('./orderHasArticleController');
 const jwtUtils = require('../services/jwt.utils');
 
@@ -47,6 +47,7 @@ const OrderController = {
 
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
+        const searchOrderArticle = await OrderHasArticle.findAll();
         // 1) I declare an empty array which will be PUSH as I go and will be returned at the end in res.JSON
         const reponseOrders = [];
 
@@ -70,39 +71,64 @@ const OrderController = {
             // the same as for the tebleau address but for the articles
             let articleResponse = [];
 
-            orderElement.orderArticles.forEach((article) => {
+            // orderElement.orderArticles.forEach((article) => {
 
-                let size_name = '';
+            //     let size_name = '';
 
-                // I have in the const searchSize all the sizes, and I loop through all the sizes to find the corresponding size
-                // we only look for the sizes that are in order_has_article.size_id
-                [...searchSize].forEach((size) => {
+            //     // I have in the const searchSize all the sizes, and I loop through all the sizes to find the corresponding size
+            //     // we only look for the sizes that are in order_has_article.size_id
+            //     [...searchSize].forEach((size) => {
 
 
-                    // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
-                    if (size.id === article.order_has_article.size_id) {
-                        size_name = size.size_name;
-                    }
-                });
+            //         // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
+            //         if (size.id === article.order_has_article.size_id) {
+            //             size_name = size.size_name;
+            //         }
+            //     });
 
-                // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
-                // so let image = what we found
-                let image = '';
-                [...searchArticle].forEach((art) => {
+            //     // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+            //     // so let image = what we found
+            //     let image = '';
+            //     [...searchArticle].forEach((art) => {
 
-                    if (art.id === article.order_has_article.article_id) {
-                        image = art.dataValues.image;
-                    }
-                });
-                articleResponse.push({
-                    article_id: article.order_has_article.article_id,
-                    article_image: image,
-                    unit_net_price: article.order_has_article.unit_net_price,
-                    sizes: {
-                        size: size_name,
-                        quantity: article.order_has_article.quantity
-                    }
-                });
+            //         if (art.id === article.order_has_article.article_id) {
+            //             image = art.dataValues.image;
+            //         }
+            //     });
+            //     articleResponse.push({
+            //         article_id: article.order_has_article.article_id,
+            //         article_image: image,
+            //         unit_net_price: article.order_has_article.unit_net_price,
+            //         sizes: {
+            //             size: size_name,
+            //             quantity: article.order_has_article.quantity
+            //         }
+            //     });
+            // })
+            [...searchOrderArticle].forEach((element) => {
+                if (element.dataValues.order_id === order.id) {
+                    let size_name = '';
+                    searchSize.forEach((size) => {
+                        if (size.id === element.dataValues.size_id) {
+                            size_name = size.size_name;
+                        }
+                    });
+                    let image = '';
+                    searchArticle.forEach((art) => {
+                        if (art.id === element.dataValues.article_id) {
+                            image = art.dataValues.image;
+                        }
+                    });
+                    articleResponse.push({
+                        article_id: element.dataValues.article_id,
+                        article_image: image,
+                        unit_net_price: element.dataValues.unit_net_price,
+                        sizes: {
+                            size: size_name,
+                            quantity: element.dataValues.quantity
+                        }
+                    });
+                }
             })
             let objetOrder = {
                 id: order.id,
@@ -122,15 +148,118 @@ const OrderController = {
     },
 
     // return an order with the processing status, the articles it contains and the quantity of the articles
-    getOne: async (req, res, next) => {
+    // getOne: async (req, res, next) => {
+    //     const { id } = req.params;
+    //     const orderElement = await Order.findOne({
+    //         include: [
+    //             {
+    //                 association: 'orderArticles',
+    //             },
+    //             {
+    //                 association: 'order_has_status',
+    //             },
+    //             {
+    //                 association: 'order_has_address',
+    //                 attributes:
+    //                     [
+    //                         'id', 'user_id',
+    //                         'country', 'city',
+    //                         'zip_code', 'number',
+    //                         'street_name', 'additional'
+    //                     ],
+    //             },
+    //         ],
+    //         order: [
+    //             ['updated_at', 'DESC']
+    //         ],
+    //         where: {
+    //             id,
+    //         }
+    //     });
+    //     console.log('orderElement oooooooooooooà:', orderElement);
+    //     if (!orderElement) {
+    //         res.status(400).json(`pas d'order avec l'id ${id}`);
+    //         next();
+    //     }
+
+    //     const searchSize = await Size.findAll();
+    //     const searchArticle = await Article.findAll();
+
+    //     // I declare an empty array which will be PUSH as I go along and will be returned at the end in res.JSON
+    //     const reponseOrders = [];
+    //     const order = orderElement.dataValues;
+
+    //     // we declare an empty array of address which will be pushed each time a loop / request is passed
+    //     let adressResponse = [];
+
+    //     // we push in addressResponse the FOLLOWING information
+    //     adressResponse.push({
+    //         address_id: order.order_has_address.id,
+    //         city: order.order_has_address.city,
+    //         zip_code: order.order_has_address.zip_code,
+    //         number: order.order_has_address.number,
+    //         street_name: order.order_has_address.street_name,
+    //         additional: order.order_has_address.additional
+    //     });
+
+    //     // the same as for the array of address but for the articles       
+    //     let articleResponse = [];
+    //     orderElement.orderArticles.forEach(async (article) => {
+
+    //         let size_name = '';
+
+    //         // I have in the const searchSize ALL the sizes, and I loop through ALL the sizes to find the corresponding size
+    //         // we ONLY look for the sizes that are in order_has_article.size_id
+    //         searchSize.forEach((size) => {
+    //             if (size.id === article.order_has_article.size_id) {
+    //                 size_name = size.size_name;
+    //             }
+    //         });
+
+
+    //         // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+    //         // so let image = what we found
+    //         let image = '';
+    //         searchArticle.forEach((art) => {
+    //             if (art.id === article.order_has_article.article_id) {
+    //                 image = art.dataValues.image;
+    //             }
+    //         });
+    //         articleResponse.push({
+    //             article_id: article.order_has_article.article_id,
+    //             article_image: image,
+    //             unit_net_price: article.order_has_article.unit_net_price,
+    //             sizes: {
+    //                 size: size_name,
+    //                 quantity: article.order_has_article.quantity
+    //             }
+    //         });
+    //     })
+    //     let objetOrder = {
+    //         id: order.id,
+    //         order_number: order.order_number,
+    //         status_name: order.order_has_status.status_name,
+    //         tracking_number: order.tracking_number,
+    //         total_price: order.total_price,
+    //         created_at: order.created_at,
+    //         updated_at: order.updated_at,
+    //         address: adressResponse,
+    //         user_id: order.order_has_address.dataValues.user_id,
+    //         articles: articleResponse
+    //     };
+    //     reponseOrders.push(objetOrder);
+    //     if (orderElement[-1]) {
+    //         res.status(400).json(`pas d'order avec l'id ${id}`)
+    //     }
+
+    //     res.json(reponseOrders);
+    // },
+    getOne: async (req, res) => {
         const { id } = req.params;
         const orderElement = await Order.findOne({
             include: [
                 {
                     association: 'orderArticles',
-                },
-                {
-                    association: 'order_has_status',
                 },
                 {
                     association: 'order_has_address',
@@ -150,23 +279,12 @@ const OrderController = {
                 id,
             }
         });
-        console.log('orderElement oooooooooooooà:', orderElement);
-        if (!orderElement) {
-            res.status(400).json(`pas d'order avec l'id ${id}`);
-            next();
-        }
 
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
-
-        // I declare an empty array which will be PUSH as I go along and will be returned at the end in res.JSON
         const reponseOrders = [];
         const order = orderElement.dataValues;
-
-        // we declare an empty array of address which will be pushed each time a loop / request is passed
         let adressResponse = [];
-
-        // we push in addressResponse the FOLLOWING information
         adressResponse.push({
             address_id: order.order_has_address.id,
             city: order.order_has_address.city,
@@ -175,45 +293,64 @@ const OrderController = {
             street_name: order.order_has_address.street_name,
             additional: order.order_has_address.additional
         });
-
-        // the same as for the array of address but for the articles       
         let articleResponse = [];
-        orderElement.orderArticles.forEach(async (article) => {
-
+        // on va dans la table orderHasArticle, chercher toutes les commandes avec un
+        // order_id égal à id
+        const searchOrderArticle = await OrderHasArticle.findAll({
+            where: {
+                order_id: id,
+            }
+        });
+        // on boucle sur les commandes retournées
+        [...searchOrderArticle].forEach((element) => {
             let size_name = '';
-
-            // I have in the const searchSize ALL the sizes, and I loop through ALL the sizes to find the corresponding size
-            // we ONLY look for the sizes that are in order_has_article.size_id
             searchSize.forEach((size) => {
-                if (size.id === article.order_has_article.size_id) {
+                if (size.id === element.dataValues.size_id) {
                     size_name = size.size_name;
                 }
             });
-
-            
-            // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
-            // so let image = what we found
             let image = '';
             searchArticle.forEach((art) => {
-                if (art.id === article.order_has_article.article_id) {
+                if (art.id === element.dataValues.article_id) {
                     image = art.dataValues.image;
                 }
             });
             articleResponse.push({
-                article_id: article.order_has_article.article_id,
+                article_id: element.dataValues.article_id,
                 article_image: image,
-                unit_net_price: article.order_has_article.unit_net_price,
+                unit_net_price: element.dataValues.unit_net_price,
                 sizes: {
                     size: size_name,
-                    quantity: article.order_has_article.quantity
+                    quantity: element.dataValues.quantity
                 }
             });
         })
+        /*         orderElement.orderArticles.forEach(async (article) =>{
+                    let size_name = '';
+                    searchSize.forEach((size) => {
+                        if(size.id === article.order_has_article.size_id){
+                            size_name = size.size_name;
+                        }
+                    });
+                    let image = '';
+                    searchArticle.forEach((art) =>{
+                        if(art.id === article.order_has_article.article_id){
+                            image = art.dataValues.image;
+                        }
+                    });
+                    articleResponse.push({
+                        article_id : article.order_has_article.article_id,
+                        article_image : image,
+                        unit_net_price : article.order_has_article.unit_net_price,
+                        sizes : {
+                            size : size_name,
+                            quantity : article.order_has_article.quantity
+                        }
+                    });
+                }) */
         let objetOrder = {
             id: order.id,
             order_number: order.order_number,
-            status_name: order.order_has_status.status_name,
-            tracking_number: order.tracking_number,
             total_price: order.total_price,
             created_at: order.created_at,
             updated_at: order.updated_at,
@@ -222,9 +359,6 @@ const OrderController = {
             articles: articleResponse
         };
         reponseOrders.push(objetOrder);
-        if (orderElement[-1]) {
-            res.status(400).json(`pas d'order avec l'id ${id}`)
-        }
 
         res.json(reponseOrders);
     },
@@ -289,8 +423,8 @@ const OrderController = {
     },
 
 
- 
-// return the command of an user and its content
+
+    // return the command of an user and its content
     userOrders: async (req, res) => {
         const { id } = req.params;
         const { limit } = req.query;
@@ -333,15 +467,15 @@ const OrderController = {
         });
         const searchSize = await Size.findAll();
         const searchArticle = await Article.findAll();
+        const searchOrderArticle = await OrderHasArticle.findAll();
         const orders = searchOrders;
-
         // 1) I declare an empty array which will be PUSH as I go and will be returned at the end in res.JSON
         const reponseOrders = [];
 
         // 2) we loop through ALL THE ORDERS that we have retrieved using the findAll method above (line 16)
         orders.forEach(async (orderElement) => {
 
-           
+
             // for each orderElement => the data, is IN orderElement.dataValues
             // this is why we RENAME orderElement.dataValues ​​= order
             const order = orderElement.dataValues;
@@ -360,36 +494,61 @@ const OrderController = {
             // the same as for the address array but for the articles
             let articleResponse = [];
 
-            orderElement.orderArticles.forEach(async (article) => {
+            // orderElement.orderArticles.forEach(async (article) => {
 
-                let size_name = '';
-                // I have in the const searchSize all the sizes, and I loop through ALL the sizes to find the corresponding size
-                // we only look for the sizes that are in order_has_article.size_id
-                searchSize.forEach((size) => {
+            //     let size_name = '';
+            //     // I have in the const searchSize all the sizes, and I loop through ALL the sizes to find the corresponding size
+            //     // we only look for the sizes that are in order_has_article.size_id
+            //     searchSize.forEach((size) => {
 
-                    // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
-                    if (size.id === article.order_has_article.size_id) {
-                        size_name = size.size_name;
-                    }
-                });
+            //         // for each of the sizes, if it is equal to article.order_has_article.size_id I give its value to size_name above
+            //         if (size.id === article.order_has_article.size_id) {
+            //             size_name = size.size_name;
+            //         }
+            //     });
 
-                // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
-                // so let image = what we found
-                let image = '';
-                searchArticle.forEach((art) => {
-                    if (art.id === article.order_has_article.article_id) {
-                        image = art.dataValues.image;
-                    }
-                });
-                articleResponse.push({
-                    article_id: article.order_has_article.article_id,
-                    article_image: image,
-                    unit_net_price: article.order_has_article.unit_net_price,
-                    sizes: {
-                        size: size_name,
-                        quantity: article.order_has_article.quantity
-                    }
-                });
+            //     // I browse all the articles and I look for the id which corresponds to the id of the article we have in the order
+            //     // so let image = what we found
+            //     let image = '';
+            //     searchArticle.forEach((art) => {
+            //         if (art.id === article.order_has_article.article_id) {
+            //             image = art.dataValues.image;
+            //         }
+            //     });
+            //     articleResponse.push({
+            //         article_id: article.order_has_article.article_id,
+            //         article_image: image,
+            //         unit_net_price: article.order_has_article.unit_net_price,
+            //         sizes: {
+            //             size: size_name,
+            //             quantity: article.order_has_article.quantity
+            //         }
+            //     });
+            // })
+            [...searchOrderArticle].forEach((element) => {
+                if (element.dataValues.order_id === order.id) {
+                    let size_name = '';
+                    searchSize.forEach((size) => {
+                        if (size.id === element.dataValues.size_id) {
+                            size_name = size.size_name;
+                        }
+                    });
+                    let image = '';
+                    searchArticle.forEach((art) => {
+                        if (art.id === element.dataValues.article_id) {
+                            image = art.dataValues.image;
+                        }
+                    });
+                    articleResponse.push({
+                        article_id: element.dataValues.article_id,
+                        article_image: image,
+                        unit_net_price: element.dataValues.unit_net_price,
+                        sizes: {
+                            size: size_name,
+                            quantity: element.dataValues.quantity
+                        }
+                    });
+                }
             })
             let objetOrder = {
                 id: order.id,
