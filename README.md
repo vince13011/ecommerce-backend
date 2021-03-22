@@ -12,15 +12,13 @@
 - Bcrypt
 - Sqitch (migration)
 
-## MCD
-<img src="./images/MCD.png" width="400" height ="400">
  
-## MLD
-<img src="./images/MLD.png" width="500" height ="350">
+## MCD
+<img src="./images/MCD.png" width="500" height ="350">
 
 ## Pour utiliser l'API
  -Clone the repository
- - installer Node.js, PostgreSQL and sqitch.  
+ - install Node.js, PostgreSQL and sqitch.  
  https://nodejs.org/fr/download/  
  https://www.postgresql.org/download/  
  https://sqitch.org/download/      
