@@ -3,7 +3,7 @@ const sequelize = require('../database');
 
 const categoryController = {
 
-     //retourne toutes les categories 
+// return all categories
     getAll: async (req, res) => {
         const { limit } = req.query;
         const categories = await Category.findAll({
@@ -12,7 +12,7 @@ const categoryController = {
         res.json(categories);
     },
 
-    //retourne une seule category 
+   // return a single category
     getOne: async (req, res) => {
         const { id } = req.params;
         const category = await Category.findOne({
@@ -26,19 +26,19 @@ const categoryController = {
         res.json(category);
     },
 
-    // on crée une category
+    // we create a category
     create: async (req, res) => {
-        /* Voici la structure que doit avoir le req.body
+        /* This is the structure that the req.body should have
         {
             "title": ""
         }
         */
         const data = req.body;
 
-        // 1) je crée Category avec les req.body
+        // 1) I create Category with the req.body
         const category = await Category.create({ ...data });
         console.log(category);
-        // on renvoie le JSON article
+        // we return the JSON article
         if (!category) {
             res.status(400).json(`La création de la catégorie a échoué`)
         }
@@ -50,14 +50,14 @@ const categoryController = {
         const { id } = req.params;
         const data = req.body;
 
-        //on vérifie que l'article existe
+        // we check that this category exists
         const verification = await Category.findByPk(id)
         if (!verification) {
             res.status(400).json(`la category avec l'id ${id} n'existe pas`);
             return next();
         }
 
-         // on update la category avec les données de req.body
+        // we update the category with the data from req.body
         const categoryUpdate = await Category.update(
             {
                 ...data
@@ -70,12 +70,12 @@ const categoryController = {
         res.json(updatedCategory);
     },
 
-    //suppresion d'une category
+    //we delete a category
     delete: async (req, res) => {
         
             const { id } = req.params;
             
-            //on vérifie que l'article existe avant la suppresion
+        // we check that this category exists before the deletion
             const category = await Category.findByPk(id);
             if (!category) {
                 res.status(400).json(`la category avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
@@ -84,13 +84,13 @@ const categoryController = {
 
             category.destroy();
 
-                //si l'article existe toujours on renvoie une erreur
+            // if this category still exists, we return an error
             const categoryExist = await Category.findByPk(id);
             if (categoryExist) {
                 res.status(400).json(`la category avec l'id ${id} n'a pas était supprimé`);
             };
 
-            res.json(category);
+            res.json(`La category est supprimée`);
       
 
     },

@@ -1,13 +1,15 @@
 const sanitizeHtml = require('sanitize-html');
 
-// Le but de ce middleware est d'assainir les données envoyer par les utilisateurs
-const bodySanitizer = (request, response, next) => {
-    // 1ère chose on vérifie que l'on a un body, rienne sert d'éxécuter ce middleware si jamais on récupère de l'information
+    // The goal of this middleware is to clean up the data sent by users
+    const bodySanitizer = (request, response, next) => {
 
+    // in the case of an array
     const sanitizeArray = (array) => {
         return array.map(el => sanitizeProp(el));
     }
     
+
+    // in the case of an object
     const sanitizeObject = (object) => {
         for (const propName in object) {
             object[propName] = sanitizeProp(object[propName]);
@@ -15,6 +17,7 @@ const bodySanitizer = (request, response, next) => {
         return object;
     }
     
+    // depending on the data format we go through one of the two functions above
     const sanitizeProp = (propValue) => {
         if (Array.isArray(propValue)) {
             return sanitizeArray(propValue);
@@ -27,7 +30,8 @@ const bodySanitizer = (request, response, next) => {
 
     if (request.body) {
         for (const propName in request.body) {
-            // Grâce à la propriété de l'objet request.body on peut lui assigner une nouvelle valeur en lui refournissant sa propre valeur, mais en prenant soin de transformer celle-ci grâce à la function sanitizeHtml du module sanitize-html
+            // Thanks to the property of the request.body object, we can assign a new value to it by giving it its own value
+            // but taking care to transform it using the sanitizeHtml function of the sanitize-html module
             request.body[propName] = sanitizeProp(request.body[propName]);
         }
     }

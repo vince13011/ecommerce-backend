@@ -2,7 +2,7 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const addressController = {
-    // renvoi toutes les address avec chacun de leur user
+// return all the addresses with each of their user
     getAll: async (req, res) => {
         const { limit } = req.query;
         const addresses = await Address.findAll({
@@ -16,7 +16,7 @@ const addressController = {
         res.json(addresses);
     },
 
-    // renvoi une address et son user
+    // return an address and his user
     getOne: async (req, res) => {
         const { id } = req.params;
         const address = await Address.findByPk(id, {
@@ -33,7 +33,7 @@ const addressController = {
         res.json(address);
     },
 
-    //cette fonction créée une addresse en fonction de son user id et la retourne 
+    // this function creates an address according to its user id and returns it
     create: async (req, res) => {
 
         const newAddressData = {
@@ -59,7 +59,7 @@ const addressController = {
 
     },
 
-    // modification d'une address en fonction de son id
+  // updating of an address according to its id
     updateById: async (req, res) => {
         const { id } = req.params;
         const newAddressData = {
@@ -80,7 +80,7 @@ const addressController = {
         res.json(newAddress)
     },
 
-    // Suppression d'une addresse en fonction de son id
+    // Delete an address based on its id
     deleteById: async (req, res) => {
        
             const { id } = req.params;

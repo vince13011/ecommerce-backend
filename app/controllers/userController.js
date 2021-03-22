@@ -5,29 +5,8 @@ const validator = require("email-validator");
 const bcrypt = require('bcrypt');
 
 const userController = {
-    //renvoi tout les  user -> ses addresses -> ses commandes -> le contenu de ses commandes
-    /* getAll: async (req, res) =>{
-        const {limit} = req.query;
-        const users = await Address.findAll({
-           attributes:{
-               exclude:['created_at']
-           },
-                include:[
-                    {association:'address_user',
-                        attributes:{
-                        exclude:['password','created_at']}
-                    },
-                    {association:'address_orders',
-                            include:[{
-                                association:'orderArticles'
-                            }]
-                    }
-                 ]  
-         })
-          res.json(users);
-     },
-*/
-
+  
+    //return all users
     getAll: async (req, res) => {
         const { limit } = req.query;
         const users = await User.findAll({
@@ -39,7 +18,7 @@ const userController = {
     },
 
 
-    //renvoi un user -> ses addresses -> ses commandes -> le contenu de ses commandes
+   // returns a user -> his addresses -> his orders -> the content of his orders
     getOne: async (req, res) => {
         const { id } = req.params;
         const headerAuth = req.headers['authorization'];
@@ -89,6 +68,7 @@ const userController = {
 
     },
 
+    // create a user
     create: async (req, res) => {
         const newUserData = {
             email: req.body.email,
@@ -102,47 +82,46 @@ const userController = {
             newUserData.role_id = req.body.roleId;
         };
 
-        // on crée un tableau d'erreurs qu'on viendra remplir si un des tests
-        // qu'on va faire ne passe pas
+        // we create an array of errors that we will fill in if one of the tests
+        // we are going to do not pass
         const errors = [];
 
-        // on teste si la valeur de firstname n'est pas une chaine de carctère vide
+        // we test if the value of firstname is not an empty string
         if (newUserData.firstname.length === 0) {
             errors.push('Le prénom doit être renseigné')
         }
 
-        // on teste si la valeur de lastname n'est pas une chaine de carctère vide
+        // we test if the value of lastname is not an empty string
         if (newUserData.lastname.length === 0) {
             errors.push('Le nom doit être renseigné')
         }
 
-        // grâce à email-validator on vient vérifier que notre email est bien
-        // valide
+        // thanks to email-validator we can check that our email is valid
         const isValidEmail = validator.validate(newUserData.email);
 
         if (!isValidEmail) {
             errors.push('Vous devez renseigné un email valide');
         }
 
-        // vérifier que le mot de passe soit assez long © Maher
+        // check that the password is long enough
         if (newUserData.password.length < 8) {
             errors.push('le mot de passe doit avoir au minimum 8 caractères');
         }
 
-        // vérifier que le mdp soit égal à la confirmation
+        // check that the password is equal to the confirmation 
         if (newUserData.password !== req.body.passwordConfirm) {
             errors.push('Le mot de passe et la confirmation doivent être identiques')
         }
 
-        // si on a des erreurs, on rend la vue avec les erreurs
+
+        // if we have errors, we return the view with the errors
         if (errors.length) {
             res.json({ errors });
         }
         else {
-            // sinon on va chercher en bdd si on a un utilisateur avec le même email
-            const user = await User.findOne({ where: { email: newUserData.email } })
+            // otherwise we will search in database if we have a user with the same email            const user = await User.findOne({ where: { email: newUserData.email } })
             console.log('ceci est le resultat de user', user)
-            // si on trouve un user, on affiche une erreur
+            // if we find a user, we display an error
             if (user) {
                 errors.push('Email déjà pris');
                 res.json({ errors });
@@ -162,7 +141,8 @@ const userController = {
                     }
                 })
 
-                // les infos de l'address à ajouter
+
+                // the address information to add
                 const newAddressData = {
                     country: req.body.country,
                     city: req.body.city,
@@ -212,67 +192,45 @@ const userController = {
 
         const errors = [];
 
-        // on vérifie que l'utilisateur a bien rempli les champs
+        // we check that the user has correctly filled in the fields
         if (req.body.email.length === 0 || req.body.password.length === 0) {
             errors.push('Veuillez remplir tous les champs');
         }
 
-        // vérifier que l'email existe en BDD => User
-        // comparer le password du form avec le hash de ka BDD
-        // si c'est pas bon lui donner un message d'erreur
-        // si c'est bon le connecter
-        // persistance de la connexion => session
+        // check that the email exists in BDD => User
+        // compare the password of the form with the hash of the database
+        // if it's not good give it an error message
+        // if it's good to connect it
 
-        // si on a des erreurs on rend la vue avec ces erreurs
+        // if we have errors we return the view with these errors
         if (errors.length) {
             res.json({ errors });
         }
-        // sinon on chercher l'utilisateur en BDD
+        // otherwise we look for the user in DB
         else {
             const user = await User.findOne({ where: { email: req.body.email } })
 
             console.log('user :', user);
 
-            // à partir d'ici, si on a un utilisateur, on le redirige sur la page d'accueil
-            // si le user est null on redirige sur la page d'inscription 
+            // from here, if we have a user, we redirect them to the home page
+            // if the user is null we redirect to the registration page
             if (!user) {
                 errors.push('Vérifiez vos identifiants');
 
                 res.json({ errors });
             }
             else {
-                // si on a trouvé un utilisateur, il va falloir comparer le mdp
-                // des données en post avec le hash de la BDD
-                // pour faire ça bcrypt propose une fonction compareSync
+               // if we have found a user, we will have to compare the password
+                // data in post with the hash of the database
+                // to do that bcrypt proposes a compareSync function
                 console.log('user :', user)
                 const isValidPassword = bcrypt.compareSync(req.body.password, user.password);
                 console.log('isValidPassword : ', isValidPassword)
 
-                // si le password est valide on va le redirier sur la page d'accueil et stocker ses infos => session
-                // on va pouvoir masquer les liens du menu "se connecter" et "s'inscrire",
-                // afficher son nom et le lien déconnecter
+   
                 if (isValidPassword) {
-                    /*   //maintenant que tout est validé on renvoit les informations demandées
-                       const theAddressUser = await Address.findOne({
-   
-                           where: { user_id: user.id },
-                           attributes: {
-                               exclude: [ 'created_at']
-   
-                           },
-                           include: [
-                               {
-                                   association: 'address_orders',
-                                   include: [{
-                                       association: 'orderArticles',
-                                       order: [
-                                           ['updated_at', 'ASC']
-                                       ]
-                                   }]
-                               }
-                           ]
-                       })
-                    */
+
+                    // now that everything is validated, we return the requested information
                     const infoUser = await User.findOne({
                         where: { id: user.id },
                         attributes: {
@@ -283,12 +241,16 @@ const userController = {
                     })
                     console.log('infouser role id: ', infoUser.role_id)
 
+                    // we send a token to the user that he will have to send back to us on certain routes requiring authorization
+                    // depending on the role of the user, we return a token with a different signature
+                    // user
                     if (infoUser.role_id === 2) {
                         const token = jwtUtils.generateTokenForUser(user);
                         const userWithAddress = [token, user.id];
                         res.json(userWithAddress);
                     }
-
+                    
+                    //Admin
                     if (infoUser.role_id === 1) {
                         const token = jwtUtils.generateTokenForAdmin(user);
                         const userWithAddress = [token, user.id];
@@ -305,28 +267,45 @@ const userController = {
         }
     },
 
+    //we update an address
     updateById: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
-        //const oldUser = await User.findOne({where:{id}});
+        
+        // we check that this user exists
+        const verification = await User.findByPk(id)
+
+        if (!verification) {
+            res.status(400).json(`le user avec l'id ${id} n'existe pas`);
+            return next();
+        }
+
         await User.update({ ...data }, { where: { id } })
         const newUser = await User.findByPk(id)
         res.json(newUser)
     },
 
+    //delete an user
     deleteById: async (req, res) => {
-        try {
+        
             const { id } = req.params;
-            console.log('id:', id)
             const user = await User.findByPk(id);
-            User.destroy({ where: { id } })
-            //await user.destroy();
-            res.json(`l'utilisateur avec l'id ${id} est bien supprimé`)
 
-        }
-        catch {
-            res.status(400).json(`l'utilisateur avec l'id ${id} n'a pas pu être supprimé ou n'existe pas`)
-        }
+            if (!user) {
+                res.status(400).json(`le user avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+                return next()
+            }
+
+            User.destroy({ where: { id } })
+
+// if the user still exists, we return an error                const userExist = await User.findByPk(id);
+                if (userExist) {
+                    res.status(400).json(`le user avec l'id ${id} n'a pas était supprimé`);
+                };
+          
+            res.json(`le user avec l'id ${id} est bien supprimé`)
+
+        
     }
 }
 module.exports = userController;

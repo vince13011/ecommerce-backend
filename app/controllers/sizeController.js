@@ -2,6 +2,8 @@ const { Article, Category, Size, User, Order, Address, ArticleHasSize } = requir
 const sequelize = require('../database');
 
 const sizeController = {
+
+    // return all sizes
     getAll: async (req, res) => {
         const { limit } = req.query;
         const response = await Size.findAll({
@@ -10,6 +12,7 @@ const sizeController = {
         res.json(response);
     },
 
+    //retourne a single category 
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await Size.findByPk(id);
@@ -20,18 +23,19 @@ const sizeController = {
 
     },
 
+    // we create a size
     create: async (req, res) => {
-        /* Voici la structure que doit avoir le req.body
+        /* Here is the structure that the req.body must have
         {
             "size_name": ""
         }
         */
         const data = req.body;
 
-        // 1) je crée Size avec les req.body
+        // 1) I create size with the req.body
         const size = await Size.create({ ...data });
         console.log(size);
-        // on renvoie le JSON article
+        // we return the JSON article
         if (!size) {
             res.status(400).json(`La  création de cette size a échoué`)
         }
@@ -41,6 +45,16 @@ const sizeController = {
     update: async (req, res) => {
         const { id } = req.params;
         const data = req.body;
+
+
+        // we check that this size exists
+        const verification = await Size.findByPk(id)
+        if (!verification) {
+            res.status(400).json(`la size avec l'id ${id} n'existe pas`);
+            return next();
+        }
+
+        // we update the size with the data from req.body
         const sizeUpdate = await Size.update(
             {
                 ...data
@@ -53,16 +67,29 @@ const sizeController = {
         res.json(updatedSize);
     },
 
+    //delete a size
     delete: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const size = await Size.findByPk(id);
-            size.destroy();
 
-            res.json(size);
-        } catch (error) {
-            res.status(400).json('error', error)
+        const { id } = req.params;
+
+        // we check that this size exists before the deletion
+        const size = await Size.findByPk(id);
+        if (!size) {
+            res.status(400).json(`la size avec l'id ${id} n'existe pas et ne peut donc pas être supprimé`);
+            return next()
         }
+
+        size.destroy();
+
+        // if this size still exists, we return an error
+        const sizeExist = await Size.findByPk(id);
+        if (sizeExist) {
+            res.status(400).json(`la size avec l'id ${id} n'a pas était supprimé`);
+        };
+
+        res.json(size);
+
+
 
     },
 };
