@@ -299,7 +299,8 @@ const userController = {
 
             User.destroy({ where: { id } })
 
-// if the user still exists, we return an error                const userExist = await User.findByPk(id);
+// if the user still exists, we return an error
+ const userExist = await User.findByPk(id);
                 if (userExist) {
                     res.status(400).json(`le user avec l'id ${id} n'a pas était supprimé`);
                 };
