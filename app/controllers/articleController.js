@@ -158,7 +158,7 @@ const articleController = {
             // if the article still exists, we return an error
             const articleExist = await Article.findByPk(id);
             if (articleExist) {
-                res.status(400).json(`l'article avec l'id ${id} n'a pas était supprimé`);
+                res.status(400).json(`l'article avec l'id ${id} n'a pas été supprimé`);
             };
 
             res.json(`l'article avec l'id ${id} vient d' être supprimé`);
