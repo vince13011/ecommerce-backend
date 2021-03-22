@@ -17,7 +17,7 @@ GET {{baseUrl}}/article/11
 ### POST
 POST {{baseUrl}}/article
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZXJFbWFpbCI6ImVhZEBnbWFpbC5jb20iLCJpYXQiOjE2MTYwNjU2MDcsImV4cCI6MTYxNjA2OTIwN30.XuBQQ93NrlVnkK7hb0saM6NJDdl0JxTV3nP3VUDfY8k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5mciIsImlhdCI6MTYxNjQwNTM5NywiZXhwIjoxNjE2NDA4OTk3fQ.-NP4WccwDX35xQ3kLQiGL6WaLgOolLroKj25P5Fgk1I
 
 {
     "reference": "111222222",
@@ -77,9 +77,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInVzZ
 }
 
 ### DELETE
-DELETE {{baseUrl}}/article/
+DELETE {{baseUrl}}/article/27
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5mciIsImlhdCI6MTYxNjMxODkxMywiZXhwIjoxNjE2MzIyNTEzfQ.ovBEfDbExlr3s718_sezbzuacBZloqdWS7D8QNWlclQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsInVzZXJFbWFpbCI6InRvdG9AdGF0YS5mciIsImlhdCI6MTYxNjQwNTM5NywiZXhwIjoxNjE2NDA4OTk3fQ.-NP4WccwDX35xQ3kLQiGL6WaLgOolLroKj25P5Fgk1I
 
 ### GET
 GET {{baseUrl}}/categories

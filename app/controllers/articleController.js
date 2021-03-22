@@ -153,7 +153,7 @@ const articleController = {
                 return next()
             }
             //we delete it
-            article.destroy();
+            await article.destroy();
 
             // if the article still exists, we return an error
             const articleExist = await Article.findByPk(id);
