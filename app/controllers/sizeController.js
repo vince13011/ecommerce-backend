@@ -12,7 +12,7 @@ const sizeController = {
         res.json(response);
     },
 
-    //retourne a single category 
+    //return a single category 
     getOne: async (req, res) => {
         const { id } = req.params;
         const response = await Size.findByPk(id);

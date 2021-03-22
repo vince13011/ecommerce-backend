@@ -61,7 +61,7 @@ const articleHasSizeController = {
             article_id: article_id,
 
             // this one to do the test directly in the controller here
-            // article_id: data.article_id,
+
 
             // we put the id
             size_id: sizeId[0].id
