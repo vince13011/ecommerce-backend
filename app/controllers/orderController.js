@@ -262,6 +262,9 @@ const OrderController = {
                     association: 'orderArticles',
                 },
                 {
+                    association: 'order_has_status',
+                },
+                {
                     association: 'order_has_address',
                     attributes:
                         [
@@ -351,7 +354,8 @@ const OrderController = {
         let objetOrder = {
             id: order.id,
             order_number: order.order_number,
-            // status_name: order.order_has_status.status_name,
+            status_name: order.order_has_status.status_name,
+            tracking_number: order.tracking_number,
             total_price: order.total_price,
             created_at: order.created_at,
             updated_at: order.updated_at,
@@ -554,7 +558,7 @@ const OrderController = {
             let objetOrder = {
                 id: order.id,
                 order_number: order.order_number,
-                // status_name: order.order_has_status.status_name,
+                status_name: order.order_has_status.status_name,
                 tracking_number: order.tracking_number,
                 total_price: order.total_price,
                 created_at: order.created_at,

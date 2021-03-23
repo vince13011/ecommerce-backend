@@ -119,7 +119,8 @@ const userController = {
             res.json({ errors });
         }
         else {
-            // otherwise we will search in database if we have a user with the same email            const user = await User.findOne({ where: { email: newUserData.email } })
+            // otherwise we will search in database if we have a user with the same email 
+           const user = await User.findOne({ where: { email: newUserData.email } })
             console.log('ceci est le resultat de user', user)
             // if we find a user, we display an error
             if (user) {
@@ -298,7 +299,8 @@ const userController = {
 
             User.destroy({ where: { id } })
 
-// if the user still exists, we return an error                const userExist = await User.findByPk(id);
+// if the user still exists, we return an error
+ const userExist = await User.findByPk(id);
                 if (userExist) {
                     res.status(400).json(`le user avec l'id ${id} n'a pas était supprimé`);
                 };
