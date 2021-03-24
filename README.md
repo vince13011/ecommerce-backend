@@ -13,6 +13,8 @@
 - Stripe
 - Sqitch (migration)
 
+You can go to [our online site](https://switch-ecommerce.netlify.app/) (demo) to get an overview of our work
+https://switch-ecommerce.netlify.app/
  
 ## MCD
 <img src="./images/MCD.png" width="500" height ="350">
